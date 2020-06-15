@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 2
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{minted}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+
+
+
+\begin{document}
+	\maketitle
+	\section{Syntax und operationale Semantik}
+	\subsubsection{Binäre Relation}
+	Teilmenge des Kreuzprodukts zweier (ungleicher) Mengen $R\subseteq X\times Y$ oder infix $xRy$, wie $\leq\subseteq \mathbb{N}\times\mathbb{N}= \{(n,m)\in\mathbb{N}\times\mathbb{N}|\forall k\in\mathbb{N} (m=n+k)\}$.
+	\begin{itemize}
+		\item reflexiv $\forall x (xRx)$
+		\item symmetrisch $\forall x,y( xRy\implies yRx)$
+		\item transitiv $\forall x,y,z (xRy\land yRz \implies xRz)$
+		\item Präordnung, wenn R reflexiv und transitiv (eine ordnung braucht auch antisymmetrie)
+		\item Äquivalenzrelation, wenn R eine Präordnung und symmetrisch ist.
+	\end{itemize}
+	Gleichheit ist die einzige Äquivalenz und totale Ordnung\\
+	Gleichheit mod k ist eine Äq (reflexiv, man kann immer als vielfaches 0 wählen, symmetrisch und transitiv)
+	$\mathbb{Z}/_{\equiv k} = \{[n]_{\equiv k}|n\in mathbb{Z}\} = \mathbb{Z}_k$ mit $|\mathbb{Z}_k|=k$ und $[n]_{\equiv k}=\{m|n{\equiv_k}m\}$\\
+	Beliebte Relationen\\
+	$=$ (weil das aber merkwürdig ist für z.B. equivalenz von Relationen) gibt es auch $id=\Delta=\{(x,x)|x\in X\}$ kleinste Äquivalenztrelation auf X. (jede Äq muss reflexiv sein, also $\Delta$ beinhalten)\\
+	Zu $R\subseteq Y\times Z$ und $S\subseteq X\times Y$ kann die komposition:\\
+	$R\circ S = \{(x,z)|\exists y (xSy\land yRz)\}$ Achtung applikativer Syntax, also rechts zuerst (S dann R).\\
+	Die funktionskomposition kann darauf reduziert werden: $f: X\to Y = Gr f = \{(x,f(x))|x\in X\}$ (nur halt apllikativ: also graph links als input).\\
+	Die n-fache Verkettung wird als $R^n$ bezeichnet, wobei $R^0=id$.\\
+	Umkehrrelation oder Inverse einer Relation ist wohldefiniert:\\
+	$R^- =\{(y,x) | xRy\}\subseteq Y\times X$.\\
+	$\leq^-=\geq$, $\leq\circ \leq = \leq $,\\
+	$< \subseteq \mathbb{N}\times\mathbb{N}< \circ < = \{(n,m)\in\mathbb{N}\times\mathbb{N}|n+2\leq m\}$  das plus zwei entsteht dadurch,dass bei jedem $<$ mindestens 1 unterschied sein muss.\\
+	Bei $<\in\mathbb{Q}\times\mathbb{Q}$ ist jedoch $<\circ < = <$, da zwischen jede Rationale zahl immer eine weiter passt $\forall x,y( x\leq y \implies \exists z(x<z<y))$.\\
+	\textbf{Def}. Sei $P\subseteq\{refl, symm, trans\}$.\\
+	Der \textbf{P-abschluss} von $R\subseteq X\times X$ ist die kleineste Relation von S mit $R\subseteq S$ und S hat die Eigenschaft P.\\
+	Eindeutigkeit, weil geordnete Menge von Relationen.	Existenz z.B. $P=\{trans\}: S= \bigcap \{Q\subseteq X\times X | R\subseteq Q, Q transitiv\}$. Also: man wählt alle Relationen die R beinhalten und die Eigenschaft haben und nimmt dann den Durchschnitt. Der Durchschnitt hat auch immer die Eigenschaft, weil sie nur über $\forall$ definiert sind (und keine disjunktionen auf der rechten seite der implikation verwenden, und FOL sind).\\
+	Daraus folgt:
+	\textbf{Lemma 2.14 }(Erzeugte equivalenz)
+	\begin{itemize}
+		\item R ist reflexiv $\iff id\subseteq R$
+		\item R ist symm $\iff R^-\subseteq R \iff R^-=R$
+		\item R ist tranisitiv $\iff R\circ R\cup R$
+	\end{itemize}
+	daraus folgt:
+	Explizit berechenbare Eigenschaften:\\
+	Reflexiver abschluss von R: man muss alle selbstrelationen hinzufügen, also $R\cup \Delta$.\\
+	Symmetrischer Abschluss: $R\cup R^-$ weil $(R\cup R^-)^- = R^-\cup R^{-^-} = R^-\cup R$.\\
+	Transitiver Abschluss: man braucht nicht nur $R\circ R$ sondern auch die weiteren $R\circ R\circ R$, also $\bigcup\limits^\infty_{n=1} R^n = \{(x,y)| \exists n\geq 1 ((x,y)\in R^n)\}$,
+	das heißt, $xR^+y\iff \exists n,x_0,\dots, x_{n+1}(x=x_0Rx_yR\dots Rx_nRx_{n+1}=y)$.\\
+	Dies nennt man $R^+$ ähnlich wie bei regulären ausdrücken: es muss mindestens einmal die Relation angewandt werden! (genau genommen sind Reg. Ausdrücke und Relationen isomorph).
+	Transitiv-Reflexiver Abschluss (erzeugte Präordnung).
+	$R^+\cup \Delta = R^*=\bigcup\limits^\infty_{n=0}R^n$ (auch wie bei regulären ausdrücken, entweder 0 oder n mal).\\
+	\textbf{Lemma 2.15 (Erzeugte Äquivalenz)}\\
+	1) S symmetrisch $\implies S^+, S^*$ symmetrisch\\
+	2) $(R\cup R^-)^*$ ist symmetrisch\\
+	3) $(R\cup R^-)^*$ ist die von R erzeugte Äquivalenz.\\
+	Beweis: 3) folgt aus 2): erzeugte Äquivalenz S ist\\
+	-symmetrisch, also ist $R\cup R^-\subseteq S$\\
+	-transitiv und reflexiver also $(R\cup R^-)^*\subseteq S$.\\
+	nach (2) ist $(R\cup r^-)^*$ Äquivalenz, also $S\subseteq (R\cup R^-)^*$.\\
+	(2) folgt aus (1), da $R\cup R^-$ symmetrisch.\\
+	(1) Sei z.B. $xS^*y$, d.h. es existierten $x=x_0Sx_1\dots Sx_n=y$.\\
+	zZ.: $yS^*x: y=x_nSx_{n-1}\dots x_1Sx_0=x$ (das inverse von S ist auch in S weil S symmetrisch!)\\
+	
+
+
+\end{document}

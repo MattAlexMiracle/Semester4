@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 6}
+
+
+\begin{document}
+	\maketitle
+	L/R statt inverse matrix!\\
+	Inverse matrix ist zwar $O(n^3)$ für ausrechnen und $O(n^2)$ fürs einsetzen.\\
+	Die inverse ist viel teurer als LR-Zerlegung. ABER man kann die multiplikation von vektoren mit inversen besser parallelisieren.\\
+	ABER die meisten matritzen sind dünn besetzt! (eine voll besetzte $10^{16}$ matrix braucht sowieso zu viele TB um mit ihr zu arbeiten)\\
+	
+	Man kann den Rang einer matrix mit rundungsfehlern nicht berechnen (ist 0.000000000001==0?)\\
+	Stattdessen kann man fragen: wie ähnlich ist die Matrix zu einde Rang-r-Matrix? (in matritzen aus nur $10^{-15}$ werten ist $10^{-14}$ groß, andersrum gilt das gleiche bei sehr großen werten (in der astrophysik mit cm rechenen))\\
+	Also wie klein kann man $Rang(A+\delta A)$ wählen, bevor man probleme kriegt (vgl später singular value decomp).\\
+	Bandmatrix nur auf band um diagonale $O(m^2 n)$ insbesonder bei diagonalmatrix ist m=1 also $O(n)$\\
+	Tridiagonal\\
+	Bei LR zerlegung ist auf der diagonale einsen (wie immer ) und auf der diagonale direkt darunter werte.\\
+	Bei R auch nur 2 belegte diagonalen: Lösbar in $O(n)$, n-1 div, add und mult.\\
+	häufig in der physik vorkommend, z.B. temperatur in draht, lokale flüsse in Fluss, schadstoffausbreitung in filter.\\
+	allg sparse matritzen\\
+	problem: normales LR zerstört schon existente nullen. (man muss speicherplatz zurücklegen und ist aufwändiger)\\
+	lösungen ``Nested dissection'', ``minimum degree'', oder iteratives verfahren\\
+	Bei symmetrie und pos. definit: $A = LDL^T$ faktorisierbar, d ist der diagonale Anteil von R\\
+	wg. positiv definit: D hat in de diagonalen nur positive Elemente, alternativ:\\
+	$A=LDL^T = LD^{\frac{1}{2}}D^{\frac{1}{2}} L^T = \tilde L \tilde L^T$\\
+	CHOLESKY-Verfahren: man braucht kein pivotsuche (immer echt größer null und stabil)\\
+	QR-Zerlegung:\\
+	LR kann ein gut konditioniertes LGS in ein schlecht konditioniertes verwandeln (fix: pivotsuche, funktioniert nicht immer optimal)\\
+	Verwenden von Rotation und Spiegelung. diese sind \textbf{längen und winkeltreu} somit verschlechtert sich die kondition des LGS nicht.\\
+	Hyper ebenen spiegeln (Householder verfahren)\\
+	$E_w=\{x:x\circ w=0\}$ spiegelgeraden\\
+	$H_w: x\mappedto x-\frac{2w\circ x}{w\circ w} \cdot w$ mapping über spiegelung\\
+	Matrixnotation: $H_w = Id -\frac{2}{w\circ w}ww^T$\\
+	Rotationen (Jacobi-Rotation)\\
+	$J_\phi (x,y)^T \mappedto \begin{pmatrix}cos\phi&-\sin\phi\\\sin\phi&cos\phi\end{pmatrix}(x,y)^T$
+	Rotation in 3D hält eine achse konstant (diagonal 1) und rotiert die andere wie gehabt.\\
+	das macht man für jede zu null zu machende spalte.\\
+\end{document}

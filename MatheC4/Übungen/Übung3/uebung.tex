@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Blatt 3}
+
+
+\begin{document}
+	\section{Hausaufgabe 17}
+	a) $P(A)=\sum P(A\cap B_i)\implies P(A)=0 = \sum P(A\cap B_i)$, da $P(A\cap B_i)\geq 0$ muss $P(A\cap B_i)$ auch null sein. (Bzw $A\cap B\subseteq A$)\\
+	b) $P(A)=\frac{1}{2}$, $P(B)=\frac{1}{3}$ folgt daraus disjunkt $A\cap B = \emptyset$\\
+	Nein, Würfel $\Omega = \{1,2,3,4,5,6\}$ $P(A):= \frac{|A|}{|\Omega|}$\\
+	$A=\{\omega\in\Omega| \omega=0\ (mod 2)\}$, $B=\{\omega\in\Omega| \omega<3\}$\\
+	$P(A) = \frac{3}{6}$\\
+	$P(B)=\frac{2}{6}$\\
+	aber $A\cap B  = \{2\}\neq \emptyset$\\
+	c) Nein, Würfel: $\Omega = \{1,2,3,4,5,6\}$\\
+	$A= \{1,2\}$, $B=\{1,2,3,4\}$\\
+	$P(A)=\frac{2}{6}$, $P(B)=\frac{4}{6}$\\
+	$P(A)=P(B^c)$, aber $A^c = \{3,4,5,6\}$\\
+	\section{Hausaufgabe 18}
+	Ereignis A: Positives Ergebnis\\
+	Ereignis B: Person hat Krebs\\
+	Bekannt ist:\\
+	$P(A|B) = 0.8$(also der Test sagt bei leuten, die Brustkrebs haben zu $80\%$ ``JA'')\\
+	$P(A|B^c) = 0.096$ (also, die wahrscheinlichkeit, dass eine nicht kranken Person einen Positiven Test hat)\\
+	$P(B)=0.01$ ist die wahrscheinlichkeit, dass eine Person krebs hat.\\
+	ges $P(B|A)$, $P(A|B^C)$\\
+	satz von Bayes $P(B|A) = \frac{P(A\cap B}{P(A)} = \frac{P(B)P(A|B)}{P(B)P(A|B)+P(B^c)P(A|B^c)}$ (genauigkeits Test)\\
+	Wir folgern $P(B^c)=1-P(B)=0.99$\\
+	$P(B|A) = \frac{P(B)P(A|B)}{P(B)P(A|B)+P(B^c)P(A|B^c)}=\frac{0.01*0.8}{0.01*0.8+0.99*0.096}\approx 0.078$\\
+	\section{Hausaufgabe 19}
+	a) Die Losnummer $3494$ wird gezogen\\
+	Sei ``N = zahl N gezogen''\\
+	$P(3)P(4|3)P(9|4,3)P(4|9,4,3)$\\
+	$\frac{4}{40}*\frac{4}{39}\frac{4}{38}\frac{3}{37}$\\
+	b) nur 1 und 7 dürfen vorkommen (beides mindestens 1 mal)\\
+	Menge aller Losnummer aus 1 und 7.\\
+	$\frac{4*4*3*3}{}$\\
+	c) $\frac{40*36*32*26}{40*39*38*37}$
+\end{document}

@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{minted}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+
+
+
+\begin{document}
+	\maketitle
+	\section{Überblick}
+	\begin{itemize}[noitemsep,topsep=0pt]
+	\item Ein programm, das ein Ergebnis liefert soll termineren. Ein programm, das kein Ergebnis liefert (e.g. OS), soll immer antwortfähig bleiben( reaktives System)
+	\item Liefert das Programm das korrekte Ergebnis? (bzw bei reaktiven Systemen) verhält es sich richtig
+	\end{itemize}
+	$\implies$ wir betrachten Semantik.\\
+	Planung:
+	\begin{itemize}[noitemsep,topsep=0pt]
+		\item Termersetzun (technisch alle funk. Programmiersprache FOL termersetzung)
+		\item $\lambda$-Kalkül (HOL-Termersetzung $\equiv$ Lisp, $\lambda$ war lange zeit semantikfrei und Lisp ist es immernoch) 
+		\item (Ko-)Datentyp, (Ko-)Induktion
+		\item reguläre Ausdrücke und minimierung von Automaten
+	\end{itemize}
+	Literatur:
+	\begin{itemize}[noitemsep,topsep=0pt]
+		\item TES: Term Rewriting and all that (für die Leute dies genau wissen wollen), J.W. Klop term rewriting systems (kurz$\approx 80$ seiten, kostenlos), Giesl: Termersetzungsysteme (Polynomordnung/Terminierung)
+		\item $\lambda$-Kalkül: Lambda Calculi with Types (einfach, vom Jesus des Lambda, kostenlos), Nipkow: Lambda-Kalkül (anders als in der Vorlesung)
+		\item (Ko-)Induktion: A Tutorial on (Co-)Algebras and (Co-)Induktion (lesbar geschrieben, rel kurz), Automat and Coinduction-An exercise in Coalgebra
+		\item Reg. Ausdrücke/Automaten: Hopcraft/Ullman/Motwani (bibel), Pitts: Lecture notes on Regular Languages and Finite Automata (kostenlos)
+	\end{itemize}
+	\section{Termersetzungsysteme}
+	$\mathbb{N}\ni 0$, Implikation $\iff$ mit doppelstrich.\\
+	- Umformung von termen gemäß \underline{gerichteter} Gleichungen (sukzessive, erschöpfend)
+	Anwendungen:
+	\begin{itemize}[noitemsep,topsep=0pt]
+		\item (algebraische) Spezifikation (nicht mehr 100\% aktuell, andere sind beliebter)
+		\item Programmverifikation
+		\item automatisches Beweisen (Coq, Anabell)
+		\item Computeralgebra (Gröbnerbasen/Buchbergeralgo\footnote{https://de.wikipedia.org/wiki/Buchberger-Algorithmus})
+		\item Programmierung: Turingvollständig \& Grundlage der funktionalen Programmierung.
+	\end{itemize}
+	\begin{minted}{haskell}
+	data Nat = Zero | Suc Nat
+	plus::Nat->Nat->Nat
+	plus Zero x = x
+	plus (Suc y) x = Suc (plus y x)
+	\end{minted}
+	\underline{Auswertung}:\\
+	 $plus(Suc(Suc Zero)) (Suc Zero) \to Suc(plus (Suc Zero) (Suc Zero)) \to 
+		Suc (Suc(plus Zero (Suc Zero)) \to Suc(Suc(Suc(zero)))$\\
+	\underline{``Beweisen''}:\\
+	$(2+x) +y = 2+(x+y)\iff p (S(S(x))) y \to S( p( S(x) y))\to S( S ( p x y))$\\
+	\underline{Optimieren}:\\
+	plus (plus x y) z = plus x (plus y z) \underline{assoziative Gesetz}
+	die Linke Seite braucht (nach obiger Suc-definition) 2x+y.\\
+	Die rechte Seite braucht x+y\\
+	(Weil nur das erste argument eine mehrfachauswertung der funktion bewirkt)\\
+	geht ``plus x y = plus y x'' auch?\\
+	NEIN, weil man hiermit in eine unendliche schleife geraten könnte! alternativ z.B. $y<x$ erzwingen, aber dann ist die frage: lohnt sich das? (hier nicht, weil der vergleich genau diese zeitdifferenz kostet).\\
+	\underline{Verifikation}:\\
+	$p ( S ( S Z)) x = p (S Z) (S x)$ ``Anforderung''\\
+	$p (S ( S Z)) x \to S (p ( S Z ) x)\to S( S ( p Z x)) \to S ( S x)$\\
+	$p (S Z) (S x)\to S ( p Z (S x)) \to S ( S x)$\\
+	Beide werden in die gleiche Normalform reduziert ( NF bezeichnet hier einen Zustand, der nicht mehr reduziert werden kann!)\\
+	Problem: Was ist wenn man nie eine NF erreicht? Wenn man ungleiche Normalformen erhält, könnte die Gleichung trotzdem gleich sein, wenn die Normalformbildung nicht deterministisch ist!\\
+
+\end{document}

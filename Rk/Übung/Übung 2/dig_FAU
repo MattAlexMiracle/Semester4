@@ -1,0 +1,33 @@
+; <<>> DiG 9.11.5-P4-5.1-Debian <<>> www.informatik.uni-erlangen.de
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 17785
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 1, AUTHORITY: 4, ADDITIONAL: 6
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 37e071c77f78333b4b3bbfb75ebc48b406f8ae1cd0c7d175 (good)
+;; QUESTION SECTION:
+;www.informatik.uni-erlangen.de.	IN	A
+
+;; ANSWER SECTION:
+www.informatik.uni-erlangen.de.	1329 IN	A	131.188.34.49
+
+;; AUTHORITY SECTION:
+uni-erlangen.de.	72690	IN	NS	tuminfo1.informatik.tu-muenchen.de.
+uni-erlangen.de.	72690	IN	NS	dns-3.dfn.de.
+uni-erlangen.de.	72690	IN	NS	ns1.rrze.uni-erlangen.de.
+uni-erlangen.de.	72690	IN	NS	ns2.rrze.uni-erlangen.de.
+
+;; ADDITIONAL SECTION:
+ns1.rrze.uni-erlangen.de. 72691	IN	AAAA	2001:638:a000:1001:53::1
+ns2.rrze.uni-erlangen.de. 72690	IN	AAAA	2001:638:a000:1054:53::2
+ns1.rrze.uni-erlangen.de. 72691	IN	A	131.188.3.2
+ns2.rrze.uni-erlangen.de. 72690	IN	A	131.188.12.100
+dns-3.dfn.de.		73316	IN	A	193.174.75.58
+
+;; Query time: 0 msec
+;; SERVER: 2001:638:a000:1053:53::1#53(2001:638:a000:1053:53::1)
+;; WHEN: Wed May 13 21:21:24 CEST 2020
+;; MSG SIZE  rcvd: 318
+

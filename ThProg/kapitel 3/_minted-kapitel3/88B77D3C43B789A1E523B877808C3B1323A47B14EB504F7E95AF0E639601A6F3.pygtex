@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k+kr}{data} \PYG{k+kt}{Nat} \PYG{k+kr}{where}
+		\PYG{l+m+mi}{0}\PYG{k+kt}{:} \PYG{n+nb}{()}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Nat}
+		\PYG{k+kt}{Suc:} \PYG{k+kt}{Nat}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Nat}
+\end{Verbatim}

@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 2
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{minted}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+
+
+
+\begin{document}
+	\maketitle
+	\section{SIR-Modell}
+	besteht aus ODE:\\
+	\begin{itemize}
+		\item $\frac{dS(t)}{dt} = -\theta I(t)S(t)$
+		\item $\frac{dI(t)}{dt} = \theta I(t)S(t)-\gamma I(t)$
+		\item $\frac{dR(t)}{dt} = \gamma I(t)$
+	\end{itemize}
+	S=susceptible, I=Infectuous, R=Recovered, $\theta$ erkrankungsrate, $\gamma$ genesungsrate\\
+	Krankheitsdauer ist $\frac{1}{\gamma}$ $R_0 = \frac{\theta}{\gamma}$.\\
+	Alternativ zur letzten gleichung kann auch gefordert werden, dass die gesamtzahl konstant bleibt: $R+S+I=1\implies R= 1-S-I$. (wenn man diese differentiert und von oben einsetzt, erhält man die ursprüngliche bedingung)\\
+	Lösung über Eulerverfahren: $y'\approx \frac{y(t+h)-y(t)}{h}\implies y(t+h)\approx y(t)+h\cdot y'$\\
+	Für die DGL	$y'=f(t,y)$ gilt also $\tilde y(t+h)= \tilde y+hf(t,\tilde y)$ um eine approximation $\tilde y$ für y zu finden.\\
+	Eulerverfahren hat ordnung h (also für jeden schritt erhält man linear genauigkeit, gute DGL löser haben $h^4$ bis $h^8$)\\
+	Die genauigkeit steigt mit $O(h^2)$ bei mehr schritten.\\
+	Die Anzahl der schritte für eine verbesserung verhält sich nach $O(h^{-1})$ (wird also immer schlechter)\\
+	Dies könnte die höhere granularität überwiegen (tuts auch, wenn nicht Lipschitz!)\\
+
+
+\end{document}

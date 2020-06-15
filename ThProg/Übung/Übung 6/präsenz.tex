@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+\newcommand{\church}[1]{\lceil#1\rceil}
+
+
+\begin{document}
+	\maketitle
+	\section{Übung 1}
+	ite true s t $\to_\delta (\lambda bxy.bxy)true\ s\ t\to_\beta (\lambda xy.(true)xy)\ s\ t \to_\beta (\lambda y.(true)sy)\  t\to_\beta true\ s \ t\to_\delta (\lambda xy.y)st\to_\beta (\lambda y.s)t \to_\beta s$\\
+	ite false s t $\to_\delta (\lambda bxy.bxy)false\ s\ t\to_\beta (\lambda xy.(false)xy)\ s\ t \to_\beta (\lambda y.(false)sy)\  t\to_\beta false\ s \ t\to_\delta (\lambda xy.x)st\to_\beta (\lambda y.y)t \to_\beta t$\\
+	Wir schreiben ite x y z = if x then y else z.\\
+	Direkt ohne beta-reduktion anwendbar.\\
+	not b = b false true.\\
+	xor b1 b2 = if b1 then (if b2 then false else true) else  b2\\
+	implikation b1 b2 = if b1 then b2 else true\\
+	\section{Übung 2}
+	fact $\lceil 2\rceil\to_\beta$ if  $\lceil 2\rceil\leq \lceil 1\rceil$ else $\lceil 2\rceil fac(\lceil 2\rceil-\lceil 1\rceil)\to^*_\beta if\  false\ else \lceil 2\rceil fac(\lceil 2\rceil-\lceil 1\rceil)\to^*_\beta if\  false\ else \lceil 2\rceil fac(\lceil 1\rceil)\to_\beta  fac(\lceil 1\rceil)\to_\beta \rceil 2\lceil if\  \rceil 1\lceil\leq \rceil 1\lceil\ else \lceil 2\rceil fac(\lceil 1\rceil-\lceil 1\rceil)\to^*_\beta fac(\lceil 1\rceil)\to_\beta \rceil 2\lceil if\  true\ else \lceil 2\rceil fac(\lceil 1\rceil-\lceil 1\rceil)\to_\beta \rceil 2\lceil * \rceil 1\lceil = \rceil 2\lceil$ \\
+	odd n = if n==$\rceil 0\lceil$ then false else (if $\rceil 2\lceil == 1$ then true else odd ($n-\church{2}$))\\
+	halve n= if $n\leq\church{1}$ then $\church{0}$ else 1+ halve ($n-\church{2}$)\\
+	\section{Übung 3}
+	Via normaler Reduktion, schauen, was nie reduziert wird, dass muss das Problem sein, weil normale sub immer NF erreicht, wenn sie existiert:\\
+	a) $\underbrace{\underbrace{(\lambda xy.y(\lambda z.x))}_{lambda\ leftmost} (uu)}_t (\lambda v.v((\lambda w.w)(\lambda w.w)))$\\
+	$\to_\beta \underbrace{(\lambda y.y(\lambda z.(uu)))  (\lambda v.v((\lambda w.w)(\lambda w.w)))}_{outermost} \to_\beta \underbrace{(\lambda v.v((\lambda w.w)(\lambda w.w)))(\lambda z.(uu))}_{outermost-leftmost,\ lambda\ aussen}\to_\beta \underbrace{(\lambda z.(uu))((\lambda w.w)(\lambda w.w))}_{outermost-leftmost}\to_\beta^* uu $\\
+	Problem: $((\lambda w.w)(\lambda w.w))$
+	b) $(\lambda u.u (\lambda y.z))(\lambda x.x((\lambda v.v)(\lambda v.v)))$\\
+	$\to_\beta \underbrace{(\lambda u.u (\lambda y.z))(\lambda x.x((\lambda v.v)(\lambda v.v)))}_{outermost}\to_\beta \underbrace{(\lambda x.x((\lambda v.v)(\lambda v.v)))(\lambda y.z)}_{outermost} \to_\beta (\lambda y.z)((\lambda v.v)(\lambda v.v))\to_\beta z$\\
+	Problem $((\lambda v.v)(\lambda v.v))$\\
+	2.\\
+	$U = (\lambda f.f I (\Omega\Omega))(\lambda xy.xx)$\\
+	applikativ:\\
+	$(\lambda f.f I (\underbrace{\Omega\Omega)}_{innermost}))(\lambda xy.xx)$
+	$\to_a (\lambda f.f I (\underbrace{(\lambda x.xx)\Omega)}_{innermost})(\lambda xy.xx)$\\
+	$\to_a (\lambda f.f I ((\lambda x.xx)(\lambda x.xx)))(\lambda xy.xx)$\\
+	$\to_a (\lambda f.f I ((\lambda x.xx)(\lambda x.xx)))(\lambda xy.xx)$\\
+	unendliche Schleife\\
+	Normale:\\
+	$\to_n\underbrace{(\lambda f.f I (\Omega\Omega))(\lambda xy.xx)}_{outermost}$\\
+	$\to_n\underbrace{\underbrace{(\lambda xy.xx)I}_{leftmost} (\Omega\Omega)}_{outermost}$\\
+	$\to_n\underbrace{(\lambda y.II) (\Omega\Omega)}_{outermost}$\\
+	$\to_n II$\\
+	\section{Übung 4}
+	twice fst (pair (pair true false) true)
+	applikativ:\\
+	$\underbrace{(\lambda fx.f(fx)) fst}_{leftmost-innermost}$ (pair (pair true false) true)\\
+	$\underbrace{(\lambda fx.f(fx)) (\lambda p.p(\lambda xy.x))}_{leftmost-innermost} (pair (pair true false) true)$\\
+	($\lambda x.(\lambda p.p(\lambda xy.x))((\lambda p.p(\lambda xy.x))\ x)$)  $\underbrace{(pair (pair\ true\ false) true)}_{leftmost-innermost}$\\
+	($\lambda x.(\lambda p.p(\lambda xy.x))((\lambda p.p(\lambda xy.x))\ x)$)  ($(\lambda ab\ select.select\ a\ b )$ (pair true false) true)\\
+	($\lambda x.(\lambda p.p(\lambda xy.x))((\lambda p.p(\lambda xy.x))\ x)$)  ($(\lambda ab\ select.select\ a\ b )$ ($(\lambda ab\ select.select\ a\ b )$ true false) true)\\
+	normal:\\
+	$\underbrace{twice fst}_{leftmost-outermost} (pair (pair\ true\ false) true)$\\
+	$\underbrace{(\lambda fx.f(fx)) fst}_{leftmost-outermost}$ (pair (pair true false) true)\\
+	$\underbrace{(\lambda x.fst(fst\ x)) (pair (pair\ true\ false) true)}_{leftmost-outermost}$\\
+	($\underbrace{fst}_{leftmost-outermost}(fst\ (pair (pair\ true\ false) true))$)\\
+	($(\lambda p.(\lambda xy.x))\underbrace{(fst\ (pair (pair\ true\ false) true))}_{leftmost-outermost}$)\\
+	($(\lambda p.(\lambda xy.x))((\lambda p.(\lambda xy.x))\ (pair (pair\ true\ false) true))$)\\
+
+
+	
+
+
+\end{document}
+

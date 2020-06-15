@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{verbatim}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\title{Übung 1}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+
+
+
+\begin{document}
+	\maketitle
+	Leitungsorientiert:\\
+	aufteilen in effektive Übertragunsrate $R_{eff} = \frac{R}{\#channels}$\\
+	Dann schauen wie viele ``schritte'' man für die Daten braucht:\\
+	$t_{transfer} = t_{connect} + \frac{\#data}{R_{eff}}$\\
+	Es ist hierbei egal, ob man Frequenzorientiert (Frequency division multiplex, FDM) oder Zeitoriert (Temporal division multiple, TDM).\\
+	Paketvermittlung: Statistisches multiplexing.\\
+	Jeder bekommt einen verhältnissmäßigen anteil an Datenrate R.\\
+	Bei 16 kanälen, die 15\% der Zeit aktiv sind, gilt:\\
+	Gegeben: $R_{ges}=10Mbit/s$ $R_{user} = 626kbit/s$ $\frac{t_{user}}{t_{ges}}=15\%$\\
+	ges.: $n_{nutzer\ leitungsvermittlung}$, $p_{user}$, $p_k,p_{k>16}$\\
+	$n_{nutzer\ leitungsvermittlung} = \frac{10Mbit/s}{626kbit/s} = 16$.\\
+	$p_{user} = 0.15$\\
+	Wahrscheinlichkeit ist binomialverteilung:\\
+	$p_k=p(X=k)=\binom{50}{k} 0.15^k\cdot (1-0.15)^{50-k} = B(15,0.15,k)$\\
+	$p_{k>16}=p(X>16)= 1-P(X\leq16) = 1-\sum^16_{i=0} p_i = 1-F(50,0.15,16) = 1-0.999339 = 0.000661$\\
+	Routing:\\
+	virtuelle Verbindungen: Jedes Paket erhält eine virtual circuit ID mit Kennzeichnung des nächsten Knotens. Pfad bleibt während der gesamten Sitzung gleich. Die router müssen für jede virtuelle Verbindung Zustandsinfos speichern.\\
+	Datagram-Netzwerke: Zieladresse im Paket bestimmt nächsten Knoten. Die Route kann sich während der Sitzung verändern (dynamische Wegfindung). (e.g. Fahren und immer wieder nach weg fragen)\\
+	4 Paketverzögerunsquellen:\\
+	\textbf{1. Übertragungsverzögerung} $d_{trans}$ L/R bei langsamer verbindung signifikant\\
+	Zeit, um bits auf den Link zu legen L=paketlänge, R=bitrate $\frac{L}{R}$\\
+	\textbf{2. Ausbreitungsverzögerung} $d_{prop}$ wenige micro bis milisekunden\\
+	Zeit zum traversieren des Links l=weglänge, v=geschwindigkeit $\frac{l}{v}$\\
+	1\&2 sind besonders Wichtig.\\
+	Dazu: Autos fahren nach Mautstation 100km zur nächsten.\\
+	Die mautstation hat delay $t_{trans} = 1Min$ und die Autos haben eine geschwindigkeit von $v=1000km/h$\\
+	Frage: kommen die ersten Autos an 2. Mautstation an, bevor die letzten durch die erste station sind.\\
+	Eine Kolonne besteht aus 10 Autos, also $10Autos* 1min = 10min$ bis zum ende.\\
+	$d_{trans}= \frac{100km}{1000km/h} = 0.1h= 6min$ also kommt das erste Auto an, wenn das 6. gerade durch die Mautstation gekommen ist (und das 7. davor steht).\\
+	Oder alternativ $d_{kolonne} = \frac{10A}{10A/min}+\frac{100km}{1000km/h}=16min$\\
+	$d_{Auto} = \frac{1A}{1A/min}+\frac{100km}{1000km/h}=7min$.\\
+	\textbf{3. Verarabeitungsverzone} $d_{proc}$ in ms\\
+	Prüfung auf Bitfehler, Bestimmung ausgehender Links.\\
+	Wenn betrachtet, dann als konstant angesehen.\\
+	\textbf{4. Warteschlangenverzögerung} $d_{queue}$ lastabhängig\\
+	Wartezeit auf den ausgehenden Link. hängt von der Routerbelastung ab.\\
+	abhängig von Verkehrsintensität $\rho = \frac{L\lambda}{R}$, wobei R=bitrate [bps], L = Paketlänge [bit] und $\lambda=$ durchschnittliche Paketankunftsrate[pakete/s] ist. (Also: was reinkommt/was rausgeht)\\
+	Wenn $\rho\approx 0$ verzögerung klein\\
+	$\rho\to 1$ verzögerung wird groß.\\
+	$\rho>1$ Es kommt mehr arbeit an, als rausgeht, durchschnittliche verzögerung geht gegen unendlich.\\
+	$\to$ Paketverlust\\
+	Router hat endliche kapazität.\\
+	Wenn warteschlange voll ist, werden neue Pakete verworfen, die entweder von der Quelle, dem vorherigen Netzwerkknoten, oder gar nicht neuübertragen werden.\\
+	$d_{nodal} = d_{proc}+d_{queue}+d_{trans}+d_{prop}$\\
+	Paketvermittlung:\\
+	Cut-Through-Vermittlung: Knoten wartet nur den Header ab, um weiterleitungsziel herauszufinden. Danach fließend weitergeschickt.\\
+	Store-and-Forward (Speichervermittlung): das ganze Paket wird beim Router gespeichert und dann erst auf den nächsten link weitergeschickt (bessere fehlerüberprüfung, ist der Standard)\\
+	Übertragungsverzögerung: übertragung von $N\cdot L$ bist über 3 Links mit Store-and-Forward\\
+	nach $t=\frac{L}{R}$ ist man beim ersten Router.\\
+	nach $2t$ erstes paket beim zweiten Router, zweites beim ersten.\\
+	3t erstes Paket im Ziel.\\
+	4t zweites im ziel\\
+	\dots\\
+	Hochseeleitung vs Containerschiff voller 2TB festplatten.\\
+	Containerschiff 60km/h 14.000TEU mit je $1TEU =2.5m\times 2.5m\times 6m = 37.5m^3$ \\
+	Hochseeleitung mit l=12315km, $R_{AP}=3.2\frac{TB}{s}$\\
+	Volumen 2TB festplatte = $0.1m\times0.2m\times0.05m = 0.001m^3$
+	ges $R_{Schiff}$:\\
+	$\#festplatten/TEU = \frac{37.5m^3}{0.001m^3}=37500\frac{festplatten}{TEU}\to 525000000festplatten=525mio\ festplatten/schiff\to 1050000000TB/schiff \to 8400000000Tbit/schiff$\\
+	$t_{fahrt} = \frac{12315km}{60km/h} = 205.25h$ also $R_{schiff}=\frac{8400000000Tbit}{205.25h} = \frac{8400000000Tbit}{738900s}= 11368.250101502234\frac{Tbit}{s}>>3.2Tbit/s hochsee$.\\
+	$d_{prop,schiff}=205.3h$ also das als minimale Wartezeit bei schiff.\\
+	$d_{prop} = \frac{12315}{2*10^8m/s} = 62ms$\\
+	Besser zuhause oder in der Uni runterladen?\\
+	fahrtzeit t=20min, downloadgeschwindigkeit $R_{uni}=1Gb/s, R_{forchheim} = 10Mb/s$\\
+	ges.: O ab der es sich lohnt in die Uni zu fahren.\\
+	$t_{uni} = 2*20min +\frac{O}{1GB/s}$\\
+	$t_{Forch} = \frac{O}{10Mbit/s}$\\
+	$t_{uni} = t_{Forch} \implies 40min +\frac{O}{1GB/s}\leq  \frac{O}{10Mbit/s}\implies 2400s \leq  \frac{O}{10Mbit/s}-\frac{O}{1000Mbit/s}\implies 2400s \leq  \frac{100*O}{1000Mbit/s}-\frac{O}{1000Mbit/s}\implies 2400s \leq  \frac{99*O}{1000Mbit/s}\implies \frac{2400s\cdot 1Gbit/s}{99} \leq  O\implies 24.24Gbit \leq O\implies 3 GB \leq  O$ es lohnt sich also ab ungefähr 3GB.\\
+	
+\end{document}

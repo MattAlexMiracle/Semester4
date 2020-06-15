@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand{\nto}{\nrightarrow}
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	1.\\
+	Grammatik:\\
+	Sei $e=c|d$
+	$f(g(c,(\cdot)))$, $g(d,f((\cdot)))$, $g(f((\cdot)),c)$, $h(f((\cdot)),e)$,\\
+	$h(f(e),(\cdot))$, $h(f(d),(\cdot))$, $h(f((\cdot)), d)$, $f(h((\cdot),c))$, $g((\cdot), f(e))$,
+	$g(e, f((\cdot)))$.\\
+	2.\\
+	a)\\
+	$h(f(d),d)\to g(d,f(d))\to h(f(d),d)\to\dots $\\
+	b)\\
+	$g(f(c),c)\to g(c,c)$\\
+	$g(f(c),c)\to f(h(c,c))$\\
+	c)\\
+	Für eine endlosschleife muss eine Kombination aus Regeln wiederholt werden, da es nur endlich viele Regeln gibt.\\
+	Eigenschaft 1:\\
+	Man kann sehen, dass in keiner der Regeln f auf der linken Seite öfter steht, als auf der Rechten. \\
+	Eigenschaft 2:\\
+	Insbesondere Regel (9) ist die einzige Regel, die ein f entfernt.\\
+	Für eine endlosschleife muss also gelten:\\
+	\# f linke Seite $=$ \# f rechte Seite.\\
+	Wenn auf der linken Seite mehr f sind, als auf der Rechten, muss Regel (9) angewandt worden sein. Dies kann aber aufgrund von Eigenschaft 1 nicht Teil einer Schleife sein. Hierbei wird ``Schleife'' als unendlicher zyklus von regelanwendungen gesehen, vor diesem endlichen Zyklus ist es möglich, dass (9) vorkommt.\\
+	Eigenschaft 3:\\
+	Eine Regel in einem Zyklus muss nach 4 schritten wiederholt werden, da es nur 4 verschiedene Regeln in einem Zyklus geben kann (Regel 9 fällt raus, vgl oben)\\
+	(Dies bedeutet nicht, dass der Term auf den die Regel angewandt wird gleich ist)\\
+	Wir betrachten alle Vereinbaren Kombinationen von 2 zyklus-Regeln:\\
+	$(13)\circ (10): f(g(c,y))\to g(d,f(y))$\\
+	$(13)\circ (11): g(d,f(y))\to g(y,f(d))$\\
+	mit Substitution/Kontext erhält man außerdem:\\
+	$(13) \circ (12): g(f(f(x)),c)\to f(g(x,f(c)))$\\
+	$(11)\circ (13): h(f(d),y)\to h(f(y),d)$\\
+	Eine Dreierkette ohne Substitution/Kontext existiert nicht.\\
+	mit Substitution/Kontext gibt es:\\
+	$(13)\circ (11)\circ(13): h(f(d),y)\to g(d,f(y))$\\
+	$(10)\circ (13)\circ(12): g(f(f(c)), c)\to h(f(d),c)$\\
+	$(11)\circ(13)\circ (11): g(d,f(d))\to h(f(d),d)$\\
+	Die viererketten mit Substitution/Kontext:\\
+	$(11)\circ(13)\circ (11)\circ(13): h(f(d),d)\to h(f(d),d)$\\
+	$(13)\circ(11)\circ (13)\circ(11): g(d,f(d))\to g(d,f(d))$\\
+	Die einzigen viererketten sind solche, die eine schleife ohne freie Variable beschreiben.\\
+	Es gibt also keine möglichkeit aus dieser auszubrechen. (wenn z.B. $f(c)$ in einer dieser loops wäre, könnte man ausbrechen)\\
+	Aufgrund von Kontextabgeschlossenheit, gibt es also keine Kette, die (c) erfüllt, selbst wenn man diese formeln in einen größeren Kontext $C(\cdot)$ einsetzt.\\
+	$g(f(g(c,d)),c)\stackrel{10, C=g((\cdot),c),\sigma=[d/y]}{\to} g(h(f(d),d), c) \to\dots\text{wie bei a)}$\\
+	$g(f(g(c,d)),c)\stackrel{12, \sigma=[g(c,d)/x]}{\to} f(h(g(c,d),c))\nrightarrow$
+	\section{Präsenzübung}
+	TES:\\
+	Terme:\\
+	Menge von Funktionssymbolen. $\Sigma$-Signatur\\
+	für jedes Funktionssymbol eine Stetigkeit $ar\Sigma\to \mathbb{N}$ (wir haben $0\in\mathbb{N}$ definiert)\\
+	Notation für $f\in\Sigma$ mit $ar(f)=n: f/n\in\Sigma$\\
+	$t::=x|f(t_1,\dots,t_n), f/n\in\Sigma, x\in V$\\
+	z.B.: $\Sigma = \{\cdot/2,c/0\}$, wäre $c\cdot c$ oder $c\cdot c\cdot c$\\
+	Kontexte:\\
+	$C(\cdot)::= (\cdot)|f(t_1,\dots,(\cdot),t_n)$\\
+	Bsp.: $C(\cdot) = c+(\cdot)$ und wenn $t=c\cdot c$, dann wäre $C(t)=c+t=c+c\cdot c$\\
+	Substitution\\
+	$\sigma:V\to T_{\Sigma}(V)$\\
+	Termersetzungssysteme: $\to_0\subseteq T_\Sigma\times T_\Sigma$\\
+	Einschrittrelation: $\to$ ist der Kontextabgeschlossen und stabile Abschluss von $\to_0$\\
+	stabile $s\to t\implies s\sigma\to t\sigma$, Kontextabgeschlossen $s\to t\implies C(s)\to C(t)$\\
+	$\{(C(s\sigma),C(t\sigma))|s\to t, C=\ Kontext, \sigma\ substitution\}$\\
+	\\
+	$t\in T_\Sigma(V)$ heißt normal, wenn man t nicht mehr reduzieren kann $\nto$
+	s heißt Normalform von t, wenn $t\to^* s$ und $s\nto$\\
+	$t\in T_\Sigma(V)$ schwach normalisierend, wenn es eine NF gibt.\\
+	$t\in T_\Sigma(V)$ stark Normalisierend (SN), wenn jede Ableitung in einer NF endet.\\
+	$\to_0$ heißt (stark/schwach) normalisierend, wenn jeder term t (stark/schwach) normalisierend ist.\\
+	$A\cdot C\stackrel{1)\sigma = [c/x]}{\to} B\cdot(C\cdot C)\stackrel{3)\sigma = [c/x,c/y]}{\to} A\cdot (D \cdot C)\stackrel{1)\sigma = [DC/x]}{\to} B\cdot (C\cdot D\cdot C)\stackrel{3)\sigma = [C/x,DC/y]}{\to} A\cdot (D\cdot C)\to loop $\\
+	alternativ $A\cdot (D\cdot C)\stackrel{1) C(\cdot) = (\cdot),\sigma=[DC/x]}{\to} B\cdot(C\cdot(D\cdot C))\stackrel{2)C(\cdot)=B\cdot (\cdot),\sigma = [C/x]}{\to} B\cdot (B\cdot (C\cdot C))\to  loop$ wie vorher\\
+	oder wenn man regel 4 anwendet $B\cdot (B\cdot (C\cdot C))\stackrel{4) \sigma=[c\cdot C/x]}{\to} D\cdot C\cdot C\nto$\\
+	Übung 2:\\
+	1. man kann nicht alle Terme bilden $((x_1\Delta x_2)\Delta x_3) \Delta x_4$ lässt sich mit nur 3 variablen nicht bilden. Also eingeschränkte Ausdrucksmöglichkeit.\\
+	verhält sich wie begrenzter Speicher.\\
+	2.\\
+	$C(\cdot) = (\cdot)| t\Delta (\cdot)|(\cdot)\Delta t$\\
+	3.\\
+	$t=x_1\Delta (c\Delta x_2)\stackrel{6) \sigma=[c/x_2,x_2/x_3]}{\to} (x_1\Delta c)\Delta x_2\stackrel{5) C(\cdot)=(\cdot)\Delta x_2}{\to}x_1\Delta c\stackrel{5)}{\to} x_1 \nto$\\
+	$t=x_1\Delta (c\Delta x_2)\stackrel{7) C=x_1\Delta (\cdot),\sigma[x_1/x_2]}{\to} x_1\Delta x_2\nto$\\
+	4.\\
+	$C(\cdot)\Delta c$ für beliebigen Kontext.\\
+	(Dann kann man am ende, egal welchen pfad man gelaufen ist die Regel 5/6 anwenden um auf den selben Wert zu kommen)\\
+	5.\\
+	nicht stark normalisierend $(c\Delta c)\Delta c$ und dann 6/8 unendlich oft iterieren.\\
+	Aber: jeder Term mit ``Endlosschleife'' hat  ``am Ende'' ein c, d.h. (5) anwendbar. (5) und (7) machen den Term stets kleiner. Es ist also schwach normalisierend.\\
+	3)\\
+	1. $xRy\land yRx\implies xRx$ das ist aufgrund der irreflexivität verboten, also darf nur einer dieser beiden Terme $xRy$ $yRx$ existieren.\\
+	Beweis:\\
+	Sei R irreflexiv und transitiv, sei $x,y\in X $ und $xRy$:\\
+	zZ $\forall x,y: xRy\implies \lnot yRx$\\
+	Annahme es gilt $yRx$, dann folgt aus transitivität $yRx\land xRy\implies xRx$ was im widerspruch zu irreflexivität von R steht. Somit ($\lnot$ Elim) R ist antisymmetrisch.\\
+	2. Sei R eine transitive und asymmetrische Relation.\\
+	zZ: R ist irreflexiv.\\
+	Annahme: es gilt $xRx$.\\
+	Aus antisymmetrie folgt insbesonder $xRx\implies \lnot xRx$ WIDERSPRUCH zur annahme( oder alternativ: dies kann nur wahr sein, wenn $xRx$ falsch ist.)\\
+\end{document}

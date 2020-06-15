@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{twice} \PYG{n}{f} \PYG{n}{x} \PYG{o+ow}{=} \PYG{n}{f} \PYG{o}{\PYGZdl{}} \PYG{n}{f} \PYG{n}{x}
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Eigentlich ``Schönfinkelisierung\PYGZsq{}\PYGZsq{} nach dem echten Erfinder.}
+	\PYG{n}{map}\PYG{o+ow}{::} \PYG{p}{(}\PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{n}{b}\PYG{p}{)}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{p}{(}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{List} \PYG{n}{b}\PYG{p}{)}
+	\PYG{n}{map} \PYG{n}{f} \PYG{k+kt}{[]} \PYG{o+ow}{=} \PYG{k+kt}{[]}
+	\PYG{n}{map} \PYG{n}{f} \PYG{p}{(}\PYG{n}{x}\PYG{k+kt}{:}\PYG{n}{xs}\PYG{p}{)} \PYG{o+ow}{=}\PYG{p}{(}\PYG{n}{f} \PYG{n}{x}\PYG{p}{)}\PYG{k+kt}{:}\PYG{n}{map}\PYG{p}{(}\PYG{n}{f} \PYG{n}{xs}\PYG{p}{)}
+\end{Verbatim}

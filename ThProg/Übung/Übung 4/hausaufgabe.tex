@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{verbatim}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\newcommand{\smallAscr}{\scriptscriptstyle\mathcal{A}}
+\title{Präsenzübung 2}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\newtheorem{satz}{Satz}
+\newtheorem{korrolar}{Korrolar}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{beweis}{Beweis}[section]
+\newtheorem{beispiel}{Beispiel}[section]
+\newtheorem{definition}{Definition}[section]
+
+\usepackage{ marvosym }
+\begin{document}
+	\maketitle\noindent
+	\section{Übung 3}
+	1. $C(\cdot )=(\cdot)$\\
+	7) $\infty \oslash (x\oslash\infty)\to_0 x\oslash x$\\
+	9) $x \oslash (y\oslash z)\to_0 (x \oslash y)\oslash z$\\
+	Term: $\infty \oslash (x\oslash\infty)\nto$\\
+	Erste ableitung $\infty \oslash (x\oslash\infty)\stackrel{7)\sigma=[]}{\to_0} x\oslash x$\\
+	Zweite (mit leerem kontext) $\infty \oslash (x\oslash\infty)\stackrel{9) \sigma=[\infty/x,y/x,\infty/z]}{\to_0} (\infty \oslash x)\oslash\infty\stackrel{8) \sigma=[\infty/y]}{\to_0} (x\oslash y)\oslash \heartsuit\nto$\\
+	2. 7) und 8)\\
+	$C(\cdot) = (\infty\oslash x)\oslash (\cdot)$\\
+	$t=\infty\oslash (x\oslash \infty)$\\
+	$t= \infty\oslash (x\oslash \infty) \stackrel{7) \sigma=[]}{\to_0} x\oslash x\implies C(x\oslash x)= (\infty\oslash x)\oslash (x\oslash x)\stackrel{8) \sigma=[(x\oslash x)/y]}{\to_0} (x\oslash (x\oslash x))\oslash \heartsuit\stackrel{9) \sigma=[x/y,x/z] C(\cdot) = x\oslash\heartsuit}{\to_0} ((x\oslash x)\oslash x)\oslash \heartsuit\nto$\\
+	also $C(t)= (\infty\oslash x)\oslash (((x\oslash x)\oslash x)\oslash \heartsuit)$ (Umklammern hier nach regeln noch möglich, aber nicht notwendig, vgl unten)\\
+	$C(t) =(\infty\oslash x)\oslash (\infty\oslash (x\oslash \infty)) \stackrel{9) \sigma = [(\infty\oslash x)/x,\infty/y,(x\oslash \infty)/z]}{\to_0} ((\infty\oslash x)\oslash \infty)\oslash (x\oslash \infty)\stackrel{9) \sigma = [((\infty\oslash x)\oslash \infty)/x,x/y,\infty/z]}{\to_0}(((\infty\oslash x)\oslash \infty)\oslash x)\oslash \infty\stackrel{8) \sigma=[\infty/y], C(\cdot)=((\cdot)\oslash x)\oslash \infty}{\to_0} (((x\oslash\infty)\oslash\heartsuit)\oslash x)\oslash \infty\nto$\\
+	Sind nicht zf, da die Reihenfolge von symbolen nie getauscht wird und das herz nie entfernt wird.\\
+	Da das Herz beim ersten ganz am ende des Terms, bei anderen direkt am anfang steht, sind sie nicht zf.\\
+	\section{Übung 4}
+	Zuerst kritische Paare:\\
+	Regel 10:\\
+	\begin{tabular}{cccc}
+	$l_1=$  & $\lnot$&$\lnot$ &x\\
+	  &$l_2=$&$\lnot$ &$\lnot x'$\\
+	  &$l_2=$&$\lnot$&$(\lnot x'\lor \lnot y)$\\
+	\end{tabular}\\
+	Regel 11 hat keine.\\
+	Regel 12:\\
+	\begin{tabular}{ccccc}
+	$l_1=$ &$\lnot$ & ($x$&$\land$ &y)\\
+		    &$l_2=$&($x'$ & $\land$ & $y'$)\\
+	\end{tabular}\\
+	Regel 13 hat keine.\\
+	Regel 14 hat nur eine (sonst hat man trivialen Kontext bei selbstanwendung):\\
+	\begin{tabular}{cccccc}
+	$l_1=$ &$x$& $\lor$& ($x$&$\lor$ &y)\\
+	 &$l_2=$& &$x'$& $\lor$&(y'$\lor$ z')\\
+	\end{tabular}\\
+	Regel 15 hat keine.\\
+	Beweis für Regel 10.1:\\
+	$\sigma = [\lnot x'/x]$ liefert $r_1\sigma = \lnot x'$ und $C(r_2)\sigma = \lnot x'$ ist also z.f.\\
+	Beweis Regel 10.2\\
+	$\sigma = [(\lnot x'\lor \lnot y)/x]$ liefert $r_1\sigma = \lnot (\lnot x'\lor \lnot y)$ un $C(r_2)\sigma = \lnot (\lnot x\lor\lnot y)$ ist also auch sofort wahr.\\
+	Beweis Regel 12.1:\\
+	$\sigma = [x'/x, y'/y]$ liefert $r_1\sigma = (\lnot x'\lor \lnot y')$ und $C(r_2)\sigma = \lnot(\lnot(\lnot x'\lor \lnot y'))\stackrel{10)}{\to_0} (\lnot x'\lor \lnot y')$ ist also z.f.\\
+	Beweis Regel 14.1:\\
+	$\sigma = [x'/x, (y'\lor z')/y]$ liefert $r_1\sigma = (x\lor x')\lor(y'\lor z')\stackrel{14)}{\to_0} ((x\lor x')\lor y')\lor z'$ und $C(r_2)\sigma = x\lor ((x'\lor y')\lor z')\stackrel{14)}{\to_0} (x\lor (x'\lor y'))\lor z'$ ist gleich, also z.f.\\
+	Es gibt keine weiteren kritischen Paare, da alle weiteren trivial sind $l_2$ liegt vollkommen unterhalb von $l_1$, z.B.: bei $l_2=\lnot \lnot x$ und $l_1=\lnot \lnot x$ liefert $\lnot \lnot \lnot \lnot x$ also regel 10 2 mal anwendenden und z.B. Regel 15 kann sich mit gar nichts beissen, da $\forall$ in keiner anderen Regel vorkommt. Es folgt, dass logischerweise auch nichts ``kaputtreduziert'' werden kann.\\
+	Alle kritischen paare sind z.f. ($\implies$ WCR) und das TES ist SN (letzte Hausaufgabe), es folgt also CR über Newmann's Lemma.\\
+
+\end{document}
+
+
+
+
+

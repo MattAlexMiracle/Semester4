@@ -1,0 +1,37 @@
+\documentclass[10pt]{article}
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\pagestyle{empty}
+\begin{document}
+\definecolor{ffqqqq}{rgb}{1,0,0}
+\definecolor{ffvvqq}{rgb}{1,0.3333333333333333,0}
+\definecolor{zzttqq}{rgb}{0.6,0.2,0}
+\definecolor{wwwwww}{rgb}{0.4,0.4,0.4}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\begin{axis}[
+x=1cm,y=1cm,
+axis lines=middle,
+ymajorgrids=true,
+xmajorgrids=true,
+xmin=-2.106367306085155,
+xmax=3.2426493970872814,
+ymin=-0.9216197139923107,
+ymax=2.5664140239119053,
+xtick={-2,-1.8,...,3.2},
+ytick={-0.8,-0.6000000000000001,...,2.4},]
+\clip(-2.106367306085155,-0.9216197139923107) rectangle (3.2426493970872814,2.5664140239119053);
+\draw[line width=0.8pt,color=zzttqq,fill=zzttqq,fill opacity=0.10000000149011612, smooth,samples=50,domain=0:1] plot(\x,{\x^(2)*1.5}) -- (1,0) -- (0,0) -- cycle;
+\draw[line width=0.8pt,color=ffqqqq,fill=ffqqqq,fill opacity=0.1] {[smooth,samples=50,domain=0.4472135954999579:1] plot(\x,{\x^(2)*1.5})} -- (1,0.3) {[smooth,samples=50,domain=1:0.4472135954999579] -- plot(\x,{0*\x+0.3})} -- (0.4472135954999579,0.3) -- cycle;
+\draw[line width=2pt,color=wwwwww,smooth,samples=100,domain=-2.106367306085155:3.2426493970872814] plot(\x,{(\x)^(2)*1.5});
+\draw [line width=0.8pt,color=ffvvqq,domain=-2.106367306085155:3.2426493970872814] plot(\x,{(--0.3-0*\x)/1});
+\draw[line width=2pt,color=zzttqq,smooth,samples=100,domain=-2.106367306085155:3.2426493970872814] plot(\x,{0*(\x)+0.3});
+\begin{scriptsize}
+\draw[color=zzttqq] (0.5751240960273979,0.09615990022098157) node {$b = 0.5$};
+\draw[color=ffvvqq] (-1.9492486692426227,0.3684988707480375) node {$g: y = 0.3$};
+\draw[color=ffqqqq] (0.8369884907649519,0.5849734370644153) node {$c = 0.29$};
+\end{scriptsize}
+\end{axis}
+\end{tikzpicture}
+\end{document}

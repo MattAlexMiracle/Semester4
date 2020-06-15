@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	\section{Präsenzaufgabe 9}
+	drei unterscheidbare würfel $\Omega$ in geeigneter weise angeben:\\
+	$\Omega = \{1,2,3,4,5,6\}^3 = \{(x,y,z)|1\leq x,y,z\leq 6 \land x,y,z\in\mathbb{N}\}$\\
+	$A = \{(x,y,z)\in\Omega|x=y=z\}=\{(1,1,1),(2,2,2),(3,3,3),(4,4,4),(5,5,5),(6,6,6)\} \implies |A| = 6$\\
+	$B = \{(x,y,z)\in\Omega|x+y+z\leq 3 = \{(1,1,1)\} \implies |B|=1$
+	$C =\{(x,y,z)\in\Omega|(x<6\land y<6)\land (z< 6\land x<6)\land(y<6\land z<6)\}$\\
+	\section{Präsenzaufgabe 10}
+	a) Der k-te würfel ergibt 3 $A_k = \{(x_1,x_2,3,\dots,x_n)|\forall n(x_n\in\Omega)\}$\\
+	$A_k = \{1,\dots,6\}^{k-1}\times \{3\}\times\{1,2,\dots, 6\}^{n-k} =\{\omega =(\omega_1,\omega_2,\dots,\omega_n|w_k = 3, w_i \in(1,\dots,6), i\neq k\}$\\
+	b) Der k-te würfel ist die erste 3:\\
+	$B_k =\{1,2,4,5,6\}^{k-1}\times \{3\}\times \{1,\dots,6\}^{n-k} \{\omega=(\omega_1,\omega_2,\dots,\omega_n)|\omega_1,\omega_2\in[1,2,4,5,6],\omega_3=3,\omega_i\in\Omega,i>3\}$\\
+	c) der k-te und k+1-te würfel sind die ersten beiden dreien.\\
+	$C_k = \{\omega=(\omega_1,\dots,\omega_n)|\omega_i\in\{1,2,4,5,6\}\forall i\in\{1,2,\dots,k-1\},\omega_k =\omega_{k+1}=3, \omega_j\in\Omega,\forall j>k+1 \}$\\
+	d) genau eine drei $D = \{\omega = (\omega_1,\dots,\omega_n)|\exists! i\in\{1,\dots,n\}: \omega_i=3\}$\\
+	e) mindestens eine drei $E=\{\omega=(\omega_1,\dots,\omega_n)|\exists i\in\{1,\dots,n\}:\omega_i=3\}$\\
+	f) Es wird keine drei geworfen:\\
+	$F = \{\omega=(\omega_1,\dots,\omega_n)|\forall i\in\{1,\dots,n\}:\omega_i\neq 3\}=CE = \{1,2,4,5,6\}^n$\\
+	Man kann $B_k=A_k\cap (\bigcap\limits^{k-1}_{i=1}CA)$ der große schnitt elimiert alle 3-en an stellen die nicht gleich k sind (maskiert diese aus)\\
+	$C_k = (A_k\cap A_{k+1})\cap(\bigcap\limits^{k-1}_{i=1}CA)$\\
+	$D_k = \bigcup\limits^{n}_{k=1}(A_k\cap (\bigcap\limits_{i=1,i\neq k}CA_i))$
+	$E = \bigcup\limits^{n}_{i=1}A_i$\\
+	$F= C\bigcup\limits^{n}_{i=1}A_i = \bigcap\limits^{n}_{i=1} CA_i$\\
+	\section{Präsenzaufgabe 11}
+	WICHTIG\\
+	Beispiel\\
+	$X=\{A,B\},X\subseteq X,\{A\}\subset X, \mathcal{P}(x)=\{\emptyset,\{A\},\{B\},X\}$\\
+	3 Vorraussetzungen für $\sigma$ Algebra:\\
+	Jede algebra muss $\mathcal{A}\subset \mathcal{P}(X)$ sein\\
+	\begin{itemize}
+		\item $\emptyset,X\in\mathcal{A}$
+		\item $A\in \mathcal{A}\implies A^C\in\mathcal{A}$
+		\item $\sigma$-additivität: $A_i\in\mathcal{A},i\in\mathbb{N} \implies \bigcup\limits^\infty_{i=1} A_i \in\mathcal{A}$
+		\item ($A_i\in\mathcal{A}, i\in\mathbb{N}\implies \bigcup\limits^\infty_{i=1}A_i\in\mathcal{A}$, folgt aus 2 und 3)
+	\end{itemize}
+	a) $\Omega$ beliebig $\mathcal{A}=\{\emptyset,\Omega\}$ ist eine $\sigma$-Algebra, da das komplement $\emptyset^C=\Omega$, die ganze und die nullmenge existieren. (die union trivialerweise auch).\\
+	b)\\
+	$\mathcal{A} = \{\{\omega\}:\omega\in\Omega\}\cup\{\emptyset,\Omega\}$\\
+	Für $|\Omega| = 2$ gilt $\mathcal{A}=\{\emptyset,\{\omega_1\},\{\omega_2\},\{\omega_1,\omega_2\}\}$ ist $\sigma$-Algebra.\\
+	Für $|\Omega| \geq 3$ gilt $\mathcal{A}=\{\emptyset,\{\omega_1\},\{\omega_2\},\{\omega_3\},\dots,\{\omega_1,\omega_2,\omega_3,\dots\}\}$  aber es fehlt $\omega_2\cup\omega_3,\omega_2\cup \omega_1,\dots$ also im allgemeinen keine $\sigma$-Algebra\\
+	c)\\
+	$\mathcal{P}(\Omega)$\\
+	Ist eine $\sigma$-Algebra, da $\emptyset$ und $\Omega$ und alle verbindungen darin sind.\\
+	Dies ist die größte $\sigma$-Algebra (die kleinstmögliche ist die a) )\\
+	d)\\
+	ist keine $\sigma$-Algebra.\\
+	Da $a,b\in\mathbb{R}$ und somit $\mathbb{R}\notin\mathcal{A}$.\\
+	Abgeschlossene Räume machen in der Mathemtik gerne Probleme (in z.B. Topologischen/Metrischen Räume). Deshalb wählen wir bei $\sigma$-Borel-Algebras die offenen Mengen.\\
+	e)\\
+	$\Omega$ beliebig $A\subset \Omega$, $\mathcal{A} = \{\emptyset,\Omega,A,A^C\}$ ist eine $\sigma$-Algebra ($A\cap A^C=\emptyset$, $A^C\cup A= \Omega$)\\
+	f)\\
+	$\Omega=\{1,2,3\}$, $\mathcal{A}=\{\emptyset,\{1,2\},\{1,3\},\{3\},\{2\},\{1,2,3\}\}$ ist keine $\sigma$-Algebra: $\{3\}\cup\{2\}=\{3,2\}\notin \mathcal{A}$
+\end{document}

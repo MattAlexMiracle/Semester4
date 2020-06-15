@@ -1,0 +1,20 @@
+\babel@toc {german}{}
+\babel@toc {german}{}
+\contentsline {section}{\numberline {1}Terme}{2}% 
+\contentsline {subsection}{\numberline {1.1}substitution}{2}% 
+\contentsline {subsection}{\numberline {1.2}Kontext}{2}% 
+\contentsline {section}{\numberline {2}Operationelle Semantik von TES}{2}% 
+\contentsline {section}{\numberline {3}Terminierung}{3}% 
+\contentsline {section}{\numberline {4}Reduktionsordnungen}{4}% 
+\contentsline {subsection}{\numberline {4.1}Polynomordnungen}{5}% 
+\contentsline {section}{\numberline {5}Konfluenz}{7}% 
+\contentsline {section}{\numberline {6}Der $\lambda $-Kalkül}{15}% 
+\contentsline {section}{\numberline {7}Der ungetypte $\lambda $-Kalkül}{15}% 
+\contentsline {subsection}{\numberline {7.1}Rekursion}{18}% 
+\contentsline {subsection}{\numberline {7.2}Auswertungsstrategie}{18}% 
+\contentsline {section}{\numberline {8}Der einfach getypte $\lambda $-Kalkül}{19}% 
+\contentsline {subsection}{\numberline {8.1}Typinferenz}{22}% 
+\contentsline {subsection}{\numberline {8.2}Subjektreduktion}{24}% 
+\contentsline {section}{\numberline {9}Church Rosser des $\lambda $-Kalkül}{25}% 
+\contentsline {section}{\numberline {10}Curry-Howard Isomorphismus}{28}% 
+\contentsline {section}{\numberline {11}Induktive Datentypen}{30}% 

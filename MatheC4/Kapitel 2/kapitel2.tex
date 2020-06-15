@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 2
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{minted}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+
+
+
+\begin{document}
+	\maketitle
+	Fragen:\\
+	\section{Streuung $\frac{1}{n}$ vs empirische Streuung $\frac{1}{n-1}$}
+	$\frac{1}{n}\sum\limits^n_{i=1}(x_i-\overline{x_i})^2$ vs $\frac{1}{n-1}\sum\limits^n_{i=1}(x_i-\overline{x_i})^2$\\
+	Wahrscheinlichkeitsverteilungen\\
+	$\to$ Erwartungswert\\
+	$\to$ Varianz\\
+	Zum ermitteln dieser muss i.a. Stichproben aus der Echten Verteilung gezogen werden.\\
+	Für mehr Stichproben n konvergiert die empirische Varianz besser gegen die echte Varianz!\\
+	Die $\frac{1}{n-1}$ ist immer größer als $\frac{1}{n}$!\\
+	Das ist eine \textbf{pessimistischere Schätzung der Varianz}, woraus die ungewissenheit besser gehandeled werden kann.\\
+	Stichprobe $\to$ Bild von der Grundverteilung!\\
+	$\to$ Wie gut ist das Bild das wir gesammelt haben?
+	\section{Rangwert vs. Ordnungsstatistik.}
+	Rangliste schmeist alle doppelten Werte raus, Ordnungsstatistik behält diese.\\
+	Ordnungsstatistik: $\{1,2,2,2,3,4\}$ Rangwert $\{1,2,3,4\}$\\
+	Der Rangwert kommt aus der Ordnungsstatistik mit $r+\frac{s-1}{2}$, wobei s=Anzahl der Werte
+	\section{Mittelwerte}
+	Arithmetisches mittel oder Durchschnitt $\overline{x}=\frac{1}{n}\sum x_i$\\
+	Harmonisches mittel $\frac{1}{n}(\sum \frac{1}{x_i})^{-1}$ für z.B. geschwindigkeiten und verhältnisse dieser. Wenn man durchschnittliche Raten haben. Es betrachtet die geschwindigkeit der Veränderung.\\
+	geometrisches Mittel $\sqrt[n]{\prod\limits^n_{i=1} x_i}$ Für exponentielle zunahmen von z.B. Kontostand und prozentuale Zunahme. Verhältnisse beleiben vorhanden.
+	\section{kovarianz}
+	Wenn die Kovarianz null ist, dann sind die Werte vollkommen unabhängig.\\
+	Die umkehrung gilt nicht, außer bei multinormalen Verteilungen
+	\section{Wie sollte man Klassen aufteilen?}
+	Gibt kein allheilmittel (mein Vorschlag: aufteilen, dass die Varianz innerhalb jeder Klasse grad kleiner ist, als die der Gesamtvarianz)
+	\section{Korrelation}
+	Wenn der korrelationskoeff $r_{xy} = \frac{s_{xy}}{s_xs_y}$ nahe an 1 ist, dann ist die korrelation optimal, bei -1 ist sie invers-optimal.\\
+	Bestimmtheitsgrad ist das Verhältniss des zweiten moments normalisiert um den mittelwert der Echten Daten:\\
+	\[B = \frac{\sum(\hat{y}-\overline{y})}{\sum(y-\overline{y})}\]
+	\section{Lineares Ausgleichsproblem}
+	Anpassen einer minimalen funktion (z.b. polynom von grad-m $m<<n$)\\
+	$\min\sum\limits^n_{j=1} (y_j-(p_mx_j^m+\dots +p_0))$\\
+	Dies liefert eine\\
+	$\begin{pmatrix}
+	x_1&x_1^2&\dots&x_1^m\\
+	\dots&\dots&\dots&\dots\\
+	x_n&x_n^2&\dots&x_n^m
+	\end{pmatrix}$\\
+	Also eine $N\times M$ matrix.\\
+	Dies liefert $\nabla_p z(p)=A^TAp-A^T_y\stackon{!}{=}$
+	Für optimalität zweiter Ordnung: $Hf(x)$ muss positiv definit sein, für ein absolutes min!\\
+	Das $H_z(p)=A^TA$\\
+	$A^TA$ ist immer symmetrisch! Also auch postiv (semi)-definit!\\
+	\\
+	\\
+	\textbf{Für den einfachen Fall von 1d-(x,y):\\}
+	$\min \frac{1}{2}\sum\limits^n_{k-1}(ax_i+n-y_i)^2$
+	minimiert $a=\frac{s_{xy}}{(s_x)^2}$ und $b=\overline{y}-a\overline{x}$\\
+	Diese Funktion.\\
+\end{document}

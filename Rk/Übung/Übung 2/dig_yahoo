@@ -1,0 +1,34 @@
+; <<>> DiG 9.11.5-P4-5.1-Debian <<>> www.yahoo.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 3748
+;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 4, ADDITIONAL: 5
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 0801399a82303bfa56eeb12f5ebc484f19e422d3fbd6ce8a (good)
+;; QUESTION SECTION:
+;www.yahoo.com.			IN	A
+
+;; ANSWER SECTION:
+www.yahoo.com.		35	IN	CNAME	new-fp-shed.wg1.b.yahoo.com.
+new-fp-shed.wg1.b.yahoo.com. 35	IN	A	87.248.98.8
+new-fp-shed.wg1.b.yahoo.com. 35	IN	A	87.248.98.7
+
+;; AUTHORITY SECTION:
+wg1.b.yahoo.com.	75510	IN	NS	yf4.a1.b.yahoo.net.
+wg1.b.yahoo.com.	75510	IN	NS	yf1.yahoo.com.
+wg1.b.yahoo.com.	75510	IN	NS	yf2.yahoo.com.
+wg1.b.yahoo.com.	75510	IN	NS	yf3.a1.b.yahoo.net.
+
+;; ADDITIONAL SECTION:
+yf1.yahoo.com.		53152	IN	A	68.142.254.15
+yf2.yahoo.com.		52102	IN	A	68.180.130.15
+yf3.a1.b.yahoo.net.	53180	IN	A	68.142.254.15
+yf4.a1.b.yahoo.net.	52065	IN	A	68.142.254.15
+
+;; Query time: 0 msec
+;; SERVER: 2001:638:a000:1053:53::1#53(2001:638:a000:1053:53::1)
+;; WHEN: Wed May 13 21:19:43 CEST 2020
+;; MSG SIZE  rcvd: 284
+

@@ -1,0 +1,37 @@
+; <<>> DiG 9.11.5-P4-5.1-Debian <<>> i7.informatik.uni-erlangen.de mx
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 15088
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 2, AUTHORITY: 4, ADDITIONAL: 9
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 5142c573a53a6fdb720cdb565ebc492d7466cbb5f3b3c7f9 (good)
+;; QUESTION SECTION:
+;i7.informatik.uni-erlangen.de.	IN	MX
+
+;; ANSWER SECTION:
+i7.informatik.uni-erlangen.de. 3600 IN	MX	20 faui45.informatik.uni-erlangen.de.
+i7.informatik.uni-erlangen.de. 3600 IN	MX	10 faui7s0.informatik.uni-erlangen.de.
+
+;; AUTHORITY SECTION:
+uni-erlangen.de.	72569	IN	NS	tuminfo1.informatik.tu-muenchen.de.
+uni-erlangen.de.	72569	IN	NS	ns2.rrze.uni-erlangen.de.
+uni-erlangen.de.	72569	IN	NS	ns1.rrze.uni-erlangen.de.
+uni-erlangen.de.	72569	IN	NS	dns-3.dfn.de.
+
+;; ADDITIONAL SECTION:
+faui45.informatik.uni-erlangen.de. 76784 IN AAAA 2001:638:a000:4134::ffff:45
+ns1.rrze.uni-erlangen.de. 72570	IN	AAAA	2001:638:a000:1001:53::1
+ns2.rrze.uni-erlangen.de. 72569	IN	AAAA	2001:638:a000:1054:53::2
+faui7s0.informatik.uni-erlangen.de. 72638 IN A	131.188.37.210
+faui45.informatik.uni-erlangen.de. 75645 IN A	131.188.34.45
+ns1.rrze.uni-erlangen.de. 72570	IN	A	131.188.3.2
+ns2.rrze.uni-erlangen.de. 72569	IN	A	131.188.12.100
+dns-3.dfn.de.		73195	IN	A	193.174.75.58
+
+;; Query time: 2 msec
+;; SERVER: 2001:638:a000:1053:53::1#53(2001:638:a000:1053:53::1)
+;; WHEN: Wed May 13 21:23:25 CEST 2020
+;; MSG SIZE  rcvd: 408
+

@@ -1,0 +1,121 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{verbatim}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\newcommand{\smallAscr}{\scriptscriptstyle\mathcal{A}}
+\title{Präsenzübung 2}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\newtheorem{satz}{Satz}
+\newtheorem{korrolar}{Korrolar}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{beweis}{Beweis}[section]
+\newtheorem{beispiel}{Beispiel}[section]
+\newtheorem{definition}{Definition}[section]
+
+\usepackage{ marvosym }
+\begin{document}
+	\maketitle\noindent
+	\underline{Reduktionsordnung:}\\
+	Ordnungsrelation $R\subseteq T_\Sigma(V)\times T_\Sigma(U)$ die wohlfundiert, stabil und kontextabgeschlossen ist.\\
+	\underline{Stark normalisierend}:\\
+	Wenn $\succ$ eine Reduktionsordnung ist und es gilt $\forall s,t(s\to_0 t\implies s\succ t)$, dann ist $\to_0$ SN.\\
+	(montone) polynomielle interpretation $\mathscr{A}$ für $\Sigma$:\\
+	- für jedes Funktionssymbol $f/n \in\Sigma$ ein $p_f\in\mathbb{N}[x_1,\dots,x_n]$\\
+	- $A\subseteq \mathbb{N}$ die unter $p_f$ abgeschlossen ist.\\
+	induzierte polynomordnung.\\
+	$p_x = x$\\
+	$p_{f(t_1,\dots,t_n)} p_f(p(t_1),\dots, p(t_n))$\\
+	$s\succ_{\mathscr{A}} t \iff p_s >_{\mathscr{A}} p_t\iff p_f $\\
+	\section{Übung 1}
+	1. $<\mathbb{N}, p_\odot, p_\oplus>$ gilt nicht.\\
+	$p((x\oplus y)\oplus z) = 2(2X+Y+1)+Z+1\to_0 2x+(2y+z+1)+1$\\
+	Falsch für $x=y=z=0$\\
+	$p_{(x\oplus y)\odot z} = p_{(x\odot y)\oplus z}= p_\odot(p_\plus(x,y), z) = (2x+y+1)Z$
+	$p_{(x\odot y)\oplus (x\odot z)} = 2XY+XZ+1$ Falsch für $x\leq 1$\\
+	2.\\
+	Deshalb $\mathbb{N}_{\geq 2}$ als gültige Menge\\
+	3. Für umgedrehte regel, auch umgedrehte Norm.\\
+	$p_\oplus (X,Y) = X+2Y+1$\\
+	$xy+2xz+X> xy+2xz+1$\\
+	\section{Übung 2}
+	HASKELL: als TES\\
+	$\Sigma=\{0/0,s/1,+/2,d/1,q/1\}$\\
+	$x+0\to_0 0$\\
+	$x+s(y)\to_0 s(x+y)$\\
+	verdopplung\\
+	$d(0)\to_0 0$\\
+	$d(s(x))\to_0 s(s(d(x)))$\\
+	quadrierung\\
+	$q(0)\to_0 0$\\
+	$q(s(x))\to_0 q(x)+S(d x)$\\
+	(also $(n+1)^2 = n^2+2n+1$)\\
+	2.\\
+	$p_s (x)=x+1$\\
+	$p_0 =c_0>0$\\
+	$p_+ = x+2y$\\
+	$p_d(c_0) = c_1*c_0, c_1>2$\\
+	$p_q(c_0) = c_1*c_0^2>c_0$\\
+	$p_1(x+1)= c_2(x+1)^2 = c_2x^2+2c_2+c_2>p_q(x)+2(c_1*c_0+1)=p_q(x)+2c_1x+2 = c_2x^2+2c_1x+2$\\
+	$c_2>c_1$ und $c_2>2$\\
+	wähle also $c_2=4, c_1=3$
+	für die polynomielle interpretation $<\mathbb{N}, p_+, p_d, p_q,p_0,p_s>$
+
+\end{document}
+
+
+
+
+

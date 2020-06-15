@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	\section{Hausaufgabe 12}
+	a) $\Omega = \{(x,y)|x,y\in \mathbb{R},\sqrt{ x^2+y^2}\leq r\}$\\
+	b) \\
+	$A=\{\omega=(x,y)|\sqrt{x^2+y^2}<1\}$\\
+	$B=\{\omega=(x,y)|x\geq 0, y\geq 0\}$\\
+	$C=\{\omega=(x,y)|\sqrt{x^2+y^2}>0.5\}$
+	\section{Hausaufgabe 13}
+	$A\cap B= \{(0,1),(1,0),(1,1)\}\cap \{(0,0),(0,1)\}=\{(0,1)\}\notin \mathcal{E}$\\
+	Also ist $\mathcal{E}$ keine $\sigma$-Algebra.\\
+	Eine option wäre natürlich $\mathcal{A} = \mathcal{P}(\Omega)$ (dies ist trivialerweise immer eine $\sigma$-Algebra).\\
+	Es geht allerdings auch kleiner:\\
+	Wir fügen successive fehlende Elemente hinzu: zuerst also $\{(0,1)\}$\\
+	$\mathcal{E}' = \{\emptyset, \Omega, A,B,\{(0,1)\}\}$\\
+	Jetzt benötigen wir noch die Negation von $C_\Omega \{(0,1)\} = \{(0,0),(1,0),(1,1)\}$:\\
+	$\mathcal{E}'' = \{\emptyset, \Omega, A,B,\{(0,1)\}, \{(0,0),(1,0),(1,1)\}\}$\\
+	Die Vereinigung von $B\cup\{0,1\}=B, B\cup\{(0,0),(1,0),(1,1)\}=\Omega$.\\
+	Die Vereinigung von $A\cup\{0,1\}=\Omega$, $A\cup\{(0,0),(1,0),(1,1)\}=\Omega$.\\
+	Die Vereinigungen mit $\emptyset$ und $\Omega$ sind trivialerweise die Menge selbst, bzw $\Omega$.\\
+	Die Schnitte sind $A\cap\{0,1\}=\{(0,1)\}\in\mathcal{E}'$, $A\cap\{(0,0),(1,0),(1,1)\}=\{(1,0),(1,1)\}$.\\
+	und von $B\cap\{0,1\}=\{0,1\}\in\mathcal{E}'$ $B\cap\{(0,0),(1,0),(1,1)\}=\{0,0\}$\\
+	Aufnahme von $\{(1,0),(1,1)\}$ und $\{(0,0)\}$:\\
+	\[\mathcal{E}''' = \{\emptyset, \Omega, A,B,\{(0,1)\}, \{(0,0),(1,0),(1,1)\},\{(1,0),(1,1)\},\{(0,0)\}\}\]\\
+	$A\cap \{(1,0),(1,1)\} = \{(1,0),(1,1)\}$ $B\cap \{(1,0),(1,1)\} = \emptyset$\\
+	$A\cap \{(0,0)\} = \emptyset$ $B\cap \{(0,0)\} = \{(0,0)\}\in\mathcal{E}'''$\\
+	Vereinigungen $A\cup\{(1,0),(1,1)\}=A$ und $B\cup\{(1,0),(1,1)\}=\emptyset$\\
+	Vereinigungen $A\cup\{(0,0)\}=\Omega$ und $B\cup\{(0,0)\}=B$\\
+	Komplemente $\overline{\{(0,0)\}} = A\in\mathcal{E}$ und $\overline{\{(1,0),(1,1)\}}=B$\\
+	Also ist $\mathcal{E}'''$ eine (minimale) abgeschlossene $\sigma$-Mengenalgebra. (im vergleich zu $\mathcal{P}(\Omega)$ fehlt z.B. $\{(1,1)\}$)
+
+\end{document}

@@ -1,0 +1,137 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	\section{$\alpha$-Äquivalenz und $\beta$-Reduktion}
+	\subsubsection{}
+	a) Wahr, umbenennungen dürfen keine neuen Variablen einfangen und zwei variablen dürfen nicht überlappen.\\
+	$\sigma = [y/f, f/x, z/y,x/z]$ alle substitutionen passieren zur gleichen Zeit.\\
+	b) bei gefangenen Variablen, darf der Name bei einsetzen nicht zu Einfang weiterer Variablen führen:\\
+	$\sigma = [x/x,y/y]$\\
+	$(\lambda xy(\lambda x.xx)yx ) = (\lambda xy((\lambda x.xx)yx\sigma') )$ wobei $\sigma'=\sigma$ ist.\\
+	$=(\lambda xy(((\lambda x.xx)\sigma')(y\sigma')(x\sigma'))) = (\lambda xy(((\lambda x.xx)\sigma')(y)(x))) = \lambda xy((\lambda y.(xx\sigma''))(y)(x)) = \lambda xy((\lambda y.((x\sigma'')(x\sigma''))(y)(x)) = \lambda xy((\lambda y.yy)(y)(x))$ wobei $\sigma'' = [x\mapsto y]$\\
+	c) geht nicht, das x im zweiten lambda Term wird vom y eingefangen.\\
+	\subsubsection{}
+	a) nein, anwendung von außen nach innen:\\
+	$(\lambda fgh.fhg)(vv)\to_\beta \lambda gh.(vv)hg$\\
+	b) ist richtig. Es ist zu beachten, dass man hier das vom $\lambda$ gebundene äußere x umbennenen muss, da dieses sonst in den inneren Termen gefangen wird.\\
+	c) ist richtig, da das y zu u umbennant wurde. Es ist außerdem zu beachten, dass das $(\lambda u.\dots)uv$ geklammert ist, und somit das äußere u nicht einfängt.\\
+	\subsubsection{}
+	a) $(\lambda fxy.f(fy)(xx))(\lambda uv.u)\stackrel{\text{umbennenung von} \lambda x.\dots}{\to_\beta} (\lambda zy.(xx)((xx)y))(\lambda uv.u)\to_\beta \lambda y.(xx)((xx)y)$.\\
+	$\beta-$Reduktion ersetzt nur gebundene Variablen, also ist hier ende.\\
+	b)$$(\lambda fxg.g((\lambda y.fyx)(gx))) (\lambda xz.gx)(gz)(\lambda x.x)\to_\beta $$
+	$$\lambda xg_0.g_0(\lambda y.\lambda x_0z.gx_0yx(g_0x)) (gz)(\lambda x.x)\to_\beta $$
+	$$\lambda g_0.g_0(\lambda y.\lambda x_0z.gx_0y(gz)(g_0(gz))) (\lambda x.x)\to_\beta $$
+	$$(\lambda x.x)(\lambda y.\lambda x_0z.gx_0y(gz)((\lambda x.x)(gz))) \to_\beta $$
+	$$(\lambda y.\lambda x_0z.gx_0y(gz)((\lambda x.x)(gz))) \to_\beta $$
+	$$\lambda y.\lambda x_0z.gx_0y(gz)(gz) \to_\beta $$
+	$$\lambda x_0z.gx_0(gz)(gz) \to_\beta $$
+	$$\lambda z.g(gz)(gz) \to_\beta $$
+	$$g(gz)$$
+	\section{Church-Kodierung}
+	\subsection{}
+	Beweis durch Umformung:\\
+	$$case\ s\ t (inl\ u)\to_{\delta}$$
+	$$(\lambda fgs.sfg)\ s\ t (inl\ u)\to_{\beta}$$
+	$$(\lambda gs_0.s_0sg)\ t (inl\ u)\to_{\beta}$$
+	$$(\lambda s_0.s_0st)\ (inl\ u)\to_{\beta}$$
+	$$((inl\ u)st)\ \to_{\delta}$$
+	$$((\lambda fg.fu)st)\ \to_{\beta}$$
+	$$(\lambda g.su)t\ \to_{\beta}$$
+	$$su$$
+	Ähnlich für 
+	$$case\ s\ t (inr\ u)\to_{\delta}$$
+	$$(\lambda fgs.sfg)\ s\ t (inr\ u)\to_{\beta}$$
+	$$(\lambda gs_0.s_0sg)\ t (inr\ u)\to_{\beta}$$
+	$$(\lambda s_0.s_0st)\ (inr\ u)\to_{\beta}$$
+	$$((inr\ u)st)\ \to_{\delta}$$
+	$$((\lambda fg.gu)st)\ \to_{\beta}$$
+	$$((\lambda g.gu)t)\ \to_{\beta}$$
+	$$tu$$
+	\subsection{}
+	$case\ inl\ inr\ t\to_{\delta}$
+	$$(\lambda fgs.sfg)\ inl\ inr \ t \to_{\beta}$$
+	$$(\lambda gs_0.s_0(inl)g)\ inr \ t\to_{\beta}$$
+	$$(\lambda s_0.s_0(inl)( inr))\  t\to_{\beta}$$
+	$$t(inl)( inr)$$
+	von hier aus beide varianten von t substitutieren.\\
+	$$t=inl\ a$$
+	$$(inl\ a)(inl)( inr)\to_{\delta}(\lambda fg.fa)(inl)( inr)\to_\beta (\lambda g.(inl)a)( inr)\to_\beta inl\ a=t$$
+	$$t=inr\ b$$
+	$$(inr\ b)(inl)( inr)\to_{\delta}(\lambda fg.gb)(inl)( inr)\to_\beta (\lambda g.gb)( inr)\to_\beta inr\ b=t$$
+	Gegenbeispiel\\
+	$$t=\lambda fg.a$$
+	$$t(inl)( inr)\to_\delta (\lambda fg.a)(inl)( inr)\to_\beta \lambda g.a(inr)\to_\beta a\neq \lambda fg.a$$
+	\section{$\eta$-Reduktion}
+	$s=\lceil 0\rceil$ und $t=\lceil 1\rceil$ unterscheiden.\\
+	wobei nach präsenzübung 3 gilt:\\
+	$\lceil 0\rceil=\lambda fa.a$ und $\lceil 1\rceil=\lambda fa.fa$\\
+	$u_1 = \lambda xyz.y$ $u_2 = \lambda xy.x$\\
+	$\lambda fa.a u_1 u_2 x y \to_\beta \lambda a.a u_2 x y\to_\beta u_2xy\to_\delta (\lambda xy.x)xy\to_\beta (\lambda y.x)y\to_\beta x$.\\
+	$\lambda fa.fa u_1 u_2 x y\to_\beta \lambda a.u_1 a u_2 xy\to_\beta u_1u_2 xy\to_\delta (\lambda xyz.z) u_2 xy\to_\beta (\lambda yz.z) xy\to_\beta (\lambda yz.z) x y\to_\beta \lambda z.zy\to_\beta y$.\\
+
+	$p_c = x^2$\\
+	$p_b = x^3+1$\
+	$p_a = x^4+2$\\
+
+	$(x^2+1)^3 +2 > x^2+1$\\
+	$x^6+2 > (x^4+2)^2 = x^8+4x^4+4$\\
+	$(x^2)^2= x^4 > x^3+1$\\
+	$(x^4+2)^3+1 >x^3+1$\\
+	$(x^3+1)^2 > $
+\end{document}

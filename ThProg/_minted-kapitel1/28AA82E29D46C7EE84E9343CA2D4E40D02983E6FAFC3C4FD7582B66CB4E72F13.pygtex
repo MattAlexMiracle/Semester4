@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k+kr}{data} \PYG{k+kt}{Nat} \PYG{o+ow}{=} \PYG{k+kt}{Zero} \PYG{o}{|} \PYG{k+kt}{Suc} \PYG{k+kt}{Nat}
+	\PYG{n}{plus}\PYG{o+ow}{::}\PYG{k+kt}{Nat}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Nat}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Nat}
+	\PYG{n}{plus} \PYG{k+kt}{Zero} \PYG{n}{x} \PYG{o+ow}{=} \PYG{n}{x}
+	\PYG{n}{plus} \PYG{p}{(}\PYG{k+kt}{Suc} \PYG{n}{y}\PYG{p}{)} \PYG{n}{x} \PYG{o+ow}{=} \PYG{k+kt}{Suc} \PYG{p}{(}\PYG{n}{plus} \PYG{n}{y} \PYG{n}{x}\PYG{p}{)}
+\end{Verbatim}

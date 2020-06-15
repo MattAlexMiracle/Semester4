@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{verbatim}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{import}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+%fügt ein kommando speziell für symbole über '=' ein.
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+%passt \begin{[b|p|B]matrix} an, dass sie ein layout wie "tabular" besitzen
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+% extra Kommando für einen durchgestrichenen Pfeil
+\newcommand{\nto}{\nrightarrow}
+%hier Titel einfügen
+\title{Vorlesung 2}
+\date{\today}
+\author{
+Alexander Mattick Kennung: qi69dube
+}
+%verkleinert die spaces vor und nach \section,etc.. 
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+
+
+
+\begin{document}
+	\maketitle
+	\section{...}
+\end{document}

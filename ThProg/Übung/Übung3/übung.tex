@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{verbatim}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\newcommand{\smallAscr}{\scriptscriptstyle\mathcal{A}}
+\title{Vorlesung 2}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\newtheorem{satz}{Satz}
+\newtheorem{korrolar}{Korrolar}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{beweis}{Beweis}[section]
+\newtheorem{beispiel}{Beispiel}[section]
+\newtheorem{definition}{Definition}[section]
+\setcounter{section}{2}
+\usepackage{ marvosym }
+\begin{document}
+	\maketitle\noindent
+	\section{Übung 3}
+	$\oslash = y+x^2$\\
+	$\infty=2$\\
+	\Heart=1\\
+	\begin{itemize}
+	\item Regel 6:$ x+(y+z)^2 = x+y^2+2zy+z^2 >x+z^2+y^2$, passt
+	\item Regel 5: $2+x^2+y^2 > (x+y^2)+1^2$, passt
+	\item Regel 4: $2+(x+2^2)^2 = 2+x^2+8x+16 > x+x^2$, passt
+	\item Sei $\mathcal{A} = \mathbb{N}_{\geq1}$ (wegen Regel 6)
+	\end{itemize}
+
+	\section{Übung 4}
+	$p_{\lor} = x+y^2$\\
+	$p_{\land} = (x+1)^2+(y+1)^2+1+1$\\
+	$p_{\implies} = (x+1)+y^2+1$\\
+	$p_{\forall} = x+(y+1)+1+1$\\
+	$p_{\exists} = x+y$\\
+	\begin{itemize}
+		\item Regel 1: $x+1+1> x$, passt
+		\item Regel 2: $x+1+(y+1)^2+1+1 > x+1+(y+1)^2+1$, passt
+		\item Regel 3: $(x+1)^2+(y+1)^2+1+1+1=x^2+2x+y^2+2y+5 > x+1+(y+1)^2$, passt
+		\item Regel 4: $(x+1)+y^2+1> (x+1)+y^2$, passt
+		\item Regel 5: $x+(y+z^2)^2 = x+y^2+2yz^2+z^4> (x+y^2)+z^2$, passt
+		\item Regel 6: $x+(y+1)+1+1 > (x+(y+1))+1$, passt	
+	\end{itemize}
+	mit $\mathcal{A} = \mathbb{N}_{\geq 1}$ wegen Regel 5
+	Das system ist SN.\\
+	\section{Übung 5} 
+	$p_a(x) = x^2+1$\\
+	$p_b(x) = x^3$\\
+	$p_c = x^2$\\
+	\begin{itemize}
+		\item Regel 7: $(x^3)^2+1 = x^6+1>x$
+		\item Regel 8: $(x^2+1)^2 = x^4+2x^2+1^2 > (x^2)^2+1 = x^4+1$
+		\item Regel 9: $(x^2)^2=x^4>x^3$
+		\item Regel 10: $(x^2+1)^3= x^6+3x^4+3x^2+1>x^2+1$
+	\end{itemize}
+	Wobei $\mathcal{A} = \mathbb{N}_{\geq 2}$ (wegen Regel 9)
+
+\end{document}
+
+
+
+
+

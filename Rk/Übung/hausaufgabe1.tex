@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{verbatim}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\title{Übung 1}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+
+
+
+\begin{document}
+	\maketitle
+	\section{Aufgabe 1.1}
+	1. $d_{trans} = \frac{L}{R}$\\
+	2. $d_{prop} = \frac{l}{v}$\\
+	3. $d_{gesamt} = d_{trans}+d_{prop}+d_{queue}$\\
+	4. Bei $t=d_{trans}$ ist das letzte bit gerade auf den Link gelegt worden. (oder wird gerade gelegt, abhängig davon, ob man 0 = ersten bit auf den Link gelegt, oder t=vor dem ersten bit auf den Link)\\
+	5. das erste bit ist irgendwo auf dem Link.\\
+	6. das erste bit ist beim Ziel B.\\
+	7. $d_{trans} = \frac{L}{R} = \frac{200bit}{1Mbps} = \frac{200bit}{1,000,000bps} = 10^{-6} s$, $d_{prop} = \frac{l}{v}\stackequal{!}{}d_{trans}\implies d_{trans}*v = l \implies 10^{-6} s* 2*10^8\frac{m}{s} = 2000m$\\
+	\section{Aufgabe 1.2}
+	Jeweils zwischen A und switch und B und switch gibt es einen Link.\\
+	Das erste Paket kommt nach $2\frac{L}{R}$ am ziel an, das zweite nach $3\frac{L}{R}$ (war bei $2\frac{L}{R}$ schon bei switch), das dritte nach $4\frac{L}{R}$\dots\\
+	also kommt das n-te paket nach
+	\[(n+1)\frac{L+h}{R} = (\frac{O}{L}+1)\frac{L+h}{R} = \]
+	(Die anzahl der Pakete ist nur von O abhängig).\\
+	ableiten $\implies L=\sqrt{150\cdot O}$
+	\section{Aufgabe 1.3}
+	1. $(N+E-1)d_{trans}+d_{con} = (N+E-1)\frac{\frac{O}{N}+h}{R}+d_{con}$\\
+	2. $(N+E-1)d_{trans} = (N+E-1)\frac{\frac{O}{N}+2h}{R}$\\
+	3. $(N+E-1)d_{trans} = (1+E-1)\frac{O+2h}{R}$\\
+	4. $d_{conn}+\frac{h+O}{R}$
+\end{document}

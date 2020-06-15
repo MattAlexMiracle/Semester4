@@ -1,0 +1,1041 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{bm}
+\usepackage{verbatim}
+\usepackage{fourier}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath,amsthm}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usepackage{bussproofs}
+
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=0pt}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\newcommand{\smallAscr}{\scriptscriptstyle\mathcal{A}}
+%\newcommand{\nsqsubseteq}{\xout{\sqsubseteq}}
+\title{Vorlesung 2}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\newtheorem{satz}{Satz}
+\newtheorem{korrolar}{Korrolar}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\theoremstyle{definition}
+\newtheorem{beweis}{Beweis}[section]
+\newtheorem{beispiel}{Beispiel}[section]
+\newtheorem{definition}{Definition}[section]
+
+
+\begin{document}
+	\tableofcontents
+	\newpage
+	\maketitle
+	\section{Terme}
+	$\Sigma-Terme\ t::= x| f(t_1,\dots,t_n)\ (x\in V, f/n\in\Sigma)$\\
+	V Menge von Variablen.\\
+	$T_\Sigma(V) =$ Menge der $\Sigma$-Terme über V (ist nicht fix, kann sich u.u. z.B. verkleinern)\\
+	$FV(t) = $ Menge der in t (frei) vorkommenden Variablen.\\
+	$FV(x) = \{x\}$\\
+	$FV(f(t_1,\dots,t_n)) = \bigcup\limits^n_{i=1} FV(t_i)$\\
+	\subsection{substitution}
+	Substitution ist eine Abbildung $\sigma: V_0\to T_\Sigma(V)$ für ein $V_0\subseteq V, V_0$ endlich.\\
+	$[t_1/x_1,\dots,t_n/x_n]$ $V_0=\{x_0,\dots,x_1\}, \sigma(x_i)=t_i$
+	$t\sigma = \begin{cases}x\sigma = \sigma(x)\\ f(t_1,\dots,t_n)\sigma = f(t_1\sigma,\dots,t_n\sigma)\end{cases}$
+	\subsection{Kontext}
+	$C(\cdot) = (\cdot)|f(t_1,\dots,c(\cdot),\dots,t_n), \ (f/n\in\Sigma)$\\
+	$f(t_1,\dots,C(\cdot),\dots,t_n)(g)= f(t_1,\dots,C(g),\dots,t_n)$
+	\section{Operationelle Semantik von TES}
+	$\to_0\subseteq T_\Sigma(V)\times T_\Sigma(V)$\\
+	$R\subseteq T_\Sigma(V)\times T_\Sigma(V)$ heißt
+	\begin{itemize}
+		\item abgeschlossen bezüglich $C(\cdot)$, wenn $\forall t,s (tRs\implies C(t)RC(s))$
+		\begin{itemize}\item Bsp.: $x+y+=y+x\implies z*(x+y)=z(y+x)$ zeigt Kontextabschluss $C(\cdot)=z*(\cdot)$\end{itemize}
+		\item Kontextabgeschlossen $\iff$ R abgeschlossen für alle $C(\cdot)$
+		\item stabil $\iff \forall t,s,\sigma (tRs\implies (t\sigma)R(s\sigma))$
+		\begin{itemize} \item z.B. $x+y=y+x\implies z^2+xw=xw+z^2$\end{itemize}
+	\end{itemize}
+	Einschrittreduktion $\to\subseteq T_\Sigma(V)\times T_\Sigma(V)$ = kontextabgeschlossener und stabiler Abschluss von $\to_0$\\
+	$\to = \{(C(s\sigma), C(t\sigma))|t\to_0s, C(\cdot) \text{Kontext}, \sigma \text{ Substitution}\}$\\
+	Bew.: Wenn man einen Kontext von einem Kontext macht, erhält man einen Kontext (weil es nur eine Freistelle gibt).\\
+	Wenn man substituiert dann ist die substitution entweder in s/t oder im Kontext, substitution im Kontext ändert nur in einen neuen kontext (es bleibt aber kontext).\\
+	\textbf{Reduktion} $\to^*$ (sprich ``t reduziert zu s'')\\
+	\textbf{Konvertierbarkeit} $\leftrightarrow^*= (\to\cup\to^-)^*$ ist die Äquivalenz zu $\to$.\\
+	t \textbf{normal} $\iff\lnot \exists s(t\to s)\iff t\nto$ 
+	s Normalform von t $\iff t\to^* s$ s normal\\
+	\begin{lemma}
+	Sei $R\subseteq T_\Sigma(v)\times T_\Sigma(V)$\\
+	1) R kontextabg. $\iff$ R abgeschlossen bzg. aller $f(t_1,\dots, t_{i-1},(\cdot), t_{i+1},\dots,t_n)$
+	(Induktion über kontexte! ):\\
+	$(\cdot)$ ist trivial.\\
+	$ tRs\implies C(t) R C(s)\implies f(t_1,\dots,C(t),\dots, t_n)R f(t_1,\dots,C(s),\dots, t_n)$\\
+	2) R stabil $\implies $(R kontextabg. $\iff$ R abgeschlossen bezgl aller $f(x_1, \dots, (\cdot), \dots, x_n)$) (folgt direkt aus 1.)
+	\end{lemma}
+	\begin{beispiel}\ \\
+	$\Sigma = \{+/2,s/1,0/0\}$\\
+	1) $s(x)+y\to_0 s(x+y)$\\
+	2) $0+y\to_0 y$\\
+	3) $(x+y)+z\to_0 x+(y+z)$\\
+	Es gibt versch umklammerungsmöglichkeiten:\\
+	$(s(x)+s(y))+z \stackrel{ 1), C(\cdot)+z, \sigma=[s(y)/y] }{ \to } s(x+s(y))+z \stackrel{1), C(\cdot), \sigma=[(x+s(y))/x]}{\longrightarrow} s((x+s(y))+z)\stackrel{3) }{\longrightarrow} s(x+(s(y)+z)\stackrel{1)}{\to}s(x+s(y+z))$\\
+	$(s(x)+s(y))+z \stackrel{3), C(\cdot),\sigma=[s(x)/x,s(y)/y] }{ \to }s(x)+(s(y)+z)\stackrel{1)}{\to} s(x)+s(y+z)\stackrel{1)}{\to}s(x+s(y+z))$\\
+	Unterschied Gleichungstheorie und TES: Gleichungstheorie ist eine \textbf{Umkehrbare} relation zwischen Termen!
+	\end{beispiel}
+	\section{Terminierung}
+	\begin{definition}\ \\ $R\subseteq X\times X$ wohlfundiert $\iff$ es existiert keine unendliche folge $x_0,\dots,x_n$ mit $x_0Rx_1R\dots$
+	\end{definition}\noindent
+	$(\mathbb{Z},>)$ ist nicht wohlfundiert. ($0>-1>-2>\dots$\\
+	$(\mathbb{Q_+},>)$ ist nicht wohlfundiert $1>\frac{1}{2}>\frac{1}{4}>\frac{1}{8}>\dots$\\
+	$(\mathbb{N},>)$ ist wohlfundiert (es endet spätestens bei 0, induktion über Kettenanfänge)
+
+	\begin{beweis}
+	i.V. Die Kette $n_1>n_2>\dots$ ist endlich.\\
+	Annahme: es gibt eine unendliche Kette bei $n_0>n_1>\dots\implies n_1>n_2>\dots$ wäre auch unendlich ($\infty-1=\infty$). Widerspruch zur Induktionsvorraussetzung!\\
+	\end{beweis}
+	\begin{definition}\ \\
+	\begin{itemize}
+		\item schwach normalisierend $\iff$ t hat eine NF. $t\to\dots\to s$ normal.
+		\item stark normalisierend $\iff$ es gibt keine unendliche reduktionsfolge $\lnot\exists t=t_0\to t_1\to\dots$ (unendlich). (es gibt keine zyklen)
+	\end{itemize}
+	TES $(\Sigma,\to_0)$ schwach/stark normalisierend (WN(SN)) $\iff$ alle t in $(\Sigma,\to_0)$ schwach/stark normalisierend.
+	\end{definition}
+	\begin{beispiel}\ \\
+	$f(x)\to_0 f(x)$\\
+	$g(x)\to 1$\\
+	$g(x)$ stark normalisierend einzige Reduktion $g(x)\to 1\nto$\\
+	$f(x)$ nicht schwach normalisierend einzige Reduktion $f(x)\to f(x)\to\dots$\\
+	$g(f(x))$ schwach normalisierend:$g(f(x))\to 1\nto$(Haskell ausführung)\\
+	oder $g(f(x))\to g(f(x))\to\dots$ (deshalb nicht stark normalisierend, hier ML-ausführung)
+	\end{beispiel}
+	\section{Reduktionsordnungen}
+	$\leq$ vs $<$: reflexiv vs. irreflexiv: $\forall x(\lnot xRx)$.\\
+	R ist strikte Ordnung $\iff$ R transitiv und Irreflexiv (z.B.$ >$).\\
+	\begin{definition}\ \\
+	$R\subseteq T_\Sigma(V)\times T_\Sigma(V)$.\\
+	\textbf{Reduktionsordnung $\iff$ R wohlfundierte, stabile, kontextabgeschlossen, strikte Ordnung.}\\
+	(aus wohlfundiert folgt strikt, sonst könnte man eine unendliche Folge $xRxRxRxR\dots$).
+	\end{definition}
+	\begin{satz}Sei $>$ Reduktionsordnung und $\forall t,s (t\to_0 s\implies t>s)\implies \to SN$ (also in jeder Ersetzungsregel wird nach anwendung der Term kleiner).
+	\end{satz}
+	\begin{beweis}
+	$>$ ist stabil und kontextabgeschlossen, und $\to_0\subseteq > \implies \to\subseteq >\implies \to$ ist wohlfundiert, d.h. $\to$ ist SN.\\
+	(Weil $\to$ der kontextabg. und stabile abschluss von $\to_0$ ist, wenn $>$ wohlfundiert ist, dann kann es auch keine unendlichen Mengen in der Teilmenge $\to$ geben)\\
+	\end{beweis}
+	\begin{beispiel}\ \\
+	$|t|$ = Größe von t. $t>s:\iff |t|>|s|$ (also die länge).\\
+	kontextabgeschlossen: $|t|>|s|\implies |C(t)|>|C(s)|$ (freiplatz kommt einmal vor.)\\
+	stabil? nicht immer $|x+2y-x|> |y+y|$ aber: $\sigma=[100x/y]$ $|x+2*100x-x|\ngtr |100x+100x|$!\\
+	aber Ok, wenn in $t\to_0 s$ stets jede variable s höchstens so oft wie in t vorkommt.\\
+	$\emptyset$ ist eine Reduktionsordnung.\\
+	$\to$ SN $\implies$ $\to^+$ Reduktionsordnung.\\
+	\end{beispiel}
+	\subsection{Polynomordnungen}
+	Recall: Polynome die menge der Polynome über $\mathbb{N}$ d.h. mit natürlich zahligen koeffizienten (insbesondere also keine z.B. $-1x^2$).\\
+	\[\mathbb{N}[x_1,\dots,x_n] = \left\{\sum_{i_1,\dots,i_n\in\mathbb{N}} a_{i_1,\dots,i_n}x_1^{i_1}\dots x^{i_n}_n|a_{i_1,\dots,i_n}\in\mathbb{N}\ a_{i_1\dots,i_n} =0 \text{ fast immer}\right\}\]
+	z.B. $x^2y+2y^2zx\in\mathbb{N}[x,y,z]$ ein summand wird ``Monom'' genannt. z.B. ist $y^2zx$ ein monom und gehört zu $a_{121}=2$\\
+	jedes $p\in\mathbb{N}[x_1,\dots,x_n]$ definiert eine Funktion 
+	\[\mathbb{N}^n\to \mathbb{N}\ \ (k_1,\dots,k_n)\to p(k_1,\dots,k_n)\in\mathbb{N}\]
+	p,q Polynom $\implies p+q, p\times q$ ist Polynom (nach Zusammenfassen gleichartiger Monome)\\
+	$\implies$ für $p\in \mathbb{N}[x_1,\dots,x_n], q_1,\dots q_n\in\mathbb{N}[y_1,\dots,y_k]$\\
+	$\implies p(q_1,\dots,q_n)\in\mathbb{N}[y_1,\dots, y_k]$ (die eingesetzten polynome können von jeder Art ``k'' sein, das ``buffert'' auch unten evtl vorliegende $(x^2)^3=x^6$ mit $a_{xyz}=0$)\\
+	$k_1,\dots,k_n\in\mathbb{N} \implies p(k_1,\dots, k_n)\in\mathbb{N}$\\
+	\begin{definition} Sei $\emptyset\neq A\subseteq\mathbb{N}$.\\
+	$p>_A q\iff \forall k_1,\dots,k_n\in A (p(k_1,\dots,k_n)>q(k_1,\dots,k_n))$
+	\end{definition}
+	\begin{beispiel}\ \\
+	$x^2>_\mathbb{N} x$ gilt nicht $1^2\ngtr 1$ aber schon für $A=\{n\in\mathbb{N}|n\geq 2\}$\end{beispiel}
+	\begin{lemma}
+	$>_A$ ist wohlfundiert.
+	\end{lemma}
+	\begin{beweis} Annahme: $p_0>_A p_1>_A\dots$(unendlich)
+	wähle $a\in A$; dann $p_0(a,\dots, a)>p_1(a,\dots, a)>\dots$ in $\mathbb{N}$ WIDERSPRUCH ($>_\mathbb{N}$ ist wohlfundiert)
+	\end{beweis}
+	\begin{definition} $p\in\mathbb{N}[x_1,\dots, x_n]$ \underline{streng monoton}:\\
+	\[\forall j\exists i_1,\dots,i_n (i_j>0\land a_{i_1\dots i_n}>0)\]
+	(also  wenn $x_i$ im polynom struktur ist, muss es auch einen koeffizienten geben, der $\neq$ 0 ist)
+	\end{definition}
+	\begin{lemma}
+	\[\text {p streng monoton }\iff \forall k_1,\dots, k_n,k_1',\dots,k_n'((k_1,\dots, k_n)>(k_1',\dots,k_n')\implies p(k_1,\dots, k_n)>p(k_1',\dots,k_n'))\]
+	$\iff$ 1) $\forall j(k_j\geq k_j')$ und 2) $\exists j(k_j>k_j')$ (mindestens eins echt größer).
+	\end{lemma}
+	\begin{beweis}
+	``$\implies$''\\
+	$a_{i_1,\dots,i_n}k_1^{i_1}\dots k_n^{i_n}\geq a_{i_1,\dots,i_n}k_1^{i_1'}\dots k_n^{i_n'}$ stets, einmal ``$>$''$\square$
+	\end{beweis}
+	\begin{definition} 
+	(monotone) Polynomielle Interpretion $\mathscr{A}$ besteht aus
+	\end{definition}
+	\begin{itemize}
+	\item zu jedem $f/n\in\Sigma$ ein streng monotones $ p_f\in\mathbb{N}[x_1,\dots,x_n]$ 
+	\item $A\subseteq \mathbb{N}$ die unter $p_f$ abgeschlossen ist
+	\end{itemize}
+	so dass $k_1,\dots,k_n\in A\implies p_f(k_1,\dots, k_n)\in A$\\
+	(Eine polynomordnung besteht aus einem polynom für jedes signatursymbol und einer auswahl natürlicher Zahlen)\\
+	$\to$ Polynomordnung $\succ_{\smallAscr}$
+	$t\succ_{\smallAscr} s\iff p_t\succ_{\smallAscr} p_s$\\
+	mit $p_x=x$ $p_{f(t_1,\dots,t_n)} = p_f(p_{t_1},\dots,p_{t_n})$\\
+	\\
+	\begin{satz}
+	$\succ_A$ ist eine Reduktionsordnung!\\
+	\end{satz}
+	\begin{korrolar}
+	Wenn $t\to_0 s\implies t\succ_{\smallAscr} s$, dann $\to$ SN.
+	\end{korrolar}
+	\begin{beispiel}\ \\
+	$f(f(g(x)))\to_0 f(g(g(x)))$\\
+	$p_f(x)=x^2+1, p_g(x)=x$ also
+	$f(f(g(x)))\equiv (x^2+1)^2+1\succ_\mathbb{N} f(g(g(x))) = x^2+1$\\
+	oder einfach $p_f(x)=x^2, p_g(x)=x$ also, dann muss man jedoch $A=\mathbb{N}\setminus\{1,0\}$\\
+	\end{beispiel}
+	\begin{lemma}(Substitutionslemma):\\
+	$\sigma=[t_1/x_1,\dots,t_n/x_n], p\in\mathbb{N}[x_1,\dots,x_n]\implies p_{t\sigma} = p_t(p_{t_1},\dots,p_{t_n})$
+	\end{lemma}
+	\begin{beweis} Induktion über t.\\
+	- $p_{x_i\sigma} = p_{t_i}=P_{x_i}(p_{t_1},\dots, p_{t_n})$\\
+	$p_{f(s_1,\dots,s_k)\sigma} = p_f(p_{s_1}\sigma,\dots,p_{s_k}\sigma)\\
+	\stackequal{}{IV} p_f(p_{s_1}(p_{t_1},\dots,p_{t_n}),\dots)\\
+	\stackequal{substitution}{} p_f(p_{s_1},\dots,p_{s_k})(p_{t_1},\dots,p_{t_n})=p_{f(s_1,\dots,s_n)}(p_{t_1},\dots,p_{t_n})$
+	\end{beweis}
+	\begin{beweis} ($\succ_{\smallAscr}$ ist Reduktionsordnung)\\
+	\begin{itemize}
+	\item strikte Ordnung per definition
+	\item wohlfundiert (es gibt keine endlos absteigende polynomfolge)
+	\item $\succ_{\smallAscr}$ stabil: Sei $t\succ_{\smallAscr} s, \sigma=[t_1/x_1,\dots]$\\
+	zZ.: $t\sigma\succ_{\smallAscr} s\sigma$: Seien $k_1,\dots, k_n\in A$\\
+	$p_{t\sigma}(k_1,\dots,k_n)\stackequal{}{Lemma} p_t(p_{t_1}(k_1,\dots,k_n),\dots)>p_s(p_{t_1}(k_1,\dots,k_n),\dots)\stackequal{}{Lemma} P_{s\sigma}(k_1,\dots,k_n)$
+	\item $\succ_{\smallAscr}$ kontextabgeschlossen: Sei $t\succ_{\smallAscr} s$, $C(\cdot)=f(x_1,\cdot,(\cdot)_i,\dots,x_n)$ (weil stabilität schon gezeigt, reicht das)\\
+	zZ: $C(t)\succ_{\smallAscr} C(s)$ Seien $k_1,\dots, k_n\in A$\\
+	$p_f(k_1,\dots,p_t(k_1,\dots,k_n),\dots,k_n)\stackrel{streng\ monoton}{<}p_f(k_1,\dots,p_s(k_1,\dots,k_n))$
+	\end{itemize}
+	\end{beweis}
+	Es ist beweisbar untentscheidbar, ob es für eine gegebene reduktionsordnung eine polynomordnung die deren Terminierung beweist, gibt. (halteproblem)
+	\begin{beispiel}\ \\
+	 $(x\oplus y)\oplus z\to_0 x\oplus (y\oplus z)$\\
+	 $x\oplus(y\oplus z)\to_0 y\oplus y$\\
+	 Gesucht ist also eine poly interpretation von ``$\oplus$'':\\
+	 Hier: Linke seite muss mehr gewichtet werden
+	 als die Rechte.\\
+	 $p_{\oplus}(x,y)= x^2+y$\\
+	 führt zu:\\
+	 $(x^2+y)^2+z\succ_{\smallAscr} x^2+(y^2+z) = x^4+2x^2y+y^2+z$\\
+	 $\mathcal{A} = [1,\infty)$\\
+	 $x^2+y^2+z\nsucc_{\smallAscr} y^2+y$\\
+	 Geht also nicht, wenn man $x^2\to\infty$\\
+	 Besser:\\
+	 $p_{\oplus}(x,y)=x^2+xy$\\
+	 $(x^2+xy)^2+(x^2+xy)z = x^4+2x^3y+x^2y^2+x^2z+xyz\succ_{\smallAscr} x^2+x(y^2+yz) = x^2+xy^2+xyz$\\
+	 $\mathcal{A} = \mathbb{N}_{\geq1}$\\
+	 $x^2+xy^2+xyz\succ_{\smallAscr}y^2+yy=2y^2$\\
+	 $\mathcal{A} = \mathbb{N}_{\geq2}$\\
+	 (Wichtig, man darf keine variablen ``verlieren'' wenn man noch umformungsschritte hat!)
+	\end{beispiel}
+	\section{Konfluenz}
+	\begin{beispiel} Gruppen\label{gruppen}\\
+		$x\cdot (y\cdot z)\stackrel{\to_0}{=} (x\cdot y)\cdot z$\\
+		$x\cdot e \stackrel{\to_0}{=} x$\\
+		$x\cdot x^{-1} \stackrel{\to_0}{=} e$\\
+		$y\cdot (x\cdot x^{-1})\to y\cdot e\to y\nto$ ist eine NF\\
+		oder\\
+		$y\cdot (x\cdot x^{-1})\to (y\cdot x)\cdot x^{-1}\nto$ ist eine NF\\
+		(Knuth-bendix algorithmus\cite{knuthBendix} würde zur konfluenz führen: regel von einer der beiden NF zur anderen)\\
+	\end{beispiel}
+	\begin{definition}\ \\
+	\begin{itemize}
+		\item t,s \textbf{zusammenführbar} (zf) $\iff \exists u(t\to^*u\ ^*\gets s)$ (u.U auch mit null schritten)
+		\item TES T heißt \textbf{konfluent} (CR, church/Rosser) $\iff \forall t,s,s' (t\to^* s\land t\to^* s'\implies s,s'\ zf)$\\
+		\includegraphics[scale=0.5]{images/konfluenzDiamant.png}
+		\item T heißt \textbf{lokal konfluent} (WCR, weakly Church/Rosser) $\iff \forall t,s,s' (t\to s\land t\to s'\implies s,s'\ zf)$ (also in nur einem schritt zusammenführbar)\\
+		\includegraphics[scale=0.5]{images/WeaklyChurchRosser.png}
+	\end{itemize}
+	z.B.: ist oben \ref{gruppen} weder stark noch schwach CR
+	\end{definition}
+	\begin{satz} Sei t konfluent $\implies$\\
+	1) $s\leftrightarrow^* t\iff s,t\ zf$\\
+	2) $s,s'$ NF von $t\implies s=s'$\\
+	\end{satz}
+	\begin{beweis}\ \\
+	1) $\impliedby$ klar $\implies$\\
+	Haben $s=t_0 \leftrightarrow t_1\leftrightarrow \dots\leftrightarrow t_n=t$\\
+	Induktion über n:\\
+	$n=0: s=t$ klar\\
+	$n\to n+1:$ Nach I.V. $s=t_0\to^*q ^*\gets t_n\leftrightarrow t_{n+1}$\\
+	Fall 1: $t_n\gets t_{n+1}$ fertig (weil $t_n$ über q mit s zusammenführbar)\\
+	Fall 2: $t_n\to t_{n+1}$ dann gibt es ein r, dass über $\to^*$ mit $t_{n+1}$ und $q$ erreichbar ist (wegen konfluenz)\\
+	\includegraphics[scale=0.5]{images/symmetrischTransitiverAbschlussKonfluenz.png}\\
+	2) $s\leftrightarrow^* s'\implies s,s'\ zf: s\to^* u^*\gets s'$ weil $s,s'$ NF, braucht man genau 0 schritte: $s=u=s'$\\
+	\end{beweis}
+	hier ein bsp für eine konfluente form:\\
+	\includegraphics[scale=0.5]{images/konfluent.png}\\
+	\begin{satz} (Newman's Lemma)\label{Newman's Lemma}\\
+	\[SN \land\ WCR \implies CR\]
+	(also lokale konfluenz und stark normalisierend, führt zur vollen konfluenz, starke konfluenz ist i.a untentscheidbar (und so auch SN, deshalb widerspricht dieser Satz dem nicht\dots))
+	Beweis, später\\
+	\end{satz}
+	\begin{beispiel}\ \\
+	Regeln\\
+	$l_1\to r_1$\\
+	$l_2\to r_2$\\
+	Terme\\
+	$C_1(l_1\sigma_1)=t=C_2(l_2\sigma_2)$\\
+	$C_1(l_1\sigma_1)\to C_1(r_1\sigma_1)$\\
+	$C_2(l_2\sigma_2)\to C_2(r_2\sigma_2)$\\
+	\includegraphics[width=256px]{images/lokaleKonfBspNewmann.png}\\
+	$C_1$ kann ignoriert werden wegen kontextabgeschlossen.\\
+	\includegraphics[width=256px]{images/konfluenzbaum.png}\\
+	Weil $l_2$ in $l_1$ hineinragt, ist nach anwendung von $l_2\to r_2$ kein $l_1$ mehr für die zweite Regel vorhanden (die eine anwendung zerschiest die prämisse einer zweiten)\\
+	\end{beispiel}
+	\begin{definition} Unifikation\\
+	$t,s$ Terme $t\stackrel{\cdot}{=} s$\\
+	$\sigma$ Unifikator von t,s $(\sigma\in Unif(t,s))\iff t\sigma=s\sigma$ (syntaktisch)\\
+	$t,s$ unfiz $\iff$ $unif(t,s)\neq \emptyset$\\
+	$\sigma$ allgemeiner als $\sigma' \iff\exists \tau ( \sigma' = \sigma\tau)$\\
+	$\sigma$ allgemeinster Unifikator (mgu) von $t,s$
+	$\sigma = mgu(t,s)\iff \sigma\in Unif(t,s)\land \forall \sigma'\in Unif(t,s)(\sigma \text{allgemeiner als }\sigma')$ mgu existiert, wenn t,s unifizierbar, eindeutig bis auf isomorphismus (injektive umbennennung)\\
+	\end{definition}
+	\begin{beispiel} unifikation\\
+	$k(r(x),x)\stackrel{\cdot}{=} k(z,r(z))$\\
+	decomp $r(x)\stackrel{\cdot}{=}z, x\stackrel{\cdot}{=} r(z)$\\
+	elim $r(r(z))\stackrel{\cdot}{=}z, x\stackrel{\cdot}{=} r(z)$\\
+	occurs.\\
+	$f(h(x),z), f(y,g(x))$\\
+	$\sigma=[h(x)/y, g(x)/z]$\\
+	\end{beispiel}
+	\begin{definition}kritisches Paar nach Knuth-Bendix\\
+	Seien $l_1\to_0 r_1, l_2\to_0 r_2$,\\
+	$l_1 = C(t)$ t nichttrivial (d.h. t keine Variable, konstanten gehen aber\dots)\\
+	und $FV(l_2)\cap FV(l_1)=\emptyset$\\
+	$\sigma = mgu(t,l_2)$\\
+	also, wenn man $r_1\sigma\gets l_1\sigma = C(t)\sigma =( C\sigma(t\sigma) = C\sigma(l_2)\to C\sigma(r_2\sigma)=C(r_2)\sigma$\\
+	$\implies (r_1\sigma, C(r_2)\sigma)$  \textbf{kritisches Paar}
+	\end{definition}
+	\begin{lemma} $(r_1\sigma, C(r_2\sigma))$ kritisches Paar\label{critical pair}\\
+	$\implies r_1\sigma\gets l_1\sigma =C(l_2)\sigma \to C(r_2)\sigma$ (kritische Paare sind divergente Redukte eines gemeinsamen ursprungs)
+	\end{lemma}
+	\begin{korrolar}$T\ WCR\implies$ alle Paare sind zf
+	\end{korrolar}
+	\begin{satz} alle kritischen Paare zf $\implies WCR$ (Critical Pair Lemma)\label{critical pair lemma}\\
+	Aufwand ist $O(n^3)$ (paare und dann jede Regel für kontext C(t) einsetzen, mal die anzahl der Schritte, den jede reduktion selbst benötigt)\\
+	\end{satz}
+	\begin{beispiel} (Gruppe)\\
+	$(l_1\to_0 r_1) = (x\cdot (y\cdot z))\to_0 (x\cdot y)\cdot z)$\\
+	(in frische variablen umbennenen)\\
+	$(l_2\to_0 r_2) = (x'\cdot e\to x')$\\
+	Jetzt: wähle einen Teilterm aus, und mach das ``t'' draus:\\
+	$C(\cdot) = x\cdot(\cdot)$\\
+	$t=y\cdot z$ $\sigma=mgu(t,l_2) = [y/x',e/z]$\\
+	$\to$ kritisches Paar $(r_1\sigma, C(r_2)\sigma) = ((x\cdot y)\cdot e,\ x\cdot y)$\\
+	(die $r_1,r_2$ sind oben definiert\dots)\\
+	\includegraphics[width=256px]{images/criticalPairs.png}\\
+	\end{beispiel}
+	\begin{beispiel}\ \\
+	$l_1\to_0 r_1 = (x\cdot (y\cdot z))\to_0 (x\cdot y)\cdot z)$\\
+	$l_2\to_0 r_2 = (x'\cdot x^{-1'}\to_0 e)$\\
+	$C(\cdot) = x\cdot (\cdot)$\\
+	$t=y\cdot z$\\
+	$\sigma= mgu(t,l_2) = [x'/y, x^{-1'}/z]$\\
+	$(x\cdot x')\cdot x^{'-1}\gets x\cdot (x'\cdot x^{-1'})\to x\cdot e$ nicht z.f.\\
+	\includegraphics[height=128px]{images/nichtZF.png}\\
+	\end{beispiel}
+	\begin{beispiel}
+	$l_1\to_0 r_1 = (x\cdot(y\cdot z)\to_0 (x\cdot y)z) = l_2\to_0 r_2$\\
+	$t=y\cdot z$
+	$\sigma = mgu(t,l_2)=mgu((y\cdot z), x'\cdot(y'\cdot z')) = [y/x', y'\cdot z'/z]$\\
+	$(x\cdot y) \cdot (y'\cdot z')\gets x\cdot (y\cdot (y'\cdot z'))\to x\cdot ((y\cdot y')\cdot z')$\\
+	\includegraphics[height=128px]{images/SelbstReferenzCriticalPair.png}\\
+	sind z.f.\\
+	\textbf{\underline{ACHTUNG}}\\
+	wenn man das umbennenen der variablen vergisst, dann krigt man $y\cdot z$ und $x\cdot (y\cdot z)$$\longrightarrow \bot$ occurs!!\\
+	\end{beispiel}
+	\begin{beweis} Critical Pair Lemma\ref{critical pair lemma}\\
+	Notation $C(\cdot) \sqsubseteq D(\cdot)\iff \exists E(\cdot)(C(\cdot)=D(E(\cdot)))$ (also C liegt unter D, wenn man in D einen weiteren kontext einführen kann, um ihn zu C zu verwandeln! Wie bei mgu auch)\\
+	\includegraphics[height=128px]{images/CunterD.png}\\
+	$C(\cdot)\bot D(\cdot)\iff C(\cdot)\cancel{\sqsubseteq} D(\cdot)\land D(\cdot)\cancel{\sqsubseteq} C(\cdot)$ (also keiner ist subset des anderen, sie sind orthogonal)\\
+	\includegraphics[width=256px]{images/orthogonalKontext.png}\\
+	Sei $l_1\to_0 r_1, l_2\to r_2$ anwendbar auf s\\
+	\textbf{Fall 1}:$C_1(\cdot)\bot C_2(\cdot)$\\
+	\includegraphics[height=128px]{images/unabhängigeKontexte.png}\\
+	Beide Terme stören sich nicht, ich kann immer beide Regeln in beliebiger Reihenfolge anwenden\\
+	Fall 2: o.b.d.A $C_2(\cdot)\sqsubseteq C_1(\cdot)$ mit $C_1(\cdot) =(\cdot)$ (man kann sich den äußersten einfach wegdenken, der Teilbaum unter einem echten $C_1\neq (\cdot)$ ist equivalent zu einem normalen Baum mit wurzel direkt unter $C_1$)\\
+	ohne einschrenkung $l_2\sigma = l_2$, weil $l_2$ sowieso vollkommen unter unserer substitution liegt, also auch im nachhinein gemacht werden kann ( es stört den Rest des Terms nicht).\\
+	\includegraphics[width=128px]{images/TeilbaumFall.png}\\
+	\underline{unterfall 2a)} $C_2$ ist echt unterhalb von $l_1$\\
+	\includegraphics[width=256px]{images/unterfall2a.png}\\
+	auf der rechten seite ist $l_1\to r_1$ nicht mehr anwendbar, weil $l_1\to r_1$ fordert, dass es 3 gleiche argumente gibt.\\
+	\underline{unterfall 2b)} $C_2$ ist nicht unterhalb von $l_1$, d.h. $(\cdot)$ von $C_2$ liegt in $l_1$:\\
+	\includegraphics[width=128px]{images/unterfall2b.png}\\
+	Dies ist gleich der situation des Kritischen paares \ref{critical pair}: Der einzige ort, wo es schiefgehen kann ist also, wenn das kritische paar nicht zf ist.\\
+	Es reicht also: Für $\sigma\in Unif(t,l_2)$ ist $(r_1\sigma, C_2(r_2)\sigma)$ zf.\\
+	Gilt nach Annahmen für $\sigma =mgu(t,l_2)$ (alle kritischen paare sind zf), dann $\sigma' =\sigma\tau$ für ein $\tau$\\
+	$r_1\sigma\tau, C_2(r_2)\sigma \tau$ unsere Reduktionsrelation ist stabil, also ist $r_1\sigma, C_2(r_2)\sigma$ zf, so auch alle substitutionen.\\
+	\end{beweis}
+	\begin{satz} wohlfundiert Induktion\\
+	$R\subseteq X\times X$ wohlfundiert $\implies$\\
+	Wenn $\forall x (\forall y (xRy\implies P(y)))\implies P(x)$ (1)\\
+	(wenn für alle nachfolger von x P(y) gilt, dann gilt auch P(x))\\
+	dann gilt $\forall x(P(x))$ (2)\\
+	dies heißt wohlfundierte Induktion.\\
+	\end{satz}
+	\begin{beweis} Kontraposition:\\
+	zeige $(1)\land \lnot (2)\implies R$ nicht wohlfundiert.\\
+	Per $\lnot(2)$ ex. $x_0$ mit $\lnot P(x_0)$\\
+	$\stackrel{\implies}{(1)}$ ex. $x_1$ mit $x_0Rx_1$ $\lnot P(x_1)$\dots\\
+	d.h. $x_0 Rx_1Rx_2\dots,$ R nicht wf.\\
+	\textbf{(dependent choice, viel harmloser als ZFC's auswahlaxiom)}
+	\end{beweis}
+	\begin{beispiel} 1) $X=\mathbb{N}$ $R=\{(n+1,n)|n\in\mathbb{N}\}$\\
+	wohlfundierte Relation (bzw vollständige Relation als wohlfundierte\dots):\\
+	$P(0)$\\
+	$\forall n(P(n)\implies P(n+1))$\\
+	zusammen liefert das $\forall n (P(n))$\\
+	\end{beispiel}
+	\begin{beispiel} $X=\mathbb{N}$ $R= >:$ Course-of-values-Induktion (man nimmt also für alle echt kleineren n die Aussage an)
+	\end{beispiel}
+	\begin{beweis} Newman's Lemma \ref{Newman's Lemma} $SN \& WCR\implies CR$\\
+	beweis per wohlfundierter Relation über $\to$ (ist wf wegen SN).\\
+	o.E. $t\to^+ s,s'$ (weil in 0 schritten reduzieren trivialerweise sofortig zf ist)\\
+	Idee: man teilt die schritte zwischen $s$ und $s'$ in jeweils zwei paare von beiden seiten ($s_0, s_0'$) dann Induktionsvorraussetzung anwenden, woraus man folgern kann, dass dies für jeden schritt möglich ist:\\
+	\includegraphics[width=256px]{images/NewmansLemma.png}\\
+	\end{beweis}
+	\newpage
+	\section{Der $\lambda$-Kalkül}
+	Beispiel haskell
+	\begin{framed}
+	\begin{minted}{haskell}
+	twice f x = f $ f x
+	-- Eigentlich ``Schönfinkelisierung'' nach dem echten Erfinder.
+	map:: (a-> b)-> (List a-> List b) 
+	map f [] = []
+	map f (x:xs) =(f x):map(f xs)
+	\end{minted}
+	\end{framed}\noindent
+	ungetypter $\lambda$-Kalkül = LISP.\\
+	getypter $\lambda$-Kalküle\\
+	Church (Ein zuerst unvollständiges system), Kleene, Rosser (haben beide R, Curry)\\
+	\section{Der ungetypte $\lambda$-Kalkül}
+	\begin{definition}
+	$\lambda x.t$ ``die Funktion, die x auf t abbildet $x\mapsto t$ (wobei üblicherweise $x\in FV(T)$ ist)''\\
+	$ts$ Anwendung von s auf t. (Applikation)\\
+	\underline{Terme} t,s gegeben durch:\\
+	\[t,s::= x|ts|\lambda x.t\: (x\in V)\]
+	Wobei das Zweite als ($\lambda$)-Notation.
+	\end{definition}
+	\begin{beispiel}\hfill
+	\begin{itemize}
+	\item ``$\lambda x.3+x$'' (3 und plus ist technisch gesehen nicht definiert\dots)
+	\item $\lambda x. xx$ (Haskell würde typfehler liefern, wenn man x als funktion auf sich selbst andwendet, es gibt aber sinnvole kontexte für solche dinge: Wenn x eine berechenbare funktion ist, dann muss es einen bestimmten, Gödelnummerierbaren, funktionsraum geben. Das erste x wäre dann die interpretation als funktion, und die zweite die Gödelnummer)
+	\item $\lambda x.\lambda y. x=: f$, dann wäre z.B. $f x y = (\lambda y.x) y = x$
+	\end{itemize}
+	\end{beispiel}
+	\begin{definition} Freie Variablen und konventionen\\
+	Kontexte
+	 \[C(\cdot)=(\cdot)|tC(\cdot)|C(\cdot)s|\lambda x.C(\cdot)\]
+	\textbf{Kongruenz} = Kontextabgeschlossene Äquivalenz.\\
+	Notation $\lambda x_1\dots\lambda x_n. t = \lambda x_1\dots x_n.t$\\
+	$tsu = (ts)u$\\
+	Scope von $\lambda$ so weit wie möglich.\\
+	$\lambda x.xx= \lambda x.(xx) $ im gegensatz zu $ (\lambda x.x)x$\\
+	Freie Variablen:\\
+	$FV(x)=\{x\}$\\
+	$FV(ts)=FV(t)\cup FV(s)$\\
+	$FV(\lambda x.t)= FV(t)\setminus \{x\}$\\
+	\end{definition}
+	\begin{definition} Substitution\\
+	\begin{itemize}
+		\item $x\sigma = \sigma(x)$
+		\item $(ts)\sigma = (t\sigma)(s\sigma)$
+		\item $(\lambda x.t)\sigma = \lambda y.(t\sigma')$ wobei y eine \textbf{frische variable} ist\\
+		(also $y\in FV(\sigma(z)), (z\in FV(t)\setminus\{x\}\iff z\in FV(\lambda x.t))$), sonst könnte x ``gefangen werden'' $\lambda x.y [x/y]\neq \lambda x.x$!! Lösung, wie bei $\forall/\exists$ in GLOIN. (capture-avoiding substitution, liefert hier $\lambda x.y [x/y] = \lambda t.x$, mit $\sigma' =\sigma[x\to t]$) de-Broujin indizes. ($\lambda x.\lambda y. xy= \lambda\lambda. 2\ 1$) oder nominale Mengen\cite{nominaleMengen}
+	\end{itemize}
+	\end{definition}
+	\begin{definition}	$t=_\alpha s$ (sprich ``$\alpha$-äquivalent'')\\
+	$\iff $ t geht aus  s durch\textbf{ Umbennenung} gebundener Variablen hervor (ohne Variableneinfang!).\\
+	Formal: $=_\alpha$ ist die von
+	\[\lambda x.t =_\alpha \lambda y.t[y/x]\: (y\notin FV(t)\setminus\{x\})\]
+	erzeugte Kongruenz
+	\end{definition}
+	\begin{beispiel}\ \\
+	$\lambda x.xy =_\alpha \lambda z.zy \cancel{=_\alpha} \lambda y.yy$
+	\end{beispiel}
+	\begin{lemma} $=_\alpha$ ist stabil
+	\end{lemma}
+	\begin{beweis} Es reicht: erzeugende Relation ist stabil:\\
+	\[R=\{(\lambda x.t, \lambda y.t[y/x])|y\notin FV(\lambda x.t)\}\]
+	Sei also $y\notin  FV(\lambda x.t)$\\
+	zZ: $(\lambda x.t)\sigma R (\lambda y.t[y/x])\sigma$\\
+	Daraus folgt (2) $\lambda x'.t\sigma'$ $\lambda y'.t[y/x]\sigma''$\\
+	Wobei $\sigma' = \sigma[x\mapsto x']$ und $\sigma'' = \sigma[y\mapsto y']$ und $x',y'$ frisch\\
+	$[y/x]\sigma'' = \sigma'[y'/x']$\\
+	$x\to y\to y' = x\to x'\to y'$\\
+	somit ist die Rechte seite $\lambda y'.t\sigma [y'/x']$ mit $y'\notin FV(\lambda x'.t\sigma')$ frisch.\\
+	Die Rechte seite is talso gleich der linken in (2)\\
+	\end{beweis}
+	\begin{satz} $\beta$-Reduktion. Operationale Semantik (``Wie sich ein program während der Ausführung verändert'')\\
+	Im imperativen gibt es Kontexte:
+	$\eta, (x:=1;c)\to \eta[x\mapsto 1];c$ ($\eta$ Umgebung, wie in GLOIN)\\
+	In $\lambda$-Kalkül gibt es sowas nicht: $\beta$-Reduktion als kontextabgeschlossene Umformung\\
+	$(\lambda x.3+x)3\to 3+4(\to \text{ wenn + bekannt ist})$\\
+	$\lambda-$Kalkül ist im wesentlichen ein TES (nicht 100\% wegen alpha-equiv und gebundenen Variablen)\\
+	$(\beta) \ (\lambda x.t)x\to_0 t$\\
+	$\implies$ Einschrittreduktion $\to$\\
+	$C((\lambda x.t)s)\to C(t[s/x])$\\
+	$(\lambda x.t)s$ heißt $\beta$-Redex.[hier nicht: $(\eta)\ \lambda x.y x\to_0 y$, beliebt in theoriebetrachtung, aber nicht in programmiersprachen (wenn man Seiteneffekte/IO hat, macht $(\eta)$ viel kaputt, weil damit die ``ausführung'' von x auf y umgangen wird)]\\
+	\end{satz}
+	\begin{beispiel}\ \\
+	\begin{itemize}
+		\item $(\lambda x.xx)(y x)\to_\beta y x(y x)$
+		\item $(\lambda xy.x(yx))zu\to_\beta \lambda y.z(yz)u\to_\beta z(uz)$
+		\item $\omega:=\lambda x.xx$, $\omega\omega= (\lambda x.xx)\omega \to_\beta = \omega\omega\to_\beta\dots$ Nicht terminierend.
+		\item Booleans ``$x\times x \to x$''\\
+		 $true:=\lambda xy.x$ $false:=\lambda xy.y$\\
+		\item Paare: ``$Paar \equiv Fkt$'' $Bool\to x$\\
+		 \begin{itemize}
+		 	\item $fst:= \lambda p.p true$
+		 	\item $snd : = \lambda p.p false$
+		 	\item $pair:= \lambda xy.\lambda z.zxy$ wobei ``z eine von true/false ist''
+		 \end{itemize}
+		 Dies liefert uns:\\
+		 $\underline{fst\ \underline{(pair\ x\ y)}}\to_\beta fst (\lambda xy.\lambda zxy)xy\to_{2\times\beta} fst(\lambda z.zxy)=(\lambda p.p\ true)\lambda z.zxy\to_\beta (\lambda z.zxy)true\to_\beta true\ xy=(\lambda xy. x)xy \to_\beta (\lambda y.x)y\to_\beta x$\\
+	\end{itemize}
+	\end{beispiel}
+	\subsection{Rekursion}
+	$fact =\lambda n. \text{if n=0 then 1 else n*fact(n-1)}$\\
+	Dieser Aufruf besteht aus einer primitiven rekursionsfunktion F und der funktion selbst.$fact = F\ fact$\\
+	$F=\lambda f.\lambda n. \text{if n=0 then 1 else n*f(n-1)}$ F nennt man auch ein Funktional.\\
+	$fact = F\ fact$ nennt man Fixpunktgleichung. (rekursive Funktionen sind Fixpunktgleichen)\\
+	Fixpunktkombinator fix:\\
+	fix F = F(fix F)\\
+	\begin{satz} $\lambda$-Kalkül Fixpunktkombinator\\
+	1) Jedes t hat einen Fixpunkt s, d.h. $s\to_\beta ts$ (also die Reduktion liefert wieder ts auf dem wider reduziert werden kann, ad absurdum)\\
+	2) Es existiert ein Fixpunktkombinator Y, d.h. $Yt\to_\beta s$ s ist Fixpunkt von t\\
+	$Yt\to_\beta s\stackrel{(1)}{\to_\beta} ts$\\
+	\end{satz}
+	\begin{beweis} \ \\
+	1) $s=W_tW_t, W_t = \lambda x.t(xx)$ (wie oben bei $\omega\omega$, bloß mit t ausenrum):\\
+	$s=W_tW_t =(\lambda x.t(xx))W_t\to_\beta t(W_tW_t) = ts$\\
+	2) $Y=\lambda f.W_fW_f$ wenn man das jetzt auf ein f anwendet erhält man genau $fs=s$
+	\end{beweis}
+	\begin{beispiel}
+	Der Fall von oben $\lambda x.xx =\omega$ und dann $\omega\omega$ hat die funktion $t=\omega$ terminiert deshalb nicht.\\
+	$\lambda x.((\lambda y.y)(xx))$ jetzt $t=\lambda y.y$ (also rekursion über die Identitätsfunktion) und s wäre dann $\omega\omega\to_\beta t(\omega\omega)\to_\beta \omega\omega$
+	\end{beispiel}
+	\subsection{Auswertungsstrategie}
+	\begin{beispiel}\ \\
+	$(\lambda xy.x)x(\omega\omega)$ Wenn man probiert zuerst $\omega\omega$ zu reduzieren, läuft man undendlich weiter.\\
+	Wenn man den rechten reduziert erhält man:\\
+	$(\lambda y.x)(\omega\omega)$ wo man entweder wieder ad absurdum $(\omega\omega)$ reduzieren kann (ML, leftmost-innermost, applikativ), oder das ganze zerlegen in:\\
+	$\lambda y.x \omega \omega = x$ (Haskell, leftmost-outermost, normal/standard)\\
+	\includegraphics[width=256px]{images/AuswertungsReihenfolge.png}
+	\end{beispiel}
+	\begin{definition} applikative (leftmost-innermost) Reduktion $\to_a$\\
+	induktiv definiert durch:\\
+	1a)$(\lambda x.t)s\to_a t[s/x]$ \textbf{wenn} t,s normal (innermost, eager).\\
+	2a) $(\lambda x.t\to_a \lambda x.t')$, wenn $t\to_a t'$ (eine echte prog. sprache macht aber niemals Termreduktionen unter einem lambda)\\
+	3a)$ts\to_a t's$ wenn $t\to_a t'$\\
+	4a)$ts\to_a ts'$, wenn $s\to_a s'$ und t normal.
+	\end{definition}
+	\begin{definition} normale (leftmost-outermost) Reduktion $\to_n$\\
+	1n) $(\lambda x.t)s\to_n t[s/x]$ immer (outermost reinziehen)\\
+	2n) $\lambda x.t\to_n \lambda x.t'$, wenn $t\to_n t'$\\
+	3n) $ts\to_n t's$, wenn $t\to_n t'$ und t keine $\lambda-$Abstraktion. (wenn es eine wäre, dann 1. Regel)\\
+	4n) $ts\to_n ts'$ wenn $s\to_n s'$ und t normal und keine $\lambda$-Abstraktion.\\
+	\end{definition}
+	\begin{beispiel} $(\lambda y.x)(\omega\omega)$\\
+	mit normaler Reduktion:\\
+	$(\lambda y.x)(\omega\omega)\to_{1n} x$\\
+	mit Applikativer Reduktion:\\
+	$(\lambda y.x)(\omega\omega)\to_{4.a} (\lambda y.x)(\omega\omega)$
+	\end{beispiel}
+	\begin{satz} Standardisierungssatz:\\
+	Sei $t\to^* s$ s Normalform $\implies t\to_n^* s$\\
+	(Nebenbemerkung: $(\lambda x.fxx)t\to_n ftt\to_n fst\to_nfss$ und $(\lambda x.fxx)t\to_a (\lambda x.fxx)s\to_a fss$ also geht es mit applikativen schneller, weil man funktionen nur 1 mal evaluieren muss)
+	\end{satz}
+	\section{Der einfach getypte $\lambda$-Kalkül}
+	Typen $\alpha,\beta$:\\
+	$\alpha\to\beta$ Funktion von $\alpha$ nach $\beta$\\
+	Typvariablen a,b,\dots\\
+	z.B. $\lambda x.x:a\to a$\\
+	\begin{definition}\ \\
+	Gegebene Menge $\bold{V}$ var.\\
+	Typvariablen $\bold{B}$ von Basistypen.\\
+	($\bold{bool,Int,\dots}$) sind typen $\alpha,\beta,\dots$\\
+	definiert durch
+	\[\alpha,\beta::= a|\bold{b}|\alpha\to\beta\ (a\in\bold{V},\bold{b}\in\bold{B})\]
+	z.B. $a\to(b\to a) = (a\to b)\to a = a\to b\to a$
+	Terme: Church: $\lambda x:\alpha.t$ nur typkorrekte Terme. (also termbildung und typisierung)\\
+	Curry: $\lambda x.t,$ Term kann typisierbar sein oder nicht.\\
+	$\omega =\lambda x.xx$ z.B. nicht typisierbar ($\lambda \to$, weil typ voll rekursiv ist)\\
+	wir benützen curry.
+	\end{definition}
+	$x\lambda y.y$ ? weil x unbekannt/untypisiert.\\
+	\begin{definition} kontexte\label{typkontext}\\
+	Ein Kontext ist eine endliche Menge $\Gamma$ von Typisierungsannahmen $x:\alpha (x\in V)$ ``x hat typ $\alpha$''\\
+	Schreibweise: $\Gamma, x:\alpha = \Gamma \cup \{x:\alpha\}$\\
+	d.h. $\Gamma$ ist eine endliche partielle Abbildung. (von variablennamen auf typen)\\
+	Typisierungsurteile (typing judgements) $\Gamma \vdash t:\alpha $ ``in Kontext $\Gamma$ hat t Typ $\alpha$''
+	z.B. $f:a\to b, x:a\vdash fx:b$\\
+	Herleitbarkeit induktiv:\\
+	\AxiomC{}
+	\RightLabel{$ (x:\alpha)\in\Gamma$}\\
+	\LeftLabel{(Ax)}
+	\UnaryInfC{$\Gamma \vdash x:\alpha$}
+	\DisplayProof\\
+	\AxiomC{$\Gamma\vdash t:\alpha\to \beta$}
+	\AxiomC{$\Gamma \vdash s:\alpha$}
+	\LeftLabel{($\to_e$)}
+	\BinaryInfC{$\Gamma \vdash ts:\beta$}
+	\DisplayProof\\
+	\AxiomC{$\Gamma[x\mapsto \alpha]\vdash t:\beta$}
+	\LeftLabel{($\to_i$)}
+	\RightLabel{(also wenn x schon einen typ hat, wird dieser Überschrieben, shadowing)}
+	\UnaryInfC{$\Gamma \vdash\lambda x.t:\alpha\to\beta$}
+	\DisplayProof\\
+	Rechts: sonst könnte $x:\alpha$ zum clash führen! ( in der Realität könnte man das lösen, indem man aus $\Gamma$ eine List statt eine Menge baut)\\
+	\end{definition}
+	\begin{beispiel}\ \\
+	\\
+	\LeftLabel{$Ax$}\AxiomC{}\AxiomC{}\RightLabel{$AX$}
+	\BinaryInfC{$\vdash x: a\to b, y: a\vdash x:a\to b, x: a\to b, y:a \vdash y:a$}
+	\UnaryInfC{$\vdash x:a\to b, y:a \vdash xy:b $}
+	\LeftLabel{$\to_i$}
+	\UnaryInfC{$\vdash x: a\to b\vdash \lambda y.xy: a\to b$}
+	\LeftLabel{$\to_i$}
+	\UnaryInfC{$\vdash\lambda xy.xy: (a\to b)\to(a\to b)$}
+	\DisplayProof\\
+
+	\RightLabel{CIRCULAR DEPENDENCY}
+	\AxiomC{$x:a \to \vdash x:a \to x:a\to \vdash x:a$}
+	\LeftLabel{$\to_e$}
+	\UnaryInfC{$x: \vdash xx$}
+	\LeftLabel{$\to_i$}
+	\UnaryInfC{$\vdash\lambda x.xx: $}
+	\DisplayProof\\
+	\end{beispiel}
+	Berechnungsprobleme:\\
+	\begin{itemize}
+		\item gilt $\vdash t:\alpha$ ? (typcheck)
+		\item finde (existiert?) $\alpha$ mit $\vdash t:\alpha$ (Typinferenz)
+		\item finde (existiert?) t mit $\vdash t:\alpha$ (Type inhabitation)
+	\end{itemize}
+	\begin{beispiel}
+	$a\to a$ inhabited (Identitätsfunktion $\lambda x.x$, bildet typ auf sich selbst ab, nach curry-howard tautologie)\\
+	$a$ nicht inhabited (also für sich stehend hat ein wert nicht irgendeinen typ, nicht obdA gültig)\\
+	$(a\to a)\to a$ nicht inhabited (das erste ist eine Tautologie, also immer wahr, a selbst ist aber nicht immer wahr)\\
+	denn: wäre $\vdash t: (a\to a)\to a$, dann $t(\lambda x.x):a$ widerspruch! (dependent Types a'la idris/agda, Programmsynthese, automatisches Beweisen)
+	\end{beispiel}
+	Eigenschaften:\\
+	\AxiomC{$\phi(c)$}
+	\RightLabel{$\forall I$}
+	\LeftLabel{c frisch}
+	\UnaryInfC{$\forall (\phi)$}
+	\DisplayProof\\
+	\AxiomC{$\phi\vdash \psi$}
+	\RightLabel{$\to I$}
+	\UnaryInfC{$\phi\to \psi$}
+	\DisplayProof\\
+
+	\AxiomC{$\phi(c)\vdash \psi(c$)}
+	\RightLabel{herleitbar:}
+	\LeftLabel{c frisch}
+	\UnaryInfC{$\forall x(\phi\to \psi)$}
+	\DisplayProof\\
+	Beweis:\\
+	\AxiomC{$\phi\vdash \psi$}
+	\UnaryInfC{$\phi(c)\to \psi(c)$}
+	\RightLabel{c frisch}
+	\LeftLabel{$\forall I$}
+	\UnaryInfC{$\forall x(\phi\to \psi)$}
+	\DisplayProof\\
+	Regel zulässig $\iff$ durch ihre Hinzunahme wird nichts neu herleitbar.\\
+	\begin{lemma} (Weakening)\\
+	\AxiomC{$\Gamma \vdash t:\alpha$}
+	\RightLabel{$\Gamma\subseteq \Gamma'$}
+	\LeftLabel{(wk)}
+	\UnaryInfC{$\Gamma' \vdash t:\alpha$}
+	\DisplayProof\\
+	(also ein größerer Kontext ändert nichts an der Herleitbarkeit)
+	\end{lemma}
+	\begin{beweis} Induktion über Herleitung von $\Gamma\vdash t:\alpha$\\
+	$(Ax) \Gamma \vdash x:\alpha, x:\alpha \in \Gamma \implies x:\alpha\in \Gamma'\implies \Gamma'\vdash x:\alpha$
+	\AxiomC{$\Gamma[x\mapsto \alpha]\vdash t:\beta$}
+	\LeftLabel{($\to_i$)}
+	\UnaryInfC{$\Gamma\vdash \lambda x.t:\alpha\to\beta$}
+	\DisplayProof\\
+	(*) Nach IV. (prämisse ist kleineres Gamma als konklusion) $\Gamma'[x\mapsto \alpha]\vdash t:\beta$\\
+	da $\Gamma[x\mapsto \alpha]\subseteq \Gamma'[x\mapsto \alpha]$\\
+	Sei $y:\beta\in \Gamma[x\mapsto \alpha]$ (also ein beta ist links, so muss es auch rechts sein)\\
+	Fall 1: $y\neq x\implies y:\beta\in \Gamma \implies y:\beta\in \Gamma'\implies y:\beta\in \Gamma'[x\mapsto \alpha]$\\
+	Fall 2: $y=x\implies \beta=\alpha \implies y:\beta =x:\alpha\in\Gamma[x\mapsto \alpha]$\\
+	per (*) $\to_i$ $\Gamma'\vdash \lambda x.t:\alpha\to\beta$ (die prämisse gilt, also kann man auch die gleiche folgerung machen)
+	\end{beweis}
+	\begin{lemma} Inversion\\
+	(man kann alle Regeln auch umdrehen)\\
+	\begin{itemize}
+	\item 1) $\Gamma\vdash x:\alpha\implies (x:\alpha)\in\Gamma$ (ax inversion)\\
+	\item 2) $\Gamma\vdash ts:\beta \implies$ es existiert $\alpha$ mit $\Gamma\vdash t:\alpha\to\beta$ ($\to_e$ inversion, also wenn es eine Anwendung gibt, dann muss es eine Funktion dazu gegeben haben)\\
+	\item 3) $\Gamma\vdash \lambda x.t:\gamma\implies \gamma$ hat die Form $\alpha\to\beta$ und $\Gamma[x\mapsto \alpha]\vdash t:\beta$ ($\to_i$ inversion, also der type des input einer Funktion muss herleitbar sein)
+	\end{itemize}
+	\end{lemma}
+	\begin{beweis} Regeln sind syntaxgerichtet\end{beweis}
+	\subsection{Typinferenz}
+	$\lambda x.x:a \to a$\\
+	$\lambda x.x:(a\to b)\to(a\to b)$\\
+	Offensichtlich ist das erst besser als das zweite. Es muss also eine ``Algemeinheitshierarchie'' geben (most general typing)\\
+	\begin{definition}
+	Terminologie/Notation:\\
+	$TV(\alpha)=$ Menge der in $\alpha$ vorkomenden Typvariablen.\\
+	$TV(\Gamma)=\bigcup\limits_{(x:\alpha)\in\Gamma}TV(\alpha)$\\
+	\underline{Typsubstitution} = Substitution von Typen für  Typvariablen
+	$\sigma$ \underline{Lösung} von $\Gamma\vdash t:\alpha$, wenn $\Gamma\sigma\vdash t:\alpha\sigma$ herleitbar.\\
+	allgemeinste Lösung (wie bei mgu $\sigma' =\sigma \theta$ dann ist $\sigma$ das allgemeinere, wenn das $\forall \sigma'$ gilt dann ist $\sigma$ die allgemeinste Lösung)\\
+	\underline{Prinzipaltyp} von $\Gamma\vdash t=$ allgemeinste Lösung von $\Gamma\vdash t:a$ a frisch $(a\notin TV(\Gamma))$ (prinizipaltyp ist allgemeinste Lösung mit frischen typen und eindeutig modulo Umbennenung)\\
+	$\Gamma\vdash t$ \underline{typisierbar} $\iff$ $\Gamma\vdash t:a$ hat eine Lösung. (a frisch)\\
+	\end{definition}
+	\begin{satz} Algorithmus W nach HINDLEY/MILNER\\
+	Berechne zu $\Gamma\vdash t:\alpha$ (``Ziel'')\\
+	$PT(\Gamma; t;\alpha)$ Menge von Typgleichungen $a\doteq \beta$ mit $PT(\Gamma;t;\alpha)$ unfizierbar $\iff \Gamma\vdash t:\alpha$ hat Lösung.\\
+	$mgu(PT(\Gamma;t;\alpha))$ liefert allgemeinste Lösung von $\Gamma\vdash t:\alpha$ (liefert und ist nicht gleich, weil der PT mehr variablen substituiert als notwendig)\\
+	$\implies mgu(PT(();t;a))(a) = $ Prinzipaltyp von t (a frisch, t geschlossen)\\
+	Implizit geht man bei diesen Regeln immer von $x\in\Gamma$ aus
+	\begin{itemize}
+		\item $PT(\Gamma; x;\alpha) =\{\alpha\doteq \beta|x:\beta\in\Gamma\}$ (nach Ax inversionslemma)
+		\item $PT(\Gamma; ts;\alpha) =PT(\Gamma;t;a\to \alpha)\cup PT(\Gamma;s;a)\ \textbf{global} (a\ frisch) $ nach $(\to_e)$
+		\item $PT(\Gamma; \lambda x.t;\alpha) = PT(\Gamma[x\mapsto a];t,b )\cup \{a\to b\doteq\alpha\}$ mit a,b \textbf{global} frisch $(\to_i)$ invers. (wir fitten also input auf a und output auf b)
+	\end{itemize}
+	Das global ist notwendig, um einfang bei unifikation zu vermeiden. Lösung z.b. über \cite{nominaleMengen}
+	\end{satz}
+	\begin{beispiel}\ \\
+	$\vdash \lambda xy.xy$\\
+	$PT(\emptyset,\lambda xy.xy;a)= PT(x:b,\lambda y.xy,c)\cup \{a\doteq b\to c\} =\\
+	PT(x:b,y:d; xy;e)\cup \{a\doteq b\to c,c\doteq d\to e\}\\
+	PT(x:b,y:d; x;f\to e)\cup PT(x:b,y:d;y;y:f)\cup \{a\doteq b\to c,c\doteq d\to e\}\\
+	= \{b\doteq f\to e, y\doteq f, a\doteq b\to c, c\doteq c=d\to e\}$\\
+	jetzt hat man gleichungen, die man unifizieren muss:\\ 
+	$mgu = [f/d,f\to e/c,f\to e/b, (f\to e)\to(f\to e)/a]$ wir haben oben mit a angefangen, also ist der endtyp $\lambda xy.xy: (f\to e)\to(f\to e)$ ist Prinzipaltyp.\\
+	\\
+	$PT(x:a; x\lambda z.z; c) = PT(x:a; x; b\to c)\cup PT(x:a, \lambda z.z; b) = \{a\doteq b\to c\}\cup PT(x:a, z:d; z;e)\cup\{b\doteq d\to e\} = \{a\doteq b\to c, d\doteq e, b\doteq d\to e\}$\\
+	$mgu = [e\to e/b, e\to e\to c/a, c/c]$ ``$e\to e\to c/a, c/c$'' also ist Prinzipaltyp.\\
+	\\
+	$PT(\emptyset; \lambda x.xx, a) = PT(x:b; xx; c )\cup \{a\doteq b\to c\} = PT(x:b; x;d\to c)\cup PT(x:b; x; d) \cup \{a\doteq b\to c\} = \{b\doteq d\to c, b\doteq d,\dots\}$\\
+	Unifikation liefert occurs $\bot$ nach substitution [d/b]
+	\end{beispiel}
+	\begin{satz} $(\Gamma,t)$ typisierbar $\iff$ $PT(\Gamma;t; a)$ (a frisch) unifizierbar; dann $mgu(PT(\Gamma;t; \alpha))|_{TV(\Gamma)\cup \{a\}}$ Prinzipaltyp von $(\Gamma;t)$
+	\end{satz}
+	\begin{beweis} Zeige allgemeiner:
+	\[PT(\Gamma; t;\alpha)\; \text{unifizierbar}\iff \Gamma \vdash t:\alpha\; \text{lösbar}\]
+	dann
+	\[mgu(PT(\Gamma;t;\alpha))|_{TV(\Gamma,\alpha)} \]
+	allgemeinste Lösung von $\Gamma\vdash t:\alpha$\\
+	Zeige dazu:\\
+	\[\Gamma\sigma\vdash t:\alpha\sigma\iff \sigma\text{ ist erweiterbar zu }\sigma'\in Unif(PT(\Gamma; t; \alpha))\]
+	d.h. $\sigma'|_{TV(\Gamma,\alpha} = \sigma$ sigma ist also erweiterbar.\\
+	per Induktion über t:\\
+	``$\impliedby$'': per Typregeln(\ref{typkontext}).\\
+	z.B. $t=\lambda x.s:$\\
+	haben $\sigma'\in Unif(PT(\Gamma[x\mapsto a]; s; b)\cup \{\alpha \doteq a\to b\})$\\
+	Nach IV. $\underbrace{\Gamma[x\mapsto a]\sigma'}_{=\Gamma[x\mapsto a]\sigma}\vdash s:\underbrace{b\sigma'}_{b\sigma}$\\
+	Per ($\to_e$)
+	\AxiomC{$\Gamma[x\mapsto a]\sigma$}
+	\AxiomC{$s:b\sigma$}
+	\BinaryInfC{$\Gamma\sigma\vdash \lambda x.s:a\sigma'\to b\sigma'$}
+	\DisplayProof\\
+	Daraus folgt $\alpha\sigma'=\alpha\sigma$\\
+	\\
+	``$\implies$'' Per Inversion:\\
+	1.$\Gamma\sigma\vdash x:\alpha\sigma\stackrel{inversion}{\implies}x:\beta\in\Gamma, \alpha\sigma=\beta\sigma$\\
+	$\implies \sigma\in Unif(\underbrace{PT(\Gamma;x;\alpha)}_{\alpha\doteq\beta})$\\
+	2. $\Gamma \sigma \vdash ts:\alpha\sigma\stackrel{Inversion}{\implies}$\\
+	es existiert ein $\gamma$ mit $\Gamma\sigma\vdash t:\gamma\to \alpha\sigma,\Gamma\sigma\vdash s:\gamma$\\
+	Setze $\sigma'=\sigma[a\mapsto \gamma]$ (a 	global frisch) $\implies \Gamma\sigma'\vdash t:(a\to \alpha)\sigma',\Gamma\sigma' \vdash s:a\sigma'$\\
+	$\stackrel{IV}{\implies} \sigma'$ erweitert zu $\underbrace{\sigma''\in Unif(PT(\Gamma;t;a\to \alpha))}_{\text{gemeinsame TV sind nur die aus} TV(\Gamma;\alpha;a)}$ und $\sigma''\in Unif(PT(\Gamma;s;a))$\\
+	$\implies$ $\sigma''\in Unif(PT(\Gamma,ts,\alpha))$\\
+	3. $\Gamma\sigma\vdash\lambda x.s:\alpha\sigma\stackrel{Inversion}{\implies}$\\
+	$\alpha\sigma = \beta\to\gamma$ $\Gamma\sigma[x\mapsto \beta]\vdash s:\gamma$\\
+	Setze $\sigma' =\sigma[a\mapsto \beta,b\mapsto \gamma]$, a,b global frisch\\
+	$\implies$ $\Gamma[x\mapsto a]\sigma'\vdash s:b\sigma'$\\
+	$\stackrel{IV}{\implies}\sigma'$ erweitert zu $\sigma''\in Unif(PT(\Gamma[x\mapsto a];s; b))$\\
+	$\stackrel{(a\to b)\sigma'' = \alpha\sigma''}{\implies} \sigma'' \in Unif(PT(\Gamma; \lambda x.s;\alpha))$\\
+	(Das letzte folgt daraus, dass $\alpha\sigma= \beta\to \gamma$ ist und wir $\sigma' =\sigma[a\mapsto \beta,b\mapsto \gamma]$ haben)
+	\end{beweis}
+	\subsection{Subjektreduktion}
+	\begin{satz} $\Gamma\vdash t:\alpha, t\to_\beta s\implies \Gamma \vdash s:\alpha$\\
+	\danger{} ``$\impliedby$'' gilt \textbf{NICHT}: z.B. $t=(\lambda x.y)(\lambda x.xx)\to_\beta y$
+	\end{satz}
+	\begin{lemma} Substitution\\
+	$\Gamma[x\mapsto \alpha]\vdash t:\beta, \Gamma\vdash s:\alpha\implies \Gamma\vdash t[s/x]:\beta$\\
+	Beweis: induktion über t.
+	\end{lemma}
+	\begin{beweis} $t= C((\lambda x.u)v), s= C(v[u/x])$\\
+	Induktion über $C(\cdot)$\\
+	z.B.: $C(\cdot) =(\cdot)$ Per inversion:\\
+	$\Gamma\vdash \lambda x.u:\beta\to\alpha, \Gamma\vdash v:\beta$\\
+	$\Gamma[x\mapsto\beta]\vdash u:\alpha$\\
+	$\stackrel{subst-lemma}{\implies} \Gamma\vdash \underbrace{u[v/x]}_{s}:\alpha$
+	\end{beweis}
+	\section{Church Rosser des $\lambda$-Kalkül}
+	(Dies ist der Ursprüngliche Church-Rosser beweis, der Name wird jetzt mittlerweile für alle TES benutzt).\\
+	\includegraphics[width=256px]{images/KonfluenzLambda.png}\\
+	\begin{lemma} Streifenlemma (strip-lemma)\\
+	\includegraphics[width=256px]{images/streifenlemma.png}\\
+	Effektiv ein mittelweg zwischen WCR und CR.
+	\end{lemma}
+	Daraus folgt CR:\\
+	\includegraphics[width=256px]{images/StreifenGenau.png}\\
+	oben hat man die n-beta-reduktionen. Unten macht man jeweils immer einen Schritt und kaskadiert nach links.\\
+	Dies geht für jedes TES.\\
+	Speziell für lambda sähe das so aus.\\
+	\includegraphics[width=256px]{images/lambdaStreifenlemma.png}\\
+	markierte Terme: $t,s::=x|ts|\lambda x.t|(\underline{\lambda}x.t)s$ (also genau gleich, man kann nur \textbf{beta-reduzierbare }terme markieren).\\
+	Diese unterstriche müssen wieder ``unlocked'' werden.\\
+	$|t|:$ Entfernt \_ aus t, z.B. $|(\underline{\lambda}x.t)s|=(\lambda x.|t|) |s|$\\
+	$\phi(t)$ Reduziere alle unterstrichenen Redexe:
+	\begin{itemize}
+	\item $\phi(x)=x$
+	\item $\phi(ts)=\phi(t)\phi(s)$
+	\item $\phi(\lambda x.t)=\lambda x.\phi(t)$
+	\item $\phi((\underline{\lambda }x.t)s) = \phi(t)[\phi(s)/x]$
+	\end{itemize}
+	\newcommand{\tomark}{\stackrel{|\cdot|}{\to}}
+	Syntaktic sugar $t\tomark |t|$
+	\begin{lemma} Lemma A\\
+	\includegraphics[width=256px]{images/LemmaA.png}\\
+	Dabei $(\lambda x.t)s\to_{\underline{\beta}} t[s/x]$ $(\underline{\lambda} x.t)s\to_{\underline{\beta}} t[s/x]$ Es ignoriert also die Unterstriche.\\
+	\end{lemma}
+	\begin{beweis} Reduziere auf $t\to_\beta s$, Induktion über Kontexte
+	\end{beweis}
+	Wir bekommen also nicht mehr dazu, oder verlieren ausdruckskraft.
+	\begin{lemma} Syntaktisches Substitutionslemma\\
+	\[u[v/y][s/x] = u[s/x][v[s/x]/y]\]
+	nicht simultan! Das v wird vom x beeinflusst.\\
+	wenn $y\notin FV(s), x\neq y$ (bei dem ersten hätte man eine doppelsubstitution, beim zweiten wird die zweite reduktion void)\\
+	\end{lemma}
+	\begin{beweis} Induktion über u (weil in diesen Reinsubstituiert wird)\\
+	Der interessante Fall ist hier der Induktionsanfang, weil im I.S nur weitergereicht wird.\\
+	Sei n eine Variable. (LHS/RHS =Left/Right handed side)\\
+	$u\notin \{x,y\}\checkmark$\\
+	$u= x: LHS = s, RHS=s\text{ weil }y\notin FV(s)$\\
+	$u= y:LHS = v[s/x], RHS=v[s/x]$\\
+	\end{beweis}
+
+	\begin{lemma} Lemma B\\
+	a) $\phi(t[s/x])=\phi(t)[\phi(s)/x]$\\
+	b) $\phi$ bewahrt $\beta$\\
+	\includegraphics[width=256px]{images/LemmaB.png}\\
+	\end{lemma}
+
+	\begin{beweis}. \\
+	a) Induktion über t, interessant nur $t=(\underline{\lambda}y.u)v$\\
+	$\phi(((\underline{\lambda}y.u)v)[s/x])\stackrel{(1)}{=}\phi((\underline{\lambda}y.u[s/x])v[s/x]) = \phi(u[s/x])[\phi(v[s/x])/y]\\
+	\stackrel{IV}{=} \phi(u)[\phi(s)/x][\phi(v)[\phi(s)/x])/y]\\
+	\stackrel{synt.Subst+(1)}{=} \underbrace{\phi(u)[\phi(v)/y]}_{\phi((\underline{\lambda}y.u)v)}[\phi(s)/x]\\
+	= \phi((\underline{\lambda}y.u)v)[\phi(s)/x]$\\
+	 (1) o.E. $y\neq x$ $y\notin FV(s)$ ( im zweifelsfall umbennenen)\\
+	b) Reduziere auf $t\to_{\underline{\beta}} s$, Induktion über Kontexte:\\
+	$(\cdot):$ Fälle nach Markierung:\\
+	Fall 1: markiert:\\
+	$\begin{bmatrix} (\underline{\lambda}x.u)v&\to_{\underline{\beta}}& u[v/x]\\
+	\phi&&\phi\\
+	\phi(u)[\phi(v)/x]&=&\phi(u)[\phi(v)/x]
+	\end{bmatrix}$\\
+	Fall 2: unmarkiert:\\
+	$\begin{bmatrix} (\lambda x.u)v&\to_{\underline{\beta}}& u[v/x]\\
+	\phi&&\phi\\
+	\lambda x.\phi(u)\phi(v)&\to_\beta&\phi(u)[\phi(v)/x]
+	\end{bmatrix}$\\
+	Beispiel mit nichtleerem kontext:\\
+	Kontext $(\underline{\lambda} x.C(\cdot))s$ und $t\to_\beta s$\\
+	$\phi(\underline{\lambda} x.C(t))s = \phi(C(t))[\phi(s)/x]\stackrel{IV, C\ ist\ kleinerer\ Kontext}{\to_\beta^*}\phi(C(s))[\phi(s)/x]\checkmark$
+	\end{beweis}
+
+	\begin{lemma} Lemma C\\
+	\includegraphics[width=256px]{images/LemmaC.png}\\
+	\end{lemma}
+	\begin{beweis} Induktion über t, interessanter Fall $t=(\underline{\lambda}x.u)v$ (sonst passiert ja nichts):\\
+	$\begin{bmatrix}(\underline{\lambda}x.u)v&\tomark& (\lambda x.|u| )|v|\\
+	\phi & &\phi\\
+	\phi(u)[\phi(v)/x]&_\beta\leftarrow&(\lambda x.\phi(u))\phi(v)
+	\end{bmatrix}$
+	\end{beweis}
+	$C((\lambda x.u)v)$\\
+	\includegraphics[width=256px]{images/LambdaZusammenführung.png}\\
+	\section{Curry-Howard Isomorphismus}
+	Typen = Propositionen (=Formel) ``Types are propositions''.\\
+	Terme/Programme = Beweise (u.U. ist ein Typ nicht bewohnt, also nicht Beweisbar)\\
+	Coq ``man hat einen Term definiert, der diesen Typ hat''\\
+	\underline{minimale Logik:} 
+	\[\phi,\psi::= a|\phi\to\psi\; (a\in V)\]
+	Deduktion:\\
+	\AxiomC{$\phi\to\psi$}
+	\AxiomC{$\phi$}
+	\LeftLabel{$(\to_E)$}
+	\BinaryInfC{$\psi$}
+	\DisplayProof\\
+	\AxiomC{$[\phi]\vdash\psi$}
+	\LeftLabel{$(\to_I)$}
+	\UnaryInfC{$\phi\to\psi$}
+	\DisplayProof\\
+	Sequenzenkalkül: $\underbrace{\Gamma}_{Menge Formeln}^{Annahme}\vdash \underbrace{\phi}_{Formel}$
+	``linke Regel'' $(\to_E)$\\
+	\AxiomC{$\Gamma \vdash \phi\to\psi$}
+	\AxiomC{$\Gamma \vdash \phi$}
+	\LeftLabel{$(\to_E)$}
+	\BinaryInfC{$\Gamma\vdash \psi$}
+	\DisplayProof\\
+	\AxiomC{$\Gamma,\phi \vdash \psi$}
+	\LeftLabel{$(\to_I)$}
+	\UnaryInfC{$\Gamma\vdash \phi\to\psi$}
+	\DisplayProof\\
+	\AxiomC{}
+	\LeftLabel{$(Ax)$}
+	\UnaryInfC{$\Gamma\vdash \phi$}
+	\DisplayProof\\
+	\begin{satz} C-H-I:\\
+	$\vdash \phi\iff \phi$ bewohnt\\
+	\end{satz}
+	\begin{beweis}. \\
+	$\impliedby$ trivial: lösche Terme aus Herleitung von $\vdash t:\phi$ ergibt Herleitung $\vdash \phi$ (damit erhält man die kombination der $\phi$ als typen, dies sind trivialerweise die Herleitung)\\
+	$\implies$ Zu $\Gamma$ definiert Kontext $\bar\Gamma$:\\
+	$\Gamma =\{\phi_1,\dots,\phi_n\}\implies \bar\Gamma =\{x_1:\phi_1,\dots,x_n:\phi_n\}$\\
+	Also jeder Term wird als Typ gewertet und bekommt eine Variable.\\
+	Zeige $\Gamma\vdash \psi\implies \exists t(\bar\Gamma\vdash t:\psi)$\\
+	per Induktion über Herleitungen von $\Gamma\vdash\psi$\\
+	(Ax): $\phi\in\Gamma\implies \psi=\phi_i$ für ein $x_i:\phi_i\in\bar\Gamma \stackrel{(AX)}{\implies} \bar\Gamma \vdash x_i:\phi_i$\\
+	$(\to_E)$\\
+	\AxiomC{$\Gamma\vdash \phi\to\psi$}
+	\AxiomC{$\Gamma\vdash \phi$}
+	\LeftLabel{$(\to_E)$}
+	\BinaryInfC{$\Gamma\vdash \psi$}
+	\DisplayProof\\
+	I.V. haben t,s mit\\
+	\AxiomC{$\bar\Gamma\vdash t:\phi\to\psi$}
+	\AxiomC{$\bar\Gamma\vdash s:\phi$}
+	\BinaryInfC{$\bar\Gamma\vdash ts:\psi$}
+	\DisplayProof\\
+	($\to_I$) Beweis\\
+	\AxiomC{$\Gamma,\phi\vdash\psi$}
+	\LeftLabel{$(\to_I)$}
+	\UnaryInfC{$\Gamma\vdash\psi\to\phi$}
+	\DisplayProof\\
+	I.V. haben (bei $\phi=\phi_{n+1}$)\\
+	\AxiomC{$\bar\Gamma,x_{i+1}:\phi_{i+1}$}
+	\AxiomC{$\vdash t:\psi$}
+	\LeftLabel{$(\to_I)$}
+	\BinaryInfC{$\bar\Gamma\vdash \lambda x_i.t:\phi_{i+1}\to\psi$}
+	\DisplayProof\\
+	\end{beweis}
+	\textbf{\danger ``$\to$'' ist intuitionistisch!}\\
+	z.B. $((a\to b)\to a)\to a$ ist klassisch gültig, aber in miminaler (intuitionistischer) Logik nicht herleitbar.\\
+	\AxiomC{}
+	\LeftLabel{(Ax)}
+	\UnaryInfC{$(a\to a)\vdash (a \to a)\to a$}
+	\AxiomC{}
+	\LeftLabel{(Ax)}
+	\UnaryInfC{$(a\to a)\to ,a \vdash a$}
+	\UnaryInfC{$(a\to a)\to a\vdash a \to a$}
+	\LeftLabel{$(\to_E)$}
+	\BinaryInfC{$(a\to a) \to a\vdash a$}
+	\LeftLabel{$(\to_I)$}
+	\UnaryInfC{$\vdash((a\to a\to) a)\to a$}
+	\DisplayProof\\
+	Auf Typebene:\\
+	$\underbrace{((a\to a)\to a)\to a}_{\lambda f.f(\lambda x.x)}$\\
+	Man hat eine funktion, die wieder eine funktion erhält also das innere $(a\to a)\to a$ und hat als Ergebnis wieder ein a. Dazu muss man anwenden. Die innerer funktion muss den typ $a\to a$ haben. Das einzig mögliche hierfür ist die identitätsfunktion $\lambda x.x$\\
+	Deshalb haben wir eine funktion f in den wir eine funktion (identität) haben.\\
+	\section{Induktive Datentypen}
+	\begin{minted}{haskell}
+	data Nat where
+		0: ()-> Nat
+		Suc: Nat->Nat
+	\end{minted}
+	definiert Signatur $\Sigma_{Nat} = \{0/0,Suc/1\}$\\
+	Die Semantik von Nat ist definiert als\\
+	$\llbracket Nat\rrbracket=\{0,Suc(0),Suc(Suc(0)),\dots\}$ also ein Herbrandmodell.\\
+	\begin{definition} Ein $\Sigma$-Modell ($\Sigma$-Algebra) $\mathfrak{M}$ besteht aus\\
+	\begin{itemize}
+		\item Menge M (Träger)
+		\item zu f/n$\in\Sigma$
+		\item $\mathfrak{M}\llbracket f\rrbracket:M^n\to M$
+	\end{itemize}
+	Interpretion von Termen unter \underline{Umgebung} $\eta:V\to M:$\\
+	\[\mathfrak{M}\llbracket t\rrbracket\eta \in M\]
+	\[\mathfrak{M}\llbracket x\rrbracket\eta= \eta(x)\; x\in V\]
+	\[\mathfrak{M}\llbracket f(t_1,\dots,t_n)\rrbracket\eta= \mathfrak{M}\llbracket f\rrbracket(\mathfrak{M}\llbracket t_1\rrbracket\eta,\dots,\mathfrak{M}\llbracket t_n\rrbracket\eta)\]
+	\end{definition}
+	\newcommand{\dbrack}[1]{\llbracket #1\rrbracket}
+	\begin{beispiel} $\dbrack{Nat}$ ist eine $\Sigma_{Nat}$-Algebra per:\\
+	\[\dbrack{Nat}\dbrack{0} = 0\]
+	\[\dbrack{Nat}\dbrack{succ}(x) = Suc(x)\in\dbrack{Nat}\]
+	\end{beispiel}
+
+
+
+
+
+
+
+
+
+
+	\newpage
+	\begin{thebibliography}{1}
+	\bibitem{knuthBendix}
+	Knuth-bendix algorithm for creating CR TES from terminating TES\\
+	\text{https://en.wikipedia.org/wiki/Knuth\%E2\%80\%93Bendix\_completion\_algorithm}
+	\bibitem{dependantChoice}
+	dependant choice\\
+	\text{https://de.wikipedia.org/wiki/Axiom\_der\_abh\%C3\%A4ngigen\_Auswahl}
+	\bibitem{nominaleMengen}
+	nominale Mengen\\
+	\text{https://www.tcs.ifi.lmu.de/mitarbeiter/martin-hofmann/publikationen-pdfs/c43-nominalrenamingsets.pdf}
+
+	\end{thebibliography}
+
+\end{document}
+

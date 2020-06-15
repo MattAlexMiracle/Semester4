@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\section{Aufgabe 20}
+	a) Bekannt:\\
+	A,B sind stochastisch unabh. also $P(A\cap B)=P(A)P(B)$\\
+	außerdem gilt nach bedingter wahrscheinlichkeit: $P(A|B)P(B) = P(A\cap B)$, also $P(A|B)=P(A)$,\\
+	bzw $P(B|A)P(A)=P(A\cap B)\iff P(B) =P(B|A)$\\
+	zZ.: $P(A^c\cap B)=P(A^c)P(B)$\\
+	allgemein gilt $P(A^c\cap B) = P(B|A^c)P(A^c)$ für alle wahrscheinlichkeiten (abhängig oder unabhängig)\\
+	$P(A^c\cap B)=P(A^c|B)P(B)\stackrel{\text{\tiny bedingte wahrscheinlichkeit ist auch ein W-Maß}}{\iff} P(A^c\cap B) = (1-P(A|B))P(B)\\\stackrel{\scriptscriptstyle\text{stoch. unabh.} P(A|B)=P(A)}{\iff} P(A^c\cap B) = (1-P(A))P(B)\iff P(A^c\cap B)=P(A^c)P(B)$\\
+	b) mit drei\\
+	
+	$P(A\cap B\cap C)= P(A)P(B)P(C)$ ist bekannt.\\
+	Daraus folgt $P(A\cap B\cap C)= P(A)P(B)P(C)= P(A)P(B\cap C) = P(A|B\cap C)P(B\cap C)$, also $P(A|B\cap C)=P(A)$\\
+	\textbf{(1)} Es gilt hier, dass auch $P(B),P(C),P(A)$ paarweise unabhängig sind:\\
+	$P(A\cap B\cap C)= P(A)P(B)P(C) = P(A)P(B|C)P(C) = P(A)P(B\cap C)\implies P(B)P(C)=P(B\cap C)$\\
+	 (analog für die anderen paare).\\
+	\begin{comment}
+	$P(A^c\cap B^c\cap C) = P(A^c|B^c\cap C) P(B^c\cap C)\iff P(A^c\cap B^c\cap C) =P((A^c|C)|B^c)P(B^c\cap C)\stackrel{\text{\tiny Paarweise unabhängig und a)}}{\iff}  P(A^c\cap B^c\cap C) =P(A^c|B^c)P(B^c\cap C) \iff P(A^c\cap B^c\cap C) = (1-P(A)) P(B^c\cap C) \iff P(A^c\cap B^c\cap C) = P(A^C) P(B^c\cap C)$ aus 1. wissen wir, dass $P(B^c\cap C)=P(B^c)P(C)$ gilt, wenn B und C stochastisch unabhängig sind (gilt nach \textbf{(1)}). Also folgt $P(A^c\cap B^c\cap C) = P(A^c) P(B^c\cap C)\iff P(A^c\cap B^c\cap C) = P(A^c) P(B^c)P(C)$
+	\end{comment}
+	(1) $(A\cup B)$ und $C$ sind stochastisch unabhängig:\\
+	$P((A\cup B)\cap C) = P((A\cap C)\cup (B\cap C)) = P(A\cap C)+P(B\cap C)-P(A\cap B\cap C) =P(A)P(C)+P(B)P(C)-P(A)P(B)P(C) = P(C)(P(A)+P(B)-P(A)P(B))=P(C)P(A\cup B) $\\
+	Daraus folgt $P(A^c\cap B^c\cap C) = P((A\cup B)^c\cap C) = P((A\cup B)^c) * P(C)$ ist nach a) auch linear unabhängig, wenn $P(A\cup B)P(C)$ unabhängig ist, was bei (1) bewiesen wurde. Somit sind die drei werte auch stochastisch unabhängig\\
+	\section{Hausaufgabe 21}
+	Es ist bekannt:	Sei F=``Falsche Dosierung'' und $P(F)=1\%$\\
+	Heilung $P(A|F^c)=80\%$,\\
+	Nebenwirkung $P(B|F^c)=30\%$\\
+	(sprich ``unter der Bedingung, dass es keinen defekt gibt, ist Heilung/Nebenwirkung X wahrscheinlich'')\\
+	Bei fehlerhaften gilt, dass die Heilwirkung nur in $P(A|F)=20\%$ und $P(B|F)=50\%$\\
+	Dies sind bedingte wahrscheinlichkeiten, da die Wirkungszahlen unter dem Vorwissen, dass die Tabletten defekt sind, ermittelt wurden. (man nimmt eine Tablette, sieht dass sie defekt ist, und testet ihre Wirkung)
+	Gesucht ist $P(A|B)$, $P(A|B^c)$\\
+	%$P(B)$ ist mit der totalen wahrscheinlichkeit ausrechenbar. Dafür werden $P(B\cap \dots)$ benötigt.\\
+	%$P(B\cap F^c)= P(B|F^c)(P(F^c)) = P(B|F^c)(1-P(F)) = 0.3*0.99 = 0.297$\\
+	%$P(B\cap F) = P(B|F)P(F) = 0.5*0.01=0.005$\\
+	%$P(B) = P(B\cap F)+P(B\cap F^c) = 0.297+0.005=0.302$\\
+	$P(A\cap F) = P(A|F)P(F)=0.2*0.01 = 0.002$\\
+	$P(A\cap F^c) = P(A|F^c)P(F^c) = 0.8 * 0.99 = 0.792$\\
+	$P(A)=P(A\cap F)+P(A\cap F^c) = 0.002+0.792 = 0.794$\\
+	Stichwort ``unter der Bedingung'':\\
+	$P(A|B) = P(A)$, da das Medikament unabhängig voneinander zwei Wirkungen hat. (bei stoch. unabhängigkeit gilt $P(A)=P(A|B) = P(A|B^c)$, beweis vgl aufgabe 1)\\
+	Also auch $P(A|B^C) = P(A)$
+\end{document}

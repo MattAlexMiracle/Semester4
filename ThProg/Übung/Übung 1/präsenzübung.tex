@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{verbatim}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\title{Vorlesung 2}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+
+
+
+\begin{document}
+	%aaron.strahlberger@posteo.de 
+	\maketitle
+	\section{Übung 1}
+	\subsection{1}
+	a) Involution $(R^-)^-$\\
+	Beweis:\\
+	$R^- = \{(y,x)|xRy\}$\\
+	also $\{(x,y)|(y,x)\in \{(y,x)| xRy\}\}=\{(x,y)| xRy\}=R$\\
+	b) Antiautomorphismus $(R\circ T)^- = T^-\circ R^-$\\
+	Beweis:\\
+	$\{(x,z)|\exists y( xTy\land yRz)\}^- = \{(z,x)|\exists y( xTy\land yRz)\} =\{(z,x)|\exists y(zR^-y\land yT^-z\} = T^-\circ R^-$\\
+	c) Monotonie der Komposition $R\subseteq S\implies R\circ T\subseteq S\circ T$\\
+	Beweis:\\
+	Von oben nach unten und unten nach oben, in der mitte treffen.\\
+	Annahme $R\subseteq S$.\\
+	$z(R\circ T)y\\\iff \exists x (zTx\land xRy)\\
+	\stackon{$\implies$}{$R\subseteq S$}\\
+	\exists x (zTx\land xSy)\\
+	\implies z(S\circ T)y$
+	d) Monotonie des Inversen:\\
+	$R\subseteq S\implies R^-\subseteq S^-$\\
+	$yR^-x\iff xRy \stackon{$\implies$}{$R\subseteq S$} xSy\iff yS^-x$\\
+	\subsection{2}
+	gegenbeispiel für $R\circ S\neq S\circ R$\\
+	$S=\{(1,2)\}, R=\{(2,1)\}$\\
+	$S\circ R = (1,1)$\\
+	$R\circ S = (2,2)$\\
+	\subsection{Übung 2}
+	1. $(1+(-y))\cdot x^{-1} = (1+(-(-1)))\cdot (z+x\cdot 1)^{-1}$\\
+	$\stackon{$\to$}{decomp}\{(1+(-y))=(1+(-(-1))), x^{-1}=(z+x\cdot 1)^{-1}\}$\\
+	$\stackon{$\to$}{decomp} \{(1+(-y))=(1+(-(-1))), x=(z+x\cdot 1)\}$\\
+	$\stackon{$\to$}{occurs} \bot$\\
+	2. $x\cdot (y^{-1}\cdot y)+(z+y) = x\cdot x +(0+0\cdot 1)$\\
+	$\stackon{$\to$}{decomp} \{x\cdot (y^{-1}\cdot y)=x\cdot x, (z+y)=(0+0\cdot 1)\}$\\
+	$\stackon{$\to$}{decomp} \{x=x,(y^{-1}\cdot y)=x,  (z+y)=(0+0\cdot 1)\}$\\
+	$\stackon{$\to$}{orient} \{x=x,x=(y^{-1}\cdot y),  (z+y)=(0+0\cdot 1)\}$\\
+	$\stackon{$\to$}{delete} \{x=(y^{-1}\cdot y),  (z+y)=(0+0\cdot 1)\}$\\
+	$\stackon{$\to$}{decomp} \{x=(y^{-1}\cdot y),  z=0,y=0\cdot 1)\}$\\
+	$\stackon{$\to$}{elim} \{x=((0\cdot 1)^{-1}\cdot 0\cdot 1),  z=0,y=0\cdot 1)\}$\\
+	mgu = $[((0\cdot 1)^{-1}\cdot 0\cdot 1)/x,0/z,0\cdot 1/y]$\\
+	3.\\
+	$y+(x\cdot 1)= (z+0)^{-1} +y$\\
+	$\stackon{$\to$}{decomp} \{y=(z+0)^{-1},(x\cdot 1)=y\}$\\
+	$\stackon{$\to$}{elim}\{y=(z+0)^{-1},(x\cdot 1)=(z+0)^{-1}\}$\\
+	$\stackon{$\to$}{conflict}\bot$
+\end{document}
