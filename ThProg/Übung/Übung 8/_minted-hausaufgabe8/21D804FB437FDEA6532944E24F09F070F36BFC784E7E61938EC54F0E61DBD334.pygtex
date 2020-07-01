@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{length}\PYG{o+ow}{::}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Nat}
+	\PYG{n}{length} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{l+m+mi}{0}
+	\PYG{n}{length} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{x} \PYG{n}{y}\PYG{p}{)} \PYG{o+ow}{=} \PYG{l+m+mi}{1}\PYG{o}{+} \PYG{n}{length} \PYG{n}{y}
+	\PYG{n}{snoc}\PYG{o+ow}{::}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{snoc} \PYG{k+kt}{Nil} \PYG{n}{x} \PYG{o+ow}{=} \PYG{k+kt}{Cons} \PYG{n}{x} \PYG{k+kt}{Nil}
+	\PYG{n}{snoc} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{x} \PYG{n}{y}\PYG{p}{)} \PYG{n}{z} \PYG{o+ow}{=} \PYG{k+kt}{Cons} \PYG{n}{x} \PYG{p}{(}\PYG{n}{snoc} \PYG{n}{y} \PYG{n}{z}\PYG{p}{)}
+	\PYG{n}{reverse}\PYG{o+ow}{::}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{reverse} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{x} \PYG{n}{y}\PYG{p}{)}\PYG{o+ow}{=} \PYG{n}{snoc} \PYG{p}{(}\PYG{n}{reverse} \PYG{n}{y}\PYG{p}{)} \PYG{n}{x}
+	\PYG{n}{reverse} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{k+kt}{Nil}
+	\PYG{n}{drop}\PYG{o+ow}{::}\PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{drop} \PYG{n}{x} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{k+kt}{Nil}
+	\PYG{n}{drop} \PYG{n}{x} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{k+kr}{\PYGZus{}} \PYG{n}{y}\PYG{p}{)} \PYG{o+ow}{=} \PYG{k+kr}{if} \PYG{n}{x}\PYG{o}{==}\PYG{n}{z} \PYG{k+kr}{then} \PYG{n}{drop} \PYG{n}{x} \PYG{n}{y} \PYG{k+kr}{else} \PYG{k+kt}{Cons} \PYG{n}{z} \PYG{p}{(}\PYG{n}{drop} \PYG{n}{x} \PYG{n}{y}\PYG{p}{)}
+	\PYG{n}{elem}\PYG{o+ow}{::}\PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Bool}
+	\PYG{n}{elem} \PYG{n}{x} \PYG{k+kt}{Nil} \PYG{o+ow}{=}\PYG{k+kt}{False}
+	\PYG{n}{elem} \PYG{n}{x} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{z} \PYG{n}{y}\PYG{p}{)} \PYG{o+ow}{=} \PYG{k+kr}{if} \PYG{n}{x}\PYG{o}{==}\PYG{n}{z} \PYG{k+kr}{then} \PYG{k+kt}{True} \PYG{k+kr}{else} \PYG{n}{elem} \PYG{n}{x} \PYG{n}{y}
+	\PYG{n}{maximum}\PYG{o+ow}{::}\PYG{k+kt}{List} \PYG{k+kt}{Nat}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Nat}
+	\PYG{n}{maximum} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{l+m+mi}{0}
+	\PYG{n}{maximum} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{x} \PYG{n}{y}\PYG{p}{)} \PYG{o+ow}{=} \PYG{k+kr}{if} \PYG{n}{maximum} \PYG{n}{y}\PYG{o}{\PYGZgt{}} \PYG{n}{x} \PYG{k+kr}{then} \PYG{n}{maximum} \PYG{n}{y} \PYG{k+kr}{else} \PYG{n}{x}
+\end{Verbatim}

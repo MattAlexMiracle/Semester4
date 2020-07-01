@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k+kr}{data} \PYG{k+kt}{List} \PYG{n}{a} \PYG{k+kr}{where}
+		\PYG{k+kt}{Nil:}\PYG{n+nb}{()}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}
+		\PYG{k+kt}{Cons:} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{concat}\PYG{o+ow}{::}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{concat} \PYG{k+kt}{Nil} \PYG{n}{k}\PYG{o+ow}{=}\PYG{n}{k}
+	\PYG{n}{concat} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{x} \PYG{n}{l}\PYG{p}{)} \PYG{n}{k} \PYG{o+ow}{=} \PYG{k+kt}{Cons} \PYG{n}{x} \PYG{p}{(}\PYG{n}{concat} \PYG{n}{l} \PYG{n}{k}\PYG{p}{)}
+\end{Verbatim}

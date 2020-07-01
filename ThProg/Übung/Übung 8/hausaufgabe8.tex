@@ -1,0 +1,204 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usepackage{tikz-qtree}
+
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	\section{aufgabe 3}
+	Das problem der Subjektexpansion ist typischerweise, dass untypisierbare Terme durch beta-Reduktion gelöscht werden könnten.\\
+	Hier ist jedoch ist festgelegt, dass sowohl s als auch t typiserbar ist.\\
+	Sei $\Gamma[v\mapsto \alpha]$\\
+	$t=a:b$\\
+	$s=(\lambda v.v)a$\\
+	\\
+	\AxiomC{}
+	\UnaryInfC{$\Gamma[v\mapsto \alpha]\vdash v:\alpha$}
+	\UnaryInfC{$\Gamma\vdash\lambda v.v:\alpha\to\alpha$}
+	\AxiomC{}
+	\UnaryInfC{$\Gamma\vdash a:\alpha$}
+	\BinaryInfC{$\Gamma\vdash(\lambda v.v)a$}
+	\DisplayProof\\
+	Im Fall t ist das a an keine Weiteren typattribute gebunden (Es ``weis'' nichts mehr davon, dass es evtl. in einem Kontext s gestanden ist, in dem es relevant war ein $\alpha$ zu sein).\\
+	Bei s ist es jedoch, aufgrund des Kontexts gezwungenermaßen so, dass man $a:\alpha$ zuweist.\\
+	$S= \lambda xyz.xz(yz)$\\
+	\begin{tikzpicture}[sibling distance=10em,
+	every node/.style = {shape=rectangle, align=center},
+	level 1/.style={sibling distance=10em},
+	level 2/.style={sibling distance=13em},
+	level 3/.style={sibling distance=13em},
+	level 4/.style={sibling distance=15em},
+	level 4/.style={sibling distance=20em},
+	level 5/.style={sibling distance=10em},
+	]
+	\node{$PT(\emptyset,\lambda xyz.xz(yz),\alpha)$}
+	child {node {$PT(x:a_1,\lambda yz.xz(yz),a_2)$}
+		child {node {$PT(\{x:a_1,y:a_3\},\lambda z.xz(yz),a_4)$}
+			child {node {$PT(\underbrace{\{x:a_1,y:a_3, z:a_5\}}_{\Gamma},xz(yz),a_6)$}
+			child {node {$PT(\Gamma,xz, a_7\to a_6)$}
+				child {node {$PT(\Gamma,x,a_8\to a_7\to a_6)$}}
+				child {node {$PT(\Gamma,z,a_8)$}}
+			}
+			child {node {$PT(\Gamma,yz, a_7)$}
+				child {node {$PT(\Gamma,y, a_9\to a_7)$}}
+				child {node {$PT(\Gamma,z, a_9)$}}
+			}
+			}
+			child {node {$\{a_5\to a_6\doteq a_4\}$}}
+		}
+		child {node {$\{a_3\to a_4\doteq a_2\}$}}
+	}
+	child {node {$\{a_1\to a_2\doteq \alpha\}$}};
+	\end{tikzpicture}\\
+	Der letzte schritt wurde bei jedem Teilbaum aus Formatierungsgründen weggelassen.\\
+	$\{a_1\to a_2\doteq \alpha,a_3\to a_4\doteq a_2,a_5\to a_6\doteq a_4,a_8\to a_7\to a_6\doteq a_1, a_8\doteq a_5,a_3\doteq a_8\to a_7,a_5\doteq a_9\}$\\
+	elim $\{a_1\to a_2\doteq \alpha,a_3\to a_4\doteq a_2,a_9\to a_6\doteq a_4,a_8\to a_7\to a_6\doteq a_1, a_8\doteq a_9,a_3\doteq a_8\to a_7,a_5\doteq a_9\}$\\
+	elim $\{(a_8\to a_7\to a_6)\to (a_8\to a_7)\to a_9\to a_6\doteq \alpha,a_3\to a_4\doteq a_2,a_9\to a_6\doteq a_4,a_8\to a_7\to a_6\doteq a_1, a_8\doteq a_9,a_3\doteq a_8\to a_7,a_5\doteq a_9\}$\\
+	elim $\{(a_8\to a_7\to a_6)\to (a_8\to a_7)\to a_8\to a_6\doteq \alpha,a_3\to a_4\doteq a_2,a_9\to a_6\doteq a_4,a_8\to a_7\to a_6\doteq a_1, a_8\doteq a_9,a_3\doteq a_8\to a_7,a_5\doteq a_9\}$\\
+	also $S= \lambda xyz.xz(yz):(a_8\to a_7\to a_6)\to (a_8\to a_7)\to a_8\to a_6$\\
+	$K=true= \lambda xy.x:\alpha\to\beta\to\alpha$\\
+	$S(true)\to^*_\beta \lambda yz.z:b\to a\to a = false$\\
+	allerdings gilt für SK selbst:\\
+	\AxiomC{Umbennenung von oben}
+	\UnaryInfC{$K:a_8\to a_7\to a_8$}
+	\AxiomC{$a_8=a_6$ setzen, um mit K zu unifizieren}
+	\UnaryInfC{$\vdash S: (a_8\to a_7\to a_8)\to (a_8\to a_7)\to a_8\to a_8$}
+	\BinaryInfC{$\vdash SK: (a_8\to a_7)\to a_8\to a_8$}
+	\DisplayProof\\
+	D.h. $SK$ ist mit $(a_8\to a_7)\to a_8\to a_8$ unifizierbar, aber nicht nur mit $b\to a\to a$, das für das Beta-redukt notwendig wäre. Somit gilt die abgeschwächte subjektexpansion nicht.\\
+	\section{4}
+	1.\\
+	Nein:\\
+	\[\underbrace{((a\to a)\to a\to a)}_{1.Eingabe}\underbrace{\to a}_{2.Eingabe} \underbrace{\to a}_{ausgabe}\]
+	Die erste eingabe verlangt also irgendeine Funktion f mit 2 Argumenten $\underbrace{(a\to a)}_{1.Argument}\underbrace{\to a}_{2.Argument}\to a$\\
+	z.B. $\lambda fa.fa$.\\
+	Sprich wir haben eine funktion und eine anwendung als Argumente.\\
+	Daraus folgt, dass $fix\ f:a\to a$ als typ hat (man braucht noch ein a, dass man einsetzen kann, das $((a\to a)\to a\to a)$ ist f).\\
+	Wenn es ein fix gibt, dass diese typisierung besitzt, dann muss, wenn man $fix\ f:(a\to a)$ in fix einsetzt immernoch eine gültige typisierung entstehen. Sei $\Gamma = \{f= ((a\to a)\to a\to a), fix=((a\to a)\to a\to a)\to a \to a\}$\\
+	\\
+	\AxiomC{}
+	\UnaryInfC{$\Gamma\vdash f:((a\to a)\to a\to a)$}
+	\AxiomC{}
+	\UnaryInfC{$\Gamma\vdash fix:((a\to a)\to a\to a)\to a \to a$}
+	\BinaryInfC{$\Gamma\vdash \underbrace{fix\ f:a\to a}_{erste\ typisierung}$}
+	\AxiomC{}
+	\UnaryInfC{$\Gamma\vdash f:(a\to a)\to (a\to a)$}
+	\BinaryInfC{$\Gamma\vdash \underbrace{f(fix\ f):a\to a}_{zweite\ typisierung}$}
+	\DisplayProof
+	Man kann also beide (f (fix f) und fix f) gleich typisieren, also ist es kein widerspruch, somit existiert ein Term\\
+	2.\\
+	$\lceil n\rceil = \lambda fa.\underbrace{f\dots f}_{n}\ a$\\
+	ja: Jedes f wird auf eine a/f kombination angewandt:\\
+	$\underbrace{f (\underbrace{f ( \underbrace{f ( a )}_{erste\ Anwendung})}_{zweite\ Anwendung})}_{Dritte\ Anwendung}$.\\
+	Damit dies funktioniert, muss f den gleichen Ein und Ausgabewert haben. Ebenso muss a den Eingabewert von f haben, damit die erste Anwendung funktioniert.\\
+	Somit erhalten wir $\lambda fa.\underbrace{f\dots f}_{n}\ a: \underbrace{(t\to t)}_{=f}\underbrace{\to t}_{=a}\to t$\\
+	3.\\
+	Nein:\\
+	Sei $n=2$:\\
+	das erste K $\lambda xy.x$ muss im x den gleichen typen haben, wie a (sonst würde)$(\lambda fa.ffa)K = \lambda a. KKa $ bereits nicht typchecken, weil das erste Argument bereits nicht ausführbar wäre.\\
+	Der Typ vom ersten Argument von K ist somit ``fixiert''.\\
+	Das zweite Argument ist frei b:\\
+	\AxiomC{}
+	\UnaryInfC{$\{a:\beta\}\vdash K:\gamma$}
+	\AxiomC{}
+	\UnaryInfC{$\{a:\beta\}\vdash K:\gamma\to\beta\to a$}
+	\BinaryInfC{$\{a:\beta\}\vdash KK:\beta\to a$}
+	\AxiomC{}
+	\UnaryInfC{$\{a:\beta\}\vdash a:\beta$}
+	\BinaryInfC{$\{a:\beta\}\vdash KKa:a$}
+	\UnaryInfC{$\vdash \lambda a. KKa:\beta\to a$}
+	\DisplayProof\\
+	Die Beiden Typen, die K zugewiesen werden $\gamma\doteq \gamma \to\beta\to a$ sind durch occurs nicht unifizierbar. Somit gibt es keine solche typisierung.\\
+	Dies entsteht dadurch, dass jedes folgende K die übrigen argumente vom vorherigen K ``mitnehmen'' muss.\\
+	Da jedes argument jedoch eine Funktion ist die mehr und mehr argumente Erhält, kann es keine Typisierung im einfach getypten lambda-kalkül geben.\\
+	\section{5}
+	1.\\
+	\begin{itemize}
+		\item Cons True (Cons True Nil): boolean
+		\item Cons True (Cons 35 Nil): Nicht typisierbar, da a und listentyp List a von Cons den gleichen Typ a besitzen müssen (währe hier Int/bool)
+		\item Cons True: List Bool $\to$ List Bool, da als zweites argument noch ein List Bool zum anhängen erwartet wird, um die ``echte'' List zu erhalten
+		\item Cons Nil ( Cons (Cons 35 Nil) Nil): List (List Int), typchecked: hier haben die zwei äußere Nil den Typen Nil:List(List a) und das innere Nil bei der 35 den typ Nil:List Int.
+		\item Cons Nil (Cons 35 Nil): List (List Int), gleicher grund, wie beim vorletzten: Typ des inneren Nil ist Int, Typ des äußeren Nil ist List Int.
+	\end{itemize}
+	2.\\
+	\begin{minted}{haskell}
+	length::List a-> Nat
+	length Nil = 0
+	length (Cons x y) = 1+ length y
+	snoc::List a-> a->List a
+	snoc Nil x = Cons x Nil
+	snoc (Cons x y) z = Cons x (snoc y z)
+	reverse::List a-> List a
+	reverse (Cons x y)= snoc (reverse y) x
+	reverse Nil = Nil
+	drop::a->List a-> List a
+	drop x Nil = Nil
+	drop x (Cons _ y) = if x==z then drop x y else Cons z (drop x y)
+	elem::a->List a->Bool
+	elem x Nil =False
+	elem x (Cons z y) = if x==z then True else elem x y
+	maximum::List Nat->Nat
+	maximum Nil = 0
+	maximum (Cons x y) = if maximum y> x then maximum y else x
+	\end{minted}
+
+\end{document}

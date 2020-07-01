@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k+kr}{data} \PYG{k+kt}{Tree} \PYG{k+kr}{where}
+		\PYG{k+kt}{Nil:} \PYG{n+nb}{()}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Tree}
+		\PYG{k+kt}{Node:} \PYG{k+kt}{Tree}\PYG{o}{*}\PYG{k+kt}{Tree}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Tree}
+\end{Verbatim}

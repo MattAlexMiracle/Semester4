@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k+kr}{data} \PYG{k+kt}{Tree} \PYG{n}{a}\PYG{p}{,} \PYG{k+kt}{Forest} \PYG{n}{a} \PYG{k+kr}{where}
+		\PYG{k+kt}{Leaf:} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Tree} \PYG{n}{a}
+		\PYG{k+kt}{Node:} \PYG{k+kt}{Forest} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Tree} \PYG{n}{a}
+		\PYG{k+kt}{Nil:} \PYG{n+nb}{()}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Forest} \PYG{n}{a}
+		\PYG{k+kt}{Cons:} \PYG{k+kt}{Tree} \PYG{n}{a} \PYG{o}{*} \PYG{k+kt}{Forest} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Forest} \PYG{n}{a}
+		\PYG{c+c1}{\PYGZhy{}\PYGZhy{} bzw Cons:Tree a\PYGZhy{}\PYGZgt{}Forest a\PYGZhy{}\PYGZgt{} Forest a}
+\end{Verbatim}

@@ -66,4 +66,40 @@ Kapitel 1
 	``beliebige Verteilung''\\
 	$X\sim N(a,\sigma^2)$ $y\sim Beta(5,7)$ $z\sim \Chi^2(3)$ $V\sim \Gamma_{\alpha,\beta}$\\
 	\[f^X(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(x-a)^2}{2\sigma^2})\]
+	\section{Poission zur approximation der Bino-verteilung}
+	\[f(k,\lambda) = \frac{\lambda^k}{k!} e^{-\lambda}\]
+	\textbf{verteilung seltener Ereignisse}\\
+	Also z.B. #Anrufe in callcenter pro Zeiteinheit.\\
+	Der Erwartungswert des Eintretens pro Zeiteinheit z.B. 5Anrufe/h reicht. Das ist $\lambda$, hier also $\lambda = 5$\\
+	Wir sprechen hier von z.B. Ankunftsprozessen und Materialfehler pro Flächeneinheit.\\
+	\section{Gamma Verteilung}
+	\[f(x;\alpha,v) =\frac{\alpha^v}{\Gamma(v)}x^{v-1} e^{-\alpha x} 1_{(0,\infty)} (x)\]
+	$\alpha$ ist ein inverser Skalenparameter.\\
+	v ist de Formparameter.\\
+	Wenn v= 1 $\frac{\alpha}{1} e^{-\alpha} 1_{(0,\infty)} (x) = \alpha e^{-\alpha x}$\\
+	Verwendungen in Warteschlangentheorie, um Bedienzeiten oder Reperaturzeiten zu beschreiben.\\
+	Versicherungsmathematik zur Modellierung kleinerer bis mittlere Schäden.\\
+	Lebensdauer von Geräten.\\
+	\section{Exponentialverteilung}
+	$f(x;\lambda) = \lambda e^{-\lambda x}1_{(0,\infty)}(x) $\\
+	Verwendung:\\
+	Ankunftsprozesse und Bedienprozesse.\\
+	Beschreiben von Zerfallsprozessen. (Prop von einem Atom, kann auch über Poisson modeliert werden)\\
+	Beschreibung von Lebensdauer (ohne Gedächtnis$\to$ Ausfallrate ist Zeitunabhängig, P Blatt 4, P27), Wartezeit bis zum Ausfall.\\
+	Eigenschaft: Additive Ereignisse sind Unabhängig $P(x\geq a+b) = P(a)P(b)$\\
+	\section{Erlang Verteilung}
+	\[f(x,k,\lambda) = \frac{\lamda^k}{(k-1)!} x^{k-1}e^{-\lambda x}\]
+	sonderfall der Gamma verteilung.\\
+	Anwendung:\\
+	Warteschlangentheorie, Verteilung der Zeitpsanne zwischen Ereignissen eines Poisson-Prozesses\\
+	Beschreibung von Lebensdauer. (mit alterung)\\
+	Wahrscheinlichkeit dafür, dass nach Verstreichen des Orts oder Zeitabstandes x das n-te Ereigniss eintritt.\\
+	$\lambda$ Ereignisse pro Einheitsintervall.\\
+	\subsection{Ausblick}
+	Seien $X_i$ iid Zufallsvariablen.\\
+	Frage: $\sum^n_{i=1}X_i$ (also wann sind alle z.B. sicherheitssysteme Ausgefallen?)\\
+	Summenverteilung/Faltung.\\
+	\section{Weibull-Verteilung}
+	Z.B. für modellierung von Ausfallraten über Zeit.\\
+
 \end{document}

@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{codata} \PYG{k+kt}{Stream} \PYG{k+kr}{where}
+		\PYG{n}{hd}\PYG{k+kt}{:Stream}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{A}
+		\PYG{n}{tl}\PYG{k+kt}{:Stream}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Stream}
+\end{Verbatim}

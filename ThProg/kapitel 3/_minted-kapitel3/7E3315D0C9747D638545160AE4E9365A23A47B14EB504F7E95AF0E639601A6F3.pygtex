@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{l+m+mi}{0}\PYG{o}{+}\PYG{n}{k}\PYG{o+ow}{=}\PYG{n}{k}
+	\PYG{p}{(}\PYG{n}{suc} \PYG{n}{n}\PYG{p}{)}\PYG{o}{+}\PYG{n}{k} \PYG{o+ow}{=} \PYG{n}{suc} \PYG{p}{(}\PYG{n}{n}\PYG{o}{+}\PYG{n}{k}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	\section{4}
+	$\Gamma = \{length:string\to int, name:person\to string\}$\\
+	\begin{prooftree}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_1\vdash x:person$}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_1\vdash name:person\to string$}
+	\LeftLabel{$(\to_e)$}
+	\BinaryInfC{$\Gamma_1\vdash name\ x: string$}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_1\vdash length: string\to int$}
+	\LeftLabel{$(\to_e)$}
+	\BinaryInfC{$\underbrace{\Gamma[x\mapsto person]}_{\Gamma_1}\vdash length(name\ x):int$}
+	\LeftLabel{$(\to_i)$}
+	\UnaryInfC{$\Gamma\vdash\lambda x.length (name\ x):person\to int$}
+	\end{prooftree}
+	2.
+	\begin{prooftree}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_2\vdash y:int$}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_2\vdash f:int\to char\to string$}
+	\BinaryInfC{$\Gamma_2\vdash fy:char\to string$}
+	\LeftLabel{$\to_e$}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_2\vdash x:char$}
+	\LeftLabel{$(\to_e)$}
+	\BinaryInfC{$\underbrace{\Gamma_1[y\mapsto int]}_{\Gamma_2}\vdash fyx: string$}
+	\LeftLabel{$(\to_i)$}
+	\UnaryInfC{$\underbrace{\Gamma[x\mapsto char]}_{\Gamma_1}\vdash \lambda y.fyx: int\to string$}
+	\LeftLabel{$(\to_i)$}
+	\UnaryInfC{$\underbrace{\{f:char\to int\to string\}}_{\Gamma}\vdash \lambda xy.fyx:char\to int\to string$}
+	\LeftLabel{$(\to_i)$}
+	\UnaryInfC{$\vdash \lambda fxy.fyx:(int\to char\to string)\to (char\to int\to string)$}
+	\end{prooftree}
+	3.\\
+	\begin{prooftree}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_2\vdash y:\alpha$}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_2\vdash f:\alpha\to \beta\to \gamma$}
+	\BinaryInfC{$\Gamma_2\vdash fy:\beta\to \gamma$}
+	\LeftLabel{$\to_e$}
+	\AxiomC{}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma_2\vdash x:\beta$}
+	\LeftLabel{$(\to_e)$}
+	\BinaryInfC{$\underbrace{\Gamma_1[y\mapsto \alpha]}_{\Gamma_2}\vdash fyx: \gamma$}
+	\LeftLabel{$(\to_i)$}
+	\UnaryInfC{$\underbrace{\Gamma[x\mapsto \beta]}_{\Gamma_1}\vdash \lambda y.fyx: \alpha\to \gamma$}
+	\LeftLabel{$(\to_i)$}
+	\UnaryInfC{$\underbrace{\{f:\beta\to \alpha\to \gamma\}}_{\Gamma}\vdash \lambda xy.fyx:\beta\to \alpha\to \gamma$}
+	\LeftLabel{$(\to_i)$}
+	\UnaryInfC{$\vdash \lambda fxy.fyx:(\alpha\to \beta\to \gamma)\to (\beta\to \alpha\to \gamma)$}
+	\end{prooftree}
+	Also genau das gleiche Nochmal
+	\section{5}
+	\begin{tikzpicture}[sibling distance=18em,
+	every node/.style = {shape=rectangle, align=center}]]
+	\node {$PT(\Gamma; \lceil 2\rceil succ;a_0)$}
+	child { node {$PT(\Gamma; \lceil 2\rceil;a_1\to a_0)$} child {node {$PT(\Gamma;\lambda fa.ffa;a_1\to a_0)$}
+	 child {node{$PT(\underbrace{PT(\Gamma[f\mapsto a_2]}_{\Gamma_1};\lambda a.ffa;a_3)$}
+	 	child {node{$\underbrace{PT(\Gamma_1[a\mapsto a_4]}_{\Gamma_2};ffa;a_5)$} 
+	 		child {node {$PT(\Gamma_2; f;a_6\to a_5)$}
+	 			child {node {$\{a_2\doteq a_6\to a_5\}$}}
+	 		}
+	 		child {node {$PT(\Gamma_2; fa; a_6)$}
+	 			child { node {$PT(\Gamma_2; f;a_7\to a_6)$}
+	 				child{ node { $\{a_7\to a_6\doteq a_2\}$}}
+	 			}
+	 			child {node{$PT(\Gamma_2; a; a_7)$}
+	 				child{ node { $\{a_7\doteq a_4\}$}}
+	 			}
+	 		}
+	 		}
+	 	child {node{$\{a_4\to a_5\doteq a_3\}$} }
+	 	}
+	 child { node{$\{a_2\to a_3\doteq a_1\to a_0\}$} }}}
+	child {node {$PT(\Gamma; succ; a_1)$} child {node {$\{a_1\doteq int\to int\}$}}};
+	
+	\end{tikzpicture}\\
+	Also zu Unifizierende Menge:\\
+	$\{a_1\doteq int\to int, a_6\to a_5\doteq a_2, a_7\to a_6 \doteq a_2, a_7\doteq a_4, a_2\to a_3\doteq a_1\to a_0, a_4\to a_5\doteq a_3\}$\\
+	elim $\{a_1\doteq int\to int, a_6\to a_5\doteq a_2, a_7\to a_6 \doteq (a_6\to a_5), a_7\doteq a_4, (a_6\to a_5)\to a_3\doteq (int\to int)\to a_0, a_4\to a_5\doteq a_3\}$\\
+	elim $\{a_1\doteq int\to int, a_6\to a_5\doteq a_2, a_7\to a_6 \doteq (a_6\to a_5), a_7\doteq a_4, (a_6\to a_5)\to (a_4\to a_5)\doteq (int\to int)\to a_0, a_4\to a_5\doteq a_3\}$\\
+	destruct: $\{a_1\doteq int\to int, a_6\to a_5\doteq a_2, a_7 \doteq a_6,a_6\doteq a_5, a_7\doteq a_4, (a_6\to a_5)\doteq (int\to int), a_4\to a_5\doteq a_0, a_4\to a_5\doteq a_3\}$\\
+	destruct $\{a_1\doteq int\to int, a_6\to a_5\doteq a_2, a_7 \doteq a_6,a_6\doteq a_5, a_7\doteq a_4, a_6\doteq int, a_5\doteq int, a_4\to a_5\doteq a_0, a_4\to a_5\doteq a_3\}$\\
+	elim  $\{a_1\doteq int\to int, int\to int\doteq a_2, a_4 \doteq a_6,a_6\doteq a_5, a_7\doteq a_4, a_6\doteq int, a_5\doteq int, int\to int\doteq a_0, a_4\to a_5\doteq a_3\}$\\
+	Also ist der Typ von $\{succ:int\to int\}\vdash \lceil 2\rceil succ : int\to int$.\\
+	2.\\
+	\begin{tikzpicture}[sibling distance=15em,
+	every node/.style = {shape=rectangle, align=center}]]
+		\node{$PT(\Gamma, \lambda xy.y(\lambda z.xsz), a_0)$}
+			child {node{$\{a_0\doteq a_1\to a_2\}$}}
+			child {node{$PT(\underbrace{\Gamma[x\mapsto a_1]}_{\Gamma_1}, \lambda y.y(\lambda z.xsz), a_2)$}
+			child {node{$\{a_2\doteq a_3\to a_4\}$}}
+			child {node{$PT(\underbrace{\Gamma_1[y\mapsto a_3]}_{\Gamma_2},y(\lambda z.xsz),a_4)$}
+				child{node{$PT(\Gamma_2,y,a_5\to a_4)$}
+					child{node{$\{a_3\doteq a_5\to a_4\}$}}
+				}
+				child{node{$PT(\Gamma_2,\lambda z.xsz,a_5)$}
+					child{node{$\{a_6\to a_7\doteq a_5\}$}}
+					child{node{$PT(\underbrace{\Gamma_2[z\mapsto a_6]}_{\Gamma_3},xsz,a_7)$}
+						child{node{$PT(\Gamma_3,xs,a_8\to a_7)$}
+							child{ node{$PT(\Gamma_3,x,a_9\to (a_8\to a_7))$}
+								child{node{$\{a_1\doteq a_9\to (a_8\to a_7)\}$}}
+							}
+							child{ node{$PT(\Gamma_3,s,a_9)$}
+								child{node{$\{a_9\doteq string\}$}}
+							}
+						}
+						child{node{$PT(\Gamma_3,z,a_8)$}
+							child{node{$\{a_8\doteq a_6\}$}}
+						}
+					}
+				}
+			}
+			}
+			;
+	\end{tikzpicture}
+	Daraus $\{a_0\doteq a_1\to a_2, a_2\doteq a_3\to a_4, a_3\doteq a_5\to a_4, a_6\to a_7\doteq a_5, a_1\doteq a_9\to (a_8\to a_7), a_9\doteq string, a_8\doteq a_6\}$\\
+	elim: $\{a_0\doteq (string\to (a_8\to a_7))\to (((a_6\to a_7)\to a_4)\to a_4), a_2\doteq ((a_6\to a_7)\to a_4)\to a_4, a_3\doteq (a_6\to a_7)\to a_4, a_6\to a_7\doteq a_5, a_1\doteq string\to (a_8\to a_7), a_9\doteq string, a_8\doteq a_6\}$\\
+	elim: $\{a_0\doteq (string\to (a_6\to a_7))\to (((a_6\to a_7)\to a_4)\to a_4), a_2\doteq ((a_6\to a_7)\to a_4)\to a_4, a_3\doteq (a_6\to a_7)\to a_4, a_6\to a_7\doteq a_5, a_1\doteq string\to (string\to a_7), a_9\doteq string, a_8\doteq a_6\}$\\
+	Also $\Gamma\vdash \lambda x y.y(\lambda z.xsz):(string\to a_6\to a_7)\to ((a_6\to a_7)\to a_4)\to a_4$\\
+	\section{6}
+	a) $\lambda x.x$\\
+	b) $\lambda f.\lambda x. f$\\
+	c) $\lambda x.\lambda y. \lambda z. y ((x z) z)$\\
+	d) $\lambda z y.z(\lambda x.y)$\\
+	2.\\
+	Curry-Howard: $(p\to p) \to q\to p$ ist logisch nicht gültig.\\
+	(bzw wäre semantisch equivalent zu einer funktion, die eine funktion von $p\to p$ entgegennimmt, dann als argument ein q bekommt und wieder ein p herstellt. Es gibt keine Verbindung, um von dem q zu einem benötigten p zu kommen, also ungültig)\\
+	3.\\
+	a) $\Gamma\vdash \lambda x.xx:\alpha \implies\\ \alpha=\gamma\to \beta\ mit\ \Gamma[x\mapsto \gamma]\vdash xx:\beta\implies\\ \alpha=\gamma\to \beta\ mit\ (\Gamma[x\mapsto \gamma]\vdash x:\xi\to\beta\ und\ \Gamma[x\mapsto \gamma]\vdash x:\xi)$\\
+	Widerspruch in $x:\xi\to\beta$ und $x:\xi$ nicht unifizierbar.\\
+	b) $\{y:char\}\vdash \lambda x.yx:\alpha \implies \{y:char\}\vdash \alpha=\gamma\to\beta\ mit \ \{y:char,x:\gamma\}\vdash yx:\beta \implies\\
+	\{y:char\}\vdash \alpha=\gamma\to\beta\ mit \ (\{y:char,x:\gamma\}\vdash y:\xi\to\beta\ und\ \{y:char,x:\gamma\}\vdash x:\xi )$\\
+	Widerspruch in $y:\xi\to\beta$ und $y:char$, nicht unifizierbar.\\
+\end{document}

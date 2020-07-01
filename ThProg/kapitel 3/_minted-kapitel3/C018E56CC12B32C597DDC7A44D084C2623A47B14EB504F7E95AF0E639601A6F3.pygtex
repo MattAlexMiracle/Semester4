@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{fold} \PYG{n}{c} \PYG{n}{g} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{n}{c}
+	\PYG{n}{fold} \PYG{n}{c} \PYG{n}{g} \PYG{p}{(}\PYG{k+kt}{Node} \PYG{n}{x} \PYG{n}{y}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{g} \PYG{p}{(}\PYG{n}{fold} \PYG{n}{c} \PYG{n}{g} \PYG{n}{x}\PYG{p}{)} \PYG{p}{(}\PYG{n}{fold} \PYG{n}{c} \PYG{n}{g} \PYG{n}{y}\PYG{p}{)}
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{} sprich man baut hier ein pattern auf, dass einmal eine interpretation a\PYGZus{}NIL =c}
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{} und eine interpretation a\PYGZus{}Node(x,y) = g erwartet}
+\end{Verbatim}

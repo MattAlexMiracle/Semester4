@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{fact} \PYG{l+m+mi}{0} \PYG{o+ow}{=} \PYG{l+m+mi}{1}
+	\PYG{n}{fact} \PYG{p}{(}\PYG{n}{suc} \PYG{n}{n}\PYG{p}{)} \PYG{o+ow}{=} \PYG{p}{(}\PYG{n}{suc} \PYG{n}{n}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{n}{fact} \PYG{n}{n}\PYG{p}{)}
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{}problem man braucht auch suc n, nicht nur das ergebnis des rekursiven aufrufs fact!}
+\end{Verbatim}

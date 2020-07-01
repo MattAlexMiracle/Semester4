@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{} reverse is necessary because the construction is resolved from back to front (so the first in the list is going to be )}
+	\PYG{n}{map} \PYG{n}{f} \PYG{n}{xs} \PYG{o+ow}{=}\PYG{n}{reverse} \PYG{o}{\PYGZdl{}}\PYG{n}{foldl}  \PYG{k+kt}{Nil} \PYG{p}{(}\PYG{n+nf}{\PYGZbs{}}\PYG{n}{x}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Cons} \PYG{p}{(}\PYG{n}{f} \PYG{n}{x}\PYG{p}{))} \PYG{n}{xs}
+\end{Verbatim}

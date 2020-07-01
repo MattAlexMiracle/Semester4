@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYG{n}{h} \PYG{l+m+mi}{0} \PYG{o+ow}{=} \PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}
+		\PYG{n}{h} \PYG{p}{(}\PYG{n}{suc} \PYG{n}{n}\PYG{p}{)} \PYG{o+ow}{=} \PYG{p}{((} \PYG{n}{succ} \PYG{p}{(}\PYG{n}{snd} \PYG{p}{(}\PYG{n}{h} \PYG{n}{n}\PYG{p}{)} \PYG{p}{))} \PYG{o}{*}\PYG{p}{(}\PYG{n}{fst} \PYG{p}{(}\PYG{n}{h} \PYG{n}{n}\PYG{p}{)),} \PYG{n}{suc} \PYG{p}{(}\PYG{n}{snd} \PYG{p}{(}\PYG{n}{h} \PYG{n}{n}\PYG{p}{)))}
+		\PYG{c+c1}{\PYGZhy{}\PYGZhy{} snd ist das selbe wie die 2.projektion pi\PYGZus{}2}
+\end{Verbatim}

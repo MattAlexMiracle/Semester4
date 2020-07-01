@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{bussproofs}
+
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	Typisierungsurteil
+	\[\Gamma = \{x:\alpha,y:\beta\}\vdash t:\alpha\]
+	\section{Übung 1}
+	1. $x:int,add:int\to int\to int \vdash \lambda y.add\ x(add\ x\ y)$\\
+	\AxiomC{}
+	\UnaryInfC{$\Gamma\vdash y:int$}
+	\AxiomC{Das wurde auf der rechten Seite schon gezeigt}
+	\UnaryInfC{$\Gamma\vdash add x:int\to int$}
+	\BinaryInfC{$\Gamma_1\vdash add x y: int$}
+	\AxiomC{}
+	\UnaryInfC{$\Gamma\vdash add: int\to int \to int $}
+	\AxiomC{}
+	\UnaryInfC{$\Gamma\vdash x:int $}
+	\BinaryInfC{$\Gamma_1\vdash add x:int\to int$}
+	\BinaryInfC{$\Gamma_0[y\mapsto int]\vdash add\ x (add xy):int$}
+	\LeftLabel{$\to_i$}
+	\UnaryInfC{$x:int,add:int\to int\to int \vdash \lambda y.add\ x(add\ x\ y)$}
+	\DisplayProof\\
+	Seien $\alpha$ und $\beta$ beliebige Typen.\\
+	\AxiomC{}
+	\UnaryInfC{$x:\alpha,y:\beta\vdash x:\alpha$}
+	\UnaryInfC{$x:\alpha\vdash \lambda y.x:\beta\to\alpha$}
+	\UnaryInfC{$\vdash\lambda xy.x:\alpha\to\beta\to\alpha$}
+	\DisplayProof\\
+	\section{Übung 2}
+	1.\\
+	$\Gamma=\emptyset, t=\lambda x y z.x(y z)$\\
+
+	$PT(\emptyset; \lambda x y z.x(y z); a_0)$\\
+	$PT(x:a_1; \lambda y z.x(y z); a_2)$   $\{a_1\to a_2 \doteq a_0\}$\\
+	$PT(x:a_1, y:a_3; \lambda z.x(y z); a_4)$   $\{a_3\to a_4 \doteq a_2\}$\\
+	$PT(\underbrace{x:a_1, y:a_3, z:a_5;}_{\Gamma_0} x(y z); a_6)$   $\{a_5\to a_6 \doteq a_4\}$\\
+	$PT(\Gamma_0; x; a_7\to a_6)$ $PT(\Gamma_0, yz, a_7)$\\
+	$\{a_7\to a_6 \doteq a_1\}$ $PT(\Gamma_0; y; a_8\to a_7)$ $PT(\Gamma_0,z,a_8)$\\
+	$\{a_8\to a_7\doteq a_3\}$ $\{a_5\doteq a_8\}$\\
+	Unifikation:\\
+	$\{a_1\to a_2 \doteq a_0,a_3\to a_4 \doteq a_2,a_5\to a_6 \doteq a_4,a_7\to a_6 \doteq a_1,a_8\to a_7\doteq a_3,a_5\doteq a_8\}$\\
+	Liefert also\\
+	elim $\{(a_7\to a_6)\to a_2 \doteq a_0,a_3\to a_4 \doteq a_2,a_5\to a_6 \doteq a_4,a_7\to a_6 \doteq a_1,a_8\to a_7\doteq a_3,a_5\doteq a_8\}$\\
+	elim $\{(a_7\to a_6)\to (a_3\to a_4) \doteq a_0,a_3\to a_4 \doteq a_2,a_5\to a_6 \doteq a_4
+	,a_7\to a_6 \doteq a_1,a_8\to a_7\doteq a_3,a_5\doteq a_8\}$\\
+	elim $\{(a_7\to a_6)\to (a_8\to a_7)\to a_4) \doteq a_0,a_3\to a_4 \doteq a_2,a_5\to a_6 \doteq a_4,a_7\to a_6 \doteq a_1,a_8\to a_7\doteq a_3,a_5\doteq a_8\}$\\
+	elim $\{(a_7\to a_6)\to (a_8\to a_7)\to a_5\to a_6 \doteq a_0,a_3\to a_4 \doteq a_2,a_5\to a_6 \doteq a_4,a_7\to a_6 \doteq a_1,a_8\to a_7\doteq a_3,a_5\doteq a_8\}$\\
+	elim $\{(a_7\to a_6)\to (a_5\to a_7)\to a_5\to a_6 \doteq a_0,a_3\to a_4 \doteq a_2,a_5\to a_6 \doteq a_4,a_7\to a_6 \doteq a_1,a_8\to a_7\doteq a_3,a_5\doteq a_8\}$\\
+	also $\vdash \lambda xyz.x(yz): (a_7\to a_6)\to (a_5\to a_7)\to a_5\to a_6$\\
+	2.\\
+	$PT(\Gamma, \lambda x.add (length\ x); a_0)$\\
+	$PT(\underbrace{\Gamma[x\mapsto a_1]}_{\Gamma_1}, add (length\ x); a_2)\cup \{a_1\to a_2\doteq a_0\}$\\
+	$PT(\Gamma_1, add ; a_3\to a_2)$ $PT(\Gamma_1, (length\ x); a_3)$\\
+	$\{int\to int\to int \doteq a_3\to a_2\}$ $PT(\Gamma_1, length; a_4\to a_3)$ $PT(\Gamma_1, x; a_4)$\\
+	$\{string\to int\doteq a_4\to a_3\}$ $\{a_1\doteq a_4\}$\\
+	mit zwischenumformungen:\\
+	$\{string\doteq a_4, int\doteq a_3,a_1\doteq a_4, a_3\doteq int, a_2\doteq int\to int, a_0\doteq a_1\to a_2\}$\\
+	elim\\
+	$\{string\doteq a_4, int\doteq a_3,a_1\doteq a_4, a_3\doteq int, a_2\doteq int\to int, a_0\doteq a_4\to a_2\}$\\
+	$\{string\doteq a_4, int\doteq a_3,a_1\doteq a_4, a_3\doteq int, a_2\doteq int\to int, a_0\doteq string\to a_2\}$\\
+	$\{string\doteq a_4, int\doteq a_3,a_1\doteq a_4, a_3\doteq int, a_2\doteq int\to int, a_0\doteq string\to int\to int\}$\\
+	$\Gamma\vdash \lambda x.add(length\ x): string\to int \to int$\\
+	
+\end{document}

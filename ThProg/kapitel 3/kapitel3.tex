@@ -28,6 +28,7 @@
 \usepackage{tkz-euclide}
 \usepackage{stackengine}
 \usepackage{bussproofs}
+\usepackage{tikz-cd}
 
 \usetikzlibrary{datavisualization}
 \usetikzlibrary{datavisualization.formats.functions}
@@ -1013,17 +1014,344 @@ Kapitel 1
 	\[\dbrack{Nat}\dbrack{0} = 0\]
 	\[\dbrack{Nat}\dbrack{succ}(x) = Suc(x)\in\dbrack{Nat}\]
 	\end{beispiel}
+	\begin{definition} Seien $\mathfrak{M},\mathfrak{N}\; \Sigma$-Algebren.\\
+	$\Sigma-$Homomorphismus = Abbildung $h:M\to N$ (wobei M,N trägermengen des respektiven Models sind)\\
+	$\forall f/n \in \Sigma, x_1,\dots, x_n\in M$
+	\[h(\mathfrak{M}\dbrack{f}(x_1,\dots,x_n)) = \mathfrak{N}\dbrack{f}(h(x_1),\dots,h(x_n))\]
+	Erinnerung: lineare Abbildung:
+	\[ h(\lambda \cdot x) = \lambda h(x)\land h(x+y)=h(x)+h(y)\]
+	sprich: homomorphismen sind lineare Abbildung zwischen Algebren.\\
+	\end{definition}
+	\begin{lemma} 
+	\begin{itemize}
+		\item $id_n:\mathfrak{M}\to\mathfrak{M}$ ist $\Sigma$-Homomorphismus
+		\item $h:\mathfrak{M}\to\mathfrak{N}, k:\mathfrak{N}\to\mathfrak{P}$ sind $\Sigma$-Homomorphismus$ \implies k\cdot h:\mathfrak{M}\to\mathfrak{P}$ ist $\Sigma$-Homomorphismus
+	\end{itemize}
+	\end{lemma}
+	\begin{definition} h ist isomorphismus $\iff$ h $\Sigma$-Homomorphismus und bijektiv.\\
+	$\iff \exists h^{-1}(h\cdot h^{-1}=id\land h^{-1}\cdot h=id)$ (aber i.A. zwei verschiedene identitätsfunktionen!)\\
+	Isomorphismen sind also strukturerhaltend!!!\\
+	Dies gilt nicht in jedem Kontext: geordnete Systeme lassen das nicht einfach so zu!.\\
+	Menge A $\{b,\gamma\}$ ohne Ordnung und eine geordnete Menge B $(\{1,0\},\leq)$.\\
+	Es gibt ein $h:A\to B: x\leq y\implies h(x)\leq h(y)$\\
+	Aber das $h^{-1}$ ist nicht monoton: $0\leq 1, h^{-1}(0)\nleq h^{-1}(1)$\\
+	Das heißt die Abbildung die im Algebraischen sinne isomorphismen sind, sind nicht unbedingt isomorphismen im Kontext der geordneten Mengen.
+	\end{definition}
+	\begin{lemma} h Isomorphismus $\implies h^{-1}$ ist Isomorphismus
+	\end{lemma}
+	\begin{beweis} zZ: $h^{-1}$ ist Homomorphismus (bijektivität ist ja bereits bekannt!), d.h.\\
+	$h^{-1}(\mathfrak{N}\dbrack{f}(y_1,\dots,y_n)=\mathfrak{M}\dbrack{f}(h^{-1}(y_1),\dots,h^{-1}(y_n)))\stackrel{h\ injektiv}{\iff} \underbrace{h(h^{-1}(\mathfrak{N}\dbrack{f}(y_1,\dots,y_n)) }_{\mathfrak{N}\dbrack{f}(y_1,\dots,y_n)}= \underbrace{h(\mathfrak{M}\dbrack{f}(h^{-1}(y_1),\dots,h^{-1}(y_n))))}_{=\mathfrak{N}\dbrack{f}(h(h^{-1}(y_1)),\dots,h(h^{-1}(y_n)))}$
+	\end{beweis}
+	Erinnerung $m\equiv n (mod 4)$ ist Äquivalenzklasse $\mathbb{Z}/4\mathbb{Z} = \{[n]_4|n\in\mathbb{Z}\} = \{[0]_4,[1]_4,[2]_4,[3]_4\}$\\
+	Darauf kann addition definiert werden: $[n]_4 +[m]_4 = [n+m]_4$ ist wohldefiniert.\\
+	\begin{beispiel} $\Sigma_{Nat}$-Algebra $\mathfrak{M}$ mit $M=\mathbb{Z}/4\mathbb{Z},\mathfrak{M}\dbrack{0} = [0]_4, \mathfrak{M}\dbrack{suc}([n]_4) = [n+1]_4$\\
+	$h:\dbrack{Nat}\to \mathfrak{M}$\\
+	$Suc^n(0)\mapsto [n]_4$ ist homomorph:\\
+	$h(\dbrack{Nat}\dbrack{0}) = [0]_4 =\mathfrak{M}\dbrack{0}$\\
+	$h(\dbrack{Nat}\dbrack{Suc}(Suc^n(0)))=h(Suc^{n+1}(0)) = [n+1]_4 =\mathfrak{M}\dbrack{suc}([n]_4)=\mathfrak{M}\dbrack{Suc}(h(Suc^n(0)))$ (sogar surjektiv homomorph, aber natürlich nicht injektiv, somit kein isomorphismus)
+	\end{beispiel}
+	Allg.: Datentyp D= Signatur $\Sigma$, $\dbrack{D} = \dbrack{\Sigma} = T_\Sigma (\emptyset)$ (also alle geschlossenen Terme) als Algebra, mit $\dbrack{\Sigma}\dbrack{f}(t_1,\dots,t_n) = f(t_1,\dots, t_n)$\\
+	\begin{definition} $\Sigma-$Algebra $\mathfrak{M}$ initial $\iff\forall \mathfrak{N}\ \exists!\ Homomorphismus\ h:\mathfrak{M}\to\mathfrak{N}$ (initiales Modell ist also algemeinstes Modell)
+	\end{definition}
+	\begin{satz} $\dbrack{\Sigma}$ ist initial genannt ``Termalgebra''\end{satz}
+	\begin{beweis} Sei $\mathfrak{N}$ eine $\Sigma$-Sigma Algebra. zZ: $\exists! h$ mit 
+	\[(*)\ h(\dbrack{\Sigma}\dbrack{f}(t_1,\dots,t_n))=\mathfrak{N}\dbrack{f}(h(t_1),\dots,h(t_n))\; (f/n\in\Sigma)\]
+	gilt für $h(t)=\mathfrak{N}\dbrack{t}$,\\
+	(*) ist rekursive Definition von $\mathfrak{N}\dbrack{\dots}$
+	\end{beweis}
+	\begin{satz} Die initiale $\Sigma$-Algebra ist eindeutig bis auf \textbf{eindeutige} Isomorphie (also kategorietheorie\dots)
+	\end{satz}
+	\begin{beweis} Seien $\mathfrak{M},\mathfrak{N}$ initial\\
+ 	\[\mathfrak{M} \stackanchor{$\exists ! h\to$}{$\gets\exists! k$}\mathfrak{N}\]
+	Zu $\mathfrak{M},\mathfrak{N}$ gehört jeweils eine identitätsfunktion.\\
+	Wegen eindeutigkeit der homomorphismen, muss $k\cdot h=id$ sein (bzw $h\cdot k=id$)\\
+	\includegraphics[width=256px]{images/initialEindeutigkeit.png}\\
+	technisch gesehen definiert sich damit eine Äquivalenzklasse über $\Sigma$-Algebraen.\\
+	\end{beweis}
+	\subsection{Mengenkonstruktionen}
+	$X_1,X_2$ Mengen $X_1\times X_2=\{(x_1,x_2)|x_1\in X_1, x_2\in X_2\}$\\
+	$\pi_i(x_1,x_2) = x_1$ (i-te Projektion, i=1,2)\\
+	$\pi_i : X_1\times X_2 \to X_i$\\
+	Mehrer funktionen auf gleiche daten:\\
+	$f_i: Y\to X_i$ (i=1,2)\\
+	$<f_1,f_2>:Y\to X_1\times X_2$\\
+	$y\mapsto (f_1(y),f_2(y))$\\
+	kartesisches Produkt von Projektionen. (lifting)\\
+	$g_i: Y_i\to X_i$\\
+	$g_1\times g_2 :Y_1\times Y_2\to X_1\times X_2$\\
+	$(y_1,y_2)\mapsto (g_1(y_1),g_2(y_2))$\\
+	Beispiele:\\
+	$\pi_i\cdot <f_1,f_2> = f_i$\\
+	$<\pi_1,\pi_2> = id$, $<\pi_1\cdot f, \pi_2\cdot f> =f$\\
+	$g_1\times g_2 = <g_1\cdot \pi_1, g_2\cdot \pi_2>$\\
+	$X_1+X_2$ (addition als analog zur Multiplikation mit kartesischen produkt)\\
+	\[X_1+X_2 = \{(i,x)|i\in\{1,2\}, x\in X_i\}\]
+	(umbennen, damit keine zwei elemente sich gegenseiteig in der Menge auslöschen)
+	Duale\\
+	$X_i\to X_1+x_2$\\
+	$x\mapsto (i,x)$\\
+	zu $f_i:X_i\to Y\ (i=1,2)$\\
+	kopaar.\\
+	$[f_1,f_2]:X_1+X_2\to Y$\\
+	$[f_1,f_2](i,x)\mapsto f_i(x)$ (man wählt also die i-te funktion aus. effektiv ``case'' statement)\\
+	zu $g_i:X_i\to Y_i\ (i=1,2)$\\
+	$g_1+g_2: X_1+X_2\to Y_1+Y_2$\\
+	$(g_1+g_2)(i,x)\mapsto (i,g_i(x))$\\
+	\begin{lemma} Duale:\\
+	$[f_1,f_2]\circ in_i=f_i$\\
+	$r\circ in_1, r\circ in_2] = r$ \\
+	$g_1+g_2 = [in_1\circ g_1, in_2\circ g_2]$
+	\end{lemma}
+	\begin{beweis}
+	$[f_1, f_2](in_i(x))=[f_1,f_2](i,x) = f_i(x)$\\
+	$[r\circ in_1, r\circ in_2](i,x)= r(in_i(x)) = r(i,x)$\\
+	$[in_1\circ g_1, in_2\circ g_2](i,x) = in_i(g_i(x)) = (i,g_i(x)) = (g_1+g_2)(i,x)$
+	\end{beweis}
+	\begin{beispiel} Bäume\\
+	\begin{minted}{haskell}
+	data Tree where
+		Nil: ()-> Tree
+		Node: Tree*Tree->Tree
+	\end{minted}
+	Eine $\Sigma_{Tree}$-Algebra $\mathfrak{M}$:\\
+	$\mathfrak{M}\dbrack{Nil}: 1\to M$ (wobei 1 unit $\{*\}$ ist)\\
+	$\mathfrak{M}\dbrack{Node}:M^2\to M$\\
+	\includegraphics[width=256px]{images/TreeAlgebra.png}\\
+	d.h. $\mathfrak{M}$ gegeben durch $\alpha:1+M^2\to M$\\
+	($\mathfrak{M}\dbrack{Nil}=\alpha(in_1(*))$ und $\mathfrak{M}\dbrack{Node}=\alpha(in_2(x,y))$)\\
+	h homomorph bezüglich Node $\iff h(\mathfrak{M}\dbrack{Node}(x,y)) = \mathfrak{N}\dbrack{Node}(h(x),h(y))$\\
+	\includegraphics[width=256px]{images/TreeHomomorphism.png}\\
+	\includegraphics[width=256px]{images/TreeHomomorphismNil.png}\\
+	\includegraphics[width=256px]{images/VollständigTreeHomomorphism.png}\\
+	Erinnerung die Eckigen klammern heißen: gib mir vom paar $[f_1, f_2](i,x)$ die i-te funktion angewandt auf x.\\
+	\includegraphics[width=256px]{images/kommutationTree.png}\\
+	Da jedes Teildiagram kommutiert, gilt homomorphie.\\
+	(Das gilt genau so für NIL (wenn man $in_2$ verwendet))\\
+	\end{beispiel}
+	Allgemein gilt für eine $\Sigma$-Algebra 
+	\[= \alpha:\sum_{\underbrace{f/n\in\Sigma}_{=: F_\Sigma M}} M^n\to M\]
+	Dann $h\mathfrak{M}\to\mathfrak{N}$ Homomorphismus $\iff$ $F_\Sigma$\\
+	\includegraphics[width=256px]{images/allgHomomorphismus.png}\\
+	sprich, wenn man für alle signatursymbole $f$ ein solches signaturquadrat bauen kann, dann gilt homomorphismus. ($F_\Sigma h=\sum_{f/n\in\Sigma} h^n$)\\
+	Man kann also alles in eine Abbildung darstellen: das h wird einfach der Tuple aller homomorphismen eines signatursymbole!
+	\subsection{Initialität und Rekursion}
+	Datentyp $\Sigma:\dbrack{\Sigma}$ Initiale $\Sigma$-Algebra.\\
+	zu $f/n$ wähle $a_f: A^n\to A$ (konstruktion einer Algebra zu $\Sigma$)\\
+	Dan existiert ein eindeutiger homomorphismus (per def. der initialität) $h:\dbrack{\Sigma}\to A$ mit
+	\[h(\underbrace{f(\underbrace{x_1,\dots,x_n}_{konstruktorargumente})}_{konstruktorpattern}) = a_f(\underbrace{h(x_1),\dots, h(x_n)}_{rekursive\ Aufrufe\ von\ h})\]
+	Rekursive Definition von h (definiert eindeutig h) also $a_f$ sind irgendwelche funktionen, die etwas vom typ A liefern. (man wechselt also von $\dbrack{\Sigma}$ auf A mithilfe eines homomorphismus)\\
+	man nennt dies das \textbf{fold-Schema}: h= fold ($\lambda y\dots y_n. a_f)_{f\in\Sigma}$ (sprich $a_f$ ist eine totale funktion über f.)\\
+	z.B. Tree: $(fold c g):Tree\to a$ mit $c:a, g:a\to a\to a$\\
+	\begin{minted}{haskell}
 
-
-
-
-
-
-
-
-
+	fold c g Nil = c
+	fold c g (Node x y) = g (fold c g x) (fold c g y)
+	-- sprich man baut hier ein pattern auf, dass einmal eine interpretation a_NIL =c
+	-- und eine interpretation a_Node(x,y) = g erwartet
+	\end{minted}
+	fold 1 * = $\lambda x.1$ (also multiplikation aller blätter, wobei jedes blatt wert 1 hat)\\
+	fold 1 + = $\lambda x.\#leaves(x)$\\
+	\begin{minted}{haskell}
+	fact 0 = 1
+	fact (suc n) = (suc n)*(fact n)
+	--problem man braucht auch suc n, nicht nur das ergebnis des rekursiven aufrufs fact!
+	\end{minted}
+	Dies kann man jedoch lösen:\\
+	$h=<fact,id>$ wenn man das programmieren kann, dann kann man das im fold schema schreiben, da in h ja die id drinnen ist.
+	\begin{minted}{haskell}
+		h 0 = (1,0)
+		h (suc n) = (( succ (snd (h n) )) *(fst (h n)), suc (snd (h n)))
+		-- snd ist das selbe wie die 2.projektion pi_2
+	\end{minted}
+	Mehrstellige Funktionen:\\
+	$+: Nat\times Nat\to Nat$\\
+	\begin{minted}{haskell}
+	0+k=k
+	(suc n)+k = suc (n+k)
+	\end{minted}
+	Currying: $+:Nat\to (Nat\to Nat)$\\
+	$+ = fold (\lambda k.k) \underbrace{(\lambda fk.Suc (f\ k))}_{(Nat\to Nat)\to (Nat\to Nat)}$
+	primitive Rekursion:\\
+	Rekursion über Argumente verwende rekursive Aufrufe auf Konstruktorargumente.\\
+	\subsection{Mehrsortige Typen}
+	\begin{minted}{haskell}
+	data Tree a, Forest a where
+		Leaf: a-> Tree a
+		Node: Forest a-> Tree a
+		Nil: ()-> Forest a
+		Cons: Tree a * Forest a-> Forest a
+		-- bzw Cons:Tree a->Forest a-> Forest a
+	\end{minted}
+	mehrsortige Signatur, hier Sortenmenge $S=\{\underbrace{a}_{S_0},Tree\ a, Forest\ a\}$\\
+	\begin{definition} Eine sortierte Signatur $\Sigma=(S_0, S,F)$ besteht aus:\\
+	\begin{itemize}
+		\item Einer Menge S von Sorten
+		\item Menge $S_0\subseteq S$ von Parametern
+		\item Eine Menge F von Funktionssymbolen bzw. Konstruktoren c mit \underline{Profilen} $c:a_1\times\dots\times a_n\to b$ mit $n\geq 0$ $a_1,\dots,a_n\in S$ und $b\in S\setminus S_0$ (sprich wir das ziel soll nicht wieder ein Parameter sein $Tree\ a\to Forest\ a$)
+	\end{itemize}
+	\end{definition}
+	\begin{definition}.\\
+	\begin{itemize}
+		\item Ein Kontext ist eine Menge $\Gamma = \{x_1:a_1,\dots,x_k:a_k\}$ mit Sorten $a_i\in S$ paarweise verschiedenen Variablen $x_i$. (also endliche partielle Abbildung $\Gamma: Var\to Sorte$)
+		\item $\Gamma\vdash t:a$ ``Term t hat im Kontext $\Gamma$ Sorte a''
+	\end{itemize}
+	definier induktiv:\\
+	\AxiomC{}
+	\RightLabel{$(x:a\in \Gamma)$}
+	\UnaryInfC{$\Gamma\vdash x:a$}
+	\DisplayProof\\
+	\AxiomC{$\Gamma \vdash t_1:a_1,\dots \Gamma\vdash t_n:a_n$}
+	\RightLabel{$(c:a_1\times\dots\times a_n\to b)$}
+	\UnaryInfC{$\Gamma\vdash c(t_1,\dots,t_n):b$}
+	\DisplayProof\\
+	Wir schreiben $T_\Sigma(\Gamma)_a = \{t\ Term|\Gamma\vdash t:a\}$ für die Menge der Terme der Sorte a im Kontext $\Gamma$.\\
+	z.B. $x:a\vdash Node (Cons\ (Node\ Nil)\ (Cons(Leaf\ x) Nil)):Tree\ a$
+	\end{definition}
+	\begin{definition} Sei $V=(V_a)_{a\in S_0}$ eine Mengenfamilie. Eine mehrsortige $\Sigma$-Algebra $\mathfrak{M}$ über V besteht aus\\
+	\begin{itemize}
+		\item für $a\in S$ Menge $\mathfrak{M}\dbrack{a}=V_a$
+		\item einer Abbildung
+	\end{itemize}
+	$\mathfrak{M}\dbrack{c}:\mathfrak{M}\dbrack{a_1}\times\dots\times \mathfrak{M}\dbrack{a_n}\to \mathfrak{M}\dbrack{b}$\\
+	für jedes $c:a_1\times\dots\times a_n\to b$\\
+	Gegeben $\mathfrak{M}$ Umgebung $\eta$ für $\Gamma$ (d.h. $\eta(x)\in\mathfrak{M}\dbrack{a}$ für jede $\Gamma(x)=a$), $\Gamma\vdash t:a$
+	\[\mathfrak{M}\dbrack{t}\eta\in\mathfrak{M}\dbrack{a}\]
+	rekursiv definiert wie bisher.\\
+	\end{definition}
+	Ein \underline{$\Sigma$-Homomorphismus}	$h:\mathfrak{M}\to \mathfrak{N}$ über V besteht aus Abbildungen (ist also selbst mehrsortig)
+	 \[h_a:\mathfrak{M}\dbrack{a}\to\mathfrak{N}\dbrack{a}\ (a\in S)\]
+	mit $h_a=id$ für $a\in S_0$ (Parameter werden in ruhe gelassen)\\
+	sodass
+	\[h_b(\mathfrak{M}\dbrack{c}(x_1,\dots,x_n)) = \mathfrak{N}\dbrack{c}(h_{a_1}(x_1),\dots,h_{a_n}(x_n))\]
+	für $c:a_1\times \dots\times a_n\to b\in\Sigma$\\
+	\underline{Termalgebra}\\
+	Zu $V=(V_a)_{a\in S_0}$ setze $\Gamma(V)=\{x:a|a\in S_0,x\in V_a\}$\\
+	Termalgebra $\dbrack{\Sigma}_V$ (Semantik des Datentyps $\Sigma$ gegeben V)
+	\[\dbrack{\Sigma}_V\dbrack{a} = T_\Sigma(\Gamma(V))_a\  (a\in S)\]
+	\[\dbrack{\Sigma}_V\dbrack{c}(t_1,\dots, t_n) = c(t_1,\dots t_n)\]
+	\begin{satz} Initialität/Fold-Prinzip\\
+	Für jede $\Sigma$-Algebra $\mathfrak{N}$ über V existiert genau ein $\Sigma-$Homomorphismus
+	\[h:\dbrack{\Sigma}_v\to \mathfrak{N}\]
+	über V. (Termauswertung $\eta(x)=x$), sonst wie vorher\\
+	$\underbrace{fold (Algebra):}_{mehrere\ Abbildungen!} \dbrack{\Sigma}_V\to\dots$
+	\end{satz}
+	\begin{beispiel} $\Sigma_{Tree}$-Algebra $\mathfrak{N}$ über $V_a = \mathbb{N}$ (es gab hier ja nur eine\dots)
+	$\mathfrak{N}\dbrack{Tree\ a}=\mathbb{N}=\mathfrak{N}\dbrack{Forest\ a}$ (also hier forest und tree gleich interpretation)
+	$\mathfrak{N}\dbrack{Leaf}(n)=n$\\
+	$\mathfrak{N}\dbrack{Node}(n)=n$\\
+	$\mathfrak{N}\dbrack{Cons}(n,m)=n+m$\\
+	$\mathfrak{N}\dbrack{Nil}=0$\\
+	primitive Rekursion (gegenseitig) \danger Alle interpretationen müssen auf ein mal definiert werden!\\
+	\subsection{Strukturelle Induktion über Datentypen}
+	\begin{minted}{haskell}
+	data List a where
+		Nil:()->List a
+		Cons: a->List a-> List a
+	concat::List a->List a-> List a
+	concat Nil k=k
+	concat (Cons x l) k = Cons x (concat l k)
+	\end{minted}
+	Beweisen Assoziativität:
+	cc l (cc k v) = cc ((cc l k) v)\\
+	Strukturelle Induktion: Ein Fall pro Konstruktor \\
+	I.V. jeweils für Konstruktorargumente (also immer induktion über das argument, dass auch rekursion betreibt)\\
+	hier über l\\
+	-Nil: cc Nil (cc k v) = cc k v = cc ( cc Nil k) v\\
+	Cons: cc (Cons x l) (cc k v) = Cons x (cc l (cc k v)) $\stackrel{=}{IV}$ Cons x (cc ( cc l k) v) = cc ( cc (cons x l) k) v = cc (Cons x (cc l k)) v = Cons x (cc ( cc l k) v)
+	\end{beispiel}
+	\subsection{strukturelle Induktion über mehrsortige Datentypen}
+	\begin{minted}{haskell}
+	mirrort::Tree a->Tree a
+	--wald an senkrechter achse spiegeln, also wald und jeden baum an einer senkrechten achse spiegeln
+	mirrorf::Forest a->Forest a
+	mirrort (Leaf x) = Leaf x
+	mirrort (Node f) = Node (mirrorf f)
+	mirrorf Nil = Nil
+	mirrorf (Cons t f) = concat (mirrorf f) (Cons (mirror t) Nil)
+	--sortiertes flattening nach baumreihenfolge
+	flattent: Tree a->List a
+	flattenf: Forest a->List a
+	flattent (Leaf x) = [x]
+	flattent (Node f) = flattenf f
+	flattentf Nil = []
+	flattenf (Cons t f)=  concat (flattent t) (flattenf f)
+	rev:List a->List a
+	rev Nil = Nil
+	rev (Cons x y) = concat (rev y) [x]
+	\end{minted}
+	Behauptung: flattent (mirrort t) = rev (flattent t)\\
+	Induktion über t:\\
+	flattent (mirrort (Leaf x)) = [x] = rev (flattent (Leaf x))\\
+	Leaf geht, Node:\\
+	flattent (mirrort (Node f)) = flattent (Node (mirrorf f) ) = flattenf (mirrorf f)\\
+	andere seite:\\
+	rev ( flattent (Node f)) = rev ( flattenf f)\\
+	Induktionsbehauptung für f:Forest a\\
+	flattenf (mirrorf f) = rev (flattenf f)\\
+	dann gilt ``rev ( flattenf f) =  flattenf (mirrorf f)'' per I.V.\\
+	jetzt müssen wir die Induktionsvorraussetzung für Wälder anwenden: sprich dass flattenf (mirrorf f) = rev (flattenf f) für alle Wälder gilt\\
+	flattenf (mirrorf Nil) = [] = rev (flattenf Nil)\\
+	gilt also für Nil, jetzt Cons\\
+	flattenf (mirrorf (Cons t f)) = flattenf (concat (mirrorf f) (Cons (mirror t) Nil)) $\stackrel{=}{Lemma\ A}$ concat (flattenf (mirrorf f)) (flattenf (Cons (mirrort t) Nil))
+	$\stackrel{=}{Lemma\ B}$ concat ($\underbrace{flattenf (mirrorf\ f)}_{IV Forest}$) ($\underbrace{flattent (mirrort\ t))}_{IV Tree}$) = concat (rev (flattenf f)) (rev (flattent t))\\
+	andere seite\\
+	rev (flattenf (Cons t f)) = rev (concat (flattent t) (flattenf f))\\
+	ist gleich (Vgl Übung, bzw umgekehrte concatenation von zwei invertierten listen ist gleich der invertierten list)\\
+	\underline{Lemma A}: flattenf (concat f g) = concat (flattenf f) (flattenf g)\\
+	Beweis: Induktion über f (aber hier haben wir keine Bäume!! I.A. für bäume könnte $T$ sein, der Beweis ist unabhängig). Trivial beweisbar via induktion.\\
+	\underline{Lemma B}: flattenf [t] = flattent t (trivial, ausrechnen)\\
+	flatten einfach als fold:\\
+	fold $\lambda x.[x]$ id [] cc\\
+	mirror als fold\\
+	fold Leaf Node Nil $(\lambda x y.cc\ y [x])$\\
+	das einzige, was bei mirror ``was macht'' ist Cons, bei dem werden die resultate der unteren schicht in umgekehrter Reihenfolge verbunden (und das erste zum forst ``casten'')
+	\subsection{Kodaten}
+	Daten werden konstruiert $Cons\ x\ Nil$\\
+	Kodaten werden destruiert/beobachtet\\
+	z.B. $A^\omega=\{a_0,a_1,a_2,\dots|a_i\in A\}$ streams über A. (omega als Menge der ordinale, für uns einfach Nat)\\
+	hd (head): $A^\omega\to A$ gibt $a_0$ aus $a_0:a_1a_2\dots$ zurück.\\
+	tl (tail): $A^\omega\to A^\omega$\\
+	$(a_0,a_1,\dots)\mapsto (a_1,a_2,\dots)$\\
+	\begin{minted}{haskell}
+	codata Stream where
+		hd:Stream->A
+		tl:Stream->Stream
+	\end{minted}
+	Im gegensatz zu Datentypen, die über konstruktoren definiert ist, sind Kodatentypen über destructoren definiert.\\
+	\begin{minted}{haskell}
+	map f:Stream->Stream
+	 hd(map f s) = f (hd s)
+	 tl (map f s) = map f (tl s)
+	\end{minted}
+	Definition von map, allerdings terminiert map nie (soll es schließlich auch nicht).\\
+	Zunächst $<hd,tl>:A^\omega\to A\times A^\omega$\\
+	wir produzieren also aus $A^\omega$ eine ding aus der Trägermenge hinaus.(Destruction)\\
+	Koalgebra: Träger M, Abb $\alpha:M\to A\times M$\\
+	$A^\omega$ ist Koalgebra (genauer $(A^\omega,<hd,tl>)$ ist Koalgebra)\\
+	weiter Koalgebra:\\
+	$(A^\omega,<f\circ hd,tl>)$, denn $A^\omega\stackrel{hd}{\to}A\stackrel{f}{to}A$\\
+	\includegraphics[width=256px]{images/CoalgebraHomomorph.png}\\
+	explizit:\\
+	linke Komponente: hd(h(s)) = f(hd(s))\\
+	rechte Komponente: tl(h(s)) = tl(h(s))\\
+	Mengenoperatoren: (polynomialfunktoren)\\
+	$G::=A|id|(G_1+G_2)|G_1\times G_2$ A Menge (zum eingeklammerten werden wir nicht kommen)\\
+	GX rekursiv definiert:\\
+	$(A)X=A$\\
+	$id(X)=X$\\
+	$(G_1+G_2)X = G_1X+G_2X$\\
+	$(G_1\times G_2)X = G_1X\times G_2X$\\
+	entsprechend mit abbildungen Gf: $GX\to GY$ ($f:X\to Y$)\\
+	\begin{definition} Eine \underline{G-Koalgebra}\\
+	besteht aus einer Menge M (von ``Zuständen'') und Abbildung $\alpha:M\to GM$ (Transitionsabbildung, welche Zustände sind von M aus erreichbar).\\
+	\end{definition}
+	\begin{beispiel}.\\
+	G=$A\times id$
+	\end{beispiel}
+	G-Koalgebra = Koalgebra oben. $M\to A\times M$\\
 
 	\newpage
+
 	\begin{thebibliography}{1}
 	\bibitem{knuthBendix}
 	Knuth-bendix algorithm for creating CR TES from terminating TES\\
@@ -1038,4 +1366,5 @@ Kapitel 1
 	\end{thebibliography}
 
 \end{document}
+
 

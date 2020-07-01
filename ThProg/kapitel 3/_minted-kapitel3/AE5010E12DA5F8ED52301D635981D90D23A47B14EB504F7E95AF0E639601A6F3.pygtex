@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{mirrort}\PYG{o+ow}{::}\PYG{k+kt}{Tree} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Tree} \PYG{n}{a}
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{}wald an senkrechter achse spiegeln, also wald und jeden baum an einer senkrechten achse spiegeln}
+	\PYG{n}{mirrorf}\PYG{o+ow}{::}\PYG{k+kt}{Forest} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Forest} \PYG{n}{a}
+	\PYG{n}{mirrort} \PYG{p}{(}\PYG{k+kt}{Leaf} \PYG{n}{x}\PYG{p}{)} \PYG{o+ow}{=} \PYG{k+kt}{Leaf} \PYG{n}{x}
+	\PYG{n}{mirrort} \PYG{p}{(}\PYG{k+kt}{Node} \PYG{n}{f}\PYG{p}{)} \PYG{o+ow}{=} \PYG{k+kt}{Node} \PYG{p}{(}\PYG{n}{mirrorf} \PYG{n}{f}\PYG{p}{)}
+	\PYG{n}{mirrorf} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{k+kt}{Nil}
+	\PYG{n}{mirrorf} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{t} \PYG{n}{f}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{concat} \PYG{p}{(}\PYG{n}{mirrorf} \PYG{n}{f}\PYG{p}{)} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{p}{(}\PYG{n}{mirror} \PYG{n}{t}\PYG{p}{)} \PYG{k+kt}{Nil}\PYG{p}{)}
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{}sortiertes flattening nach baumreihenfolge}
+	\PYG{n}{flattent}\PYG{k+kt}{:} \PYG{k+kt}{Tree} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{flattenf}\PYG{k+kt}{:} \PYG{k+kt}{Forest} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{flattent} \PYG{p}{(}\PYG{k+kt}{Leaf} \PYG{n}{x}\PYG{p}{)} \PYG{o+ow}{=} \PYG{p}{[}\PYG{n}{x}\PYG{p}{]}
+	\PYG{n}{flattent} \PYG{p}{(}\PYG{k+kt}{Node} \PYG{n}{f}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{flattenf} \PYG{n}{f}
+	\PYG{n}{flattentf} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{k+kt}{[]}
+	\PYG{n}{flattenf} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{t} \PYG{n}{f}\PYG{p}{)}\PYG{o+ow}{=}  \PYG{n}{concat} \PYG{p}{(}\PYG{n}{flattent} \PYG{n}{t}\PYG{p}{)} \PYG{p}{(}\PYG{n}{flattenf} \PYG{n}{f}\PYG{p}{)}
+	\PYG{n}{rev}\PYG{k+kt}{:List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{rev} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{k+kt}{Nil}
+	\PYG{n}{rev} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{x} \PYG{n}{y}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{concat} \PYG{p}{(}\PYG{n}{rev} \PYG{n}{y}\PYG{p}{)} \PYG{p}{[}\PYG{n}{x}\PYG{p}{]}
+\end{Verbatim}

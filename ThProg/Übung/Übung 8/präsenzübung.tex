@@ -1,0 +1,131 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	\[\tau,\sigma::=a|b|\tau\to \sigma|\tau\times \sigma\]
+	\AxiomC{$\Gamma\vdash t:\tau\times \sigma$}
+	\LeftLabel{$\times e_1$}
+	\UnaryInfC{$\Gamma\vdash fst\ t:\tau$}
+	\DisplayProof\\
+	\AxiomC{$\Gamma\vdash t:\tau\times \sigma$}
+	\LeftLabel{$\times e_2$}
+	\UnaryInfC{$\Gamma\vdash snd\ t:\sigma$}
+	\DisplayProof\\
+	\AxiomC{$\Gamma\vdash t:\tau$}
+	\AxiomC{$\Gamma\vdash s:\sigma$}
+	\LeftLabel{$\times i$}
+	\BinaryInfC{$\Gamma\vdash \{t,s\}:\tau\times\sigma$}
+	\DisplayProof\\
+	(zum vergleich) $\land$-Regeln.\\
+	\AxiomC{$\Gamma\vdash \tau\land \sigma$}
+	\LeftLabel{$\land e_1$}
+	\UnaryInfC{$\Gamma\vdash \tau$}
+	\DisplayProof\\
+	\AxiomC{$\tau\land \sigma$}
+	\LeftLabel{$\land e_2$}
+	\UnaryInfC{$\Gamma\vdash \sigma$}
+	\DisplayProof\\
+	\AxiomC{$\Gamma\vdash \theta$}
+	\AxiomC{$\Gamma\vdash \sigma$}
+	\LeftLabel{$\land i$}
+	\BinaryInfC{$\Gamma\vdash \sigma\land \theta$}
+	\DisplayProof\\
+	Regeln:\\
+	$fst \{t,s\}\to t$\\
+	$snd \{t,s\}\to s$\\
+	Beweis ``$\impliedby$'':\\
+	Also es wird angenommen, dass $\bar\Phi$ inhabited, d.h. wir haben t und Beweis für $\vdash t:\bar\Phi$\\
+	Wir streichen den Term und ersetzen alle $\times$ durch $\land$.\\
+	``$\implies$'' Es gelte $\vdash\Phi$ (also im logischen gültig).\\
+	Lösung: Induktion über Herleitung. (F.U. über die zuletzt angewandte Lösung)\\
+	Zu geg. Menge an Annahmen.:	$\Gamma=\{\phi_0,\dots,\phi_n\}$ konstruiere Typkonext ( $\bar\Gamma=\{x_0:\bar\phi_0,\dots, x_n:\bar\phi_n\}$)\\
+	Die Fälle $\to_i,\to_e,(Ax)$ bleiben gleich (vgl. Vorlesung)\\
+	letzte Regel war $(\land-I)$ d.g. letzter Schritt war\\
+	\AxiomC{$\Gamma\vdash \theta$}
+	\AxiomC{$\Gamma\vdash \sigma$}
+	\LeftLabel{$\land i$}
+	\BinaryInfC{$\Gamma\vdash \sigma\land \theta$}
+	\DisplayProof also aus Vorraussetzungen haben wir im Kontext $\bar \Gamma\vdash x_i:\sigma,\bar \Gamma\vdash x_j:\theta$ durch Anwendung von ($\times i$) gilt $\{x_i,x_j\}:\bar\sigma\times\bar\theta$\\
+	$(\land e_1)$ per I.V.  gibt es im Kontext ein $\Gamma\vdash \{x_1,x_2\}:\phi\times\psi$\\
+	Darauf kann man jetzt $(\times e_1)$ anwenden, und erhält $x_1:\phi$.\\
+	Ebenso mit $(\land E_2)$ analog.\\
+	Beweis: Es reicht einen Term anzugeben, der diesen Typ hat\\
+	$\lambda xy. \{\{y, fst\ x\},snd\ x\} $\\
+	\AxiomC{}
+	\UnaryInfC{$x:p\times q, y:r\vdash y:r$}
+	\AxiomC{}
+	\UnaryInfC{$x:p\times q, y:r\vdash fst\ x:p$}
+	\BinaryInfC{$x:p\times q, y:r\vdash \{y,fst\ x\}:(r\times p)$}
+	\AxiomC{}
+	\UnaryInfC{$x:p\times q, y:r\vdash snd\ x:q$}
+	\BinaryInfC{$x:p\times q, y:r\vdash \{\{y, fst\ x\},snd\ x\}:(r\times p)\times q$}
+	\UnaryInfC{$x:p\times q\vdash \lambda y. \{\{y, fst\ x\},snd\ x\}:r\to (r\times p)\times q$}
+	\UnaryInfC{$\vdash \lambda xy. \{\{y, fst\ x\},snd\ x\}:p\times q\to r\to (r\times p)\times q$}
+	\DisplayProof\\
+	$sum(Ncons 4(Ncons 89 (Ncons 21 NNil))) \to_\delta 4+sum(Ncons 89 (Ncons 21 NNil))\to_\delta 4+ 89 sum(Ncons 21 NNil))\to_\delta 4+89+21+sum(NNil)\to_\delta 4+89+21+0 \to_\delta 4+110\to_\delta 114$\\
+	\begin{minted}{haskell}
+	element::Nat->NatList->Bool
+	element a NNil = False
+	element a (NCons y xs) = y==a or (element a y)
+	\end{minted}
+\end{document}

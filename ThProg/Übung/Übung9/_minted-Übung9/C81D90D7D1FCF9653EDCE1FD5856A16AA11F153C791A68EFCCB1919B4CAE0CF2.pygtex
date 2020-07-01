@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{reverse} \PYG{n}{xs} \PYG{o+ow}{=} \PYG{n}{foldL} \PYG{n}{c} \PYG{n}{g} \PYG{n}{xs} \PYG{k+kt}{Nil}
+	 \PYG{k+kr}{where}
+	 	\PYG{c+c1}{\PYGZhy{}\PYGZhy{}c::List a\PYGZhy{}\PYGZgt{}List a}
+	 	\PYG{n}{c} \PYG{o+ow}{=} \PYG{n}{id}
+	 	\PYG{n}{g}\PYG{o+ow}{::}\PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{p}{(}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}\PYG{p}{)}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{p}{(}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}\PYG{p}{)}
+	 	\PYG{n}{g} \PYG{n}{y} \PYG{n}{f} \PYG{n}{ys} \PYG{o+ow}{=} \PYG{k+kt}{Cons} \PYG{p}{(}\PYG{n}{f} \PYG{n}{y}\PYG{p}{)} \PYG{n}{ys}
+\end{Verbatim}

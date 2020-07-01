@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{} initialfall 0**2 = 0 zu (n,n**2)}
+	\PYG{n}{c} \PYG{o+ow}{=} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}
+	\PYG{n}{h} \PYG{n}{x} \PYG{o+ow}{=} \PYG{p}{(}\PYG{k+kt}{Suc}\PYG{p}{(}\PYG{n}{fst} \PYG{n}{x}\PYG{p}{),} \PYG{p}{(}\PYG{n}{snd} \PYG{n}{x}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{n}{fst} \PYG{n}{x}\PYG{p}{)}\PYG{o}{+} \PYG{k+kt}{Suc}\PYG{p}{(}\PYG{n}{fst} \PYG{n}{x}\PYG{p}{))}
+	\PYG{n}{g} \PYG{o+ow}{=} \PYG{n}{fst}
+\end{Verbatim}

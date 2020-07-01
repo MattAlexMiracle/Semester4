@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{map} \PYG{n}{f}\PYG{k+kt}{:Stream}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Stream}
+	 \PYG{n}{hd}\PYG{p}{(}\PYG{n}{map} \PYG{n}{f} \PYG{n}{s}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{f} \PYG{p}{(}\PYG{n}{hd} \PYG{n}{s}\PYG{p}{)}
+	 \PYG{n}{tl} \PYG{p}{(}\PYG{n}{map} \PYG{n}{f} \PYG{n}{s}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{map} \PYG{n}{f} \PYG{p}{(}\PYG{n}{tl} \PYG{n}{s}\PYG{p}{)}
+\end{Verbatim}

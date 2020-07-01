@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	\[\int_{\mathbb{R}^2} Cxy1_{(0,x)}(y)1_{(0,2)}(x) d(x,y)=1\]
+	\[\int_0^2\int_0^x Cxy\ dydx=1\]
+	\[\frac{1}{2}\int_0^2Cx^3\ dx=1\]
+	\[\frac{1}{2\cdot4}[Cx^4]_0^2=1\]
+	\[\frac{1}{2\cdot4}[C2^4]=1\]
+	\[\frac{16}{2\cdot4}C=1\]
+	\[2C=1\]
+	\[C=\frac{1}{2}\]
+	b)\\
+	\[f_X(x)=\int_\mathbb{R} \frac{1}{2}xy1_{(0,x)}(y)1_{(0,2)}(x)dy\]
+	\[=\int_0^x \frac{1}{2}xy1_{(0,2)}(x)dy\]
+	\[=[\frac{1}{2\cdot 2}xy^21_{(0,2)}(x)]_0^x \]
+	\[=\frac{1}{2\cdot 2}xx^21_{(0,2)}(x) \]
+	\[=\frac{1}{2\cdot 2}x^31_{(0,2)}(x) \]
+	Bei Y muss aufgepasst werden, da (abhängig vom y) nicht alle x Werte einen Wert ungleich null haben. Der beginn der Zeit, an der x-Werte relevant werden, ist der punkt, an dem der y wert für x liegt liegt: Es gilt $0<y\leq x<2\implies Cxy$ (da für $y>x$ der wert null wäre), Wenn man nur den rechten Constraint betrachtet, sieht man $y\leq x<2$, das sind die grenzen\\
+	\[f_Y(y)=\int_\mathbb{R} \frac{1}{2}xy1_{(0,x)}(y)1_{(0,2)}(x)dx\]
+	\[=\int_y^2 \frac{1}{2}xy1_{(0,x)}(y)dx\]
+	\[=[\frac{1}{2\cdot 2}x^2y1_{(0,x)}(y)]_y^2\]
+	\[=1_{(0,2)}(y)[\frac{1}{2\cdot 2}2^2y-\frac{1}{2\cdot 2}y^3]\]
+
+	c)\\
+	\[P(X<1,Y<1)=\int^1_0\int^x_0 \frac{1}{2}xy\ dydx\]
+	\[P(X<1,Y<1)=\int^1_0[\frac{1}{2\cdot 2}xy^2]^x_0\ dx\]
+	\[P(X<1,Y<1)=\int^1_0[\frac{1}{2\cdot 2}xx^2]\ dx\]
+	\[P(X<1,Y<1)=[\frac{1}{2\cdot 2\cdot 4}x^4]^1_0\]
+	\[P(X<1,Y<1)=\frac{1}{2\cdot 2\cdot 4} = \frac{1}{16}\]
+	\\
+	\[P(X=1,Y<1)=\int^1_1\int^1_0 \frac{1}{2}xy\ dydx =0\]
+	 \\
+	\[P(X<1,Y>\frac{1}{2}) = \int^1_{-\infty}\int^x_{\frac{1}{2}} \frac{1}{2}xy1_{(0,x)}(y)1_{(0,2)}(x)\ dy dx\]
+	\[P(X<1,Y>\frac{1}{2}) = \frac{1}{2}\int^1_{0}\int^x_{\frac{1}{2}} xy\ dy dx\]
+	\[P(X<1,Y>\frac{1}{2}) = \frac{1}{2\cdot 2}\int^1_{0} [xy^2]^x_{\frac{1}{2}}dx\]
+	\[P(X<1,Y>\frac{1}{2}) = \frac{1}{2\cdot 2}\int^1_{0} [xx^2-x(\frac{1}{2})^2]dx\]
+	\[P(X<1,Y>\frac{1}{2}) = \frac{1}{2\cdot 2}[\frac{1}{4}x^4-x^2\frac{1}{2^3}]^1_{0}\]
+	\[P(X<1,Y>\frac{1}{2}) = \frac{1}{2\cdot 2}(\frac{1}{4}1^4-1^2\frac{1}{2^3})=\frac{1}{32}\]
+	 \\
+	\[P(X<1) = \int^1_{-\infty}f_X(x)dx = \int^1_{-\infty}\frac{1}{2\cdot 2}x^31_{(0,2)}(x)=\int^1_{0}\frac{1}{2\cdot 2}x^3 =[\frac{x^4}{4^2}]^1_0= \frac{1}{16}\]
+	
+\end{document}

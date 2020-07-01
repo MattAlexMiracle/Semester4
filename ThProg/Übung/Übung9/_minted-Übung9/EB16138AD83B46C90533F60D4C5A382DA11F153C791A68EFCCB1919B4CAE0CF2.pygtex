@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{c+c1}{\PYGZhy{}\PYGZhy{} wir dürfen annehemen, dass n=0 wahr ist (laufvariable, letzter treffer)}
+	\PYG{n}{c}\PYG{o+ow}{=} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{)}
+	\PYG{n}{h} \PYG{n}{x}\PYG{o+ow}{=} \PYG{k+kr}{if} \PYG{n}{p} \PYG{p}{(}\PYG{n}{fst} \PYG{n}{x}\PYG{p}{)} \PYG{k+kr}{then} \PYG{p}{(}\PYG{k+kt}{Suc}\PYG{p}{(}\PYG{n}{fst} \PYG{n}{x}\PYG{p}{),} \PYG{n}{fst} \PYG{n}{x}\PYG{p}{)} \PYG{k+kr}{else} \PYG{p}{(}\PYG{k+kt}{Suc}\PYG{p}{(}\PYG{n}{fst} \PYG{n}{x}\PYG{p}{),} \PYG{n}{snd} \PYG{n}{x}\PYG{p}{)}
+	\PYG{n}{g}\PYG{o+ow}{=} \PYG{n}{snd}
+\end{Verbatim}

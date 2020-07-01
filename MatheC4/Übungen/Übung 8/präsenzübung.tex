@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	a)\\
+	$f^X(x)=0$ für $x<0$
+	$$f^X(x)=\int^\infty_{-\infty} f(x,y)dy= \int^\infty_{-\infty}\frac{1}{8} (x^2-y^2)e^{-x}dy =\int^x_{-x} \frac{1}{8}x^2e^{-x}-\frac{1}{8}y^2e^{-x}dy $$
+	$$\frac{1}{6}e^{-x}x^3 $$
+	$$f^Y(y)=\int^\infty_{-\infty}f(x,y)dx$$
+	$$\lim_{n\to\infty}\int^n_{0} f(x,y)dx$$
+	d)\\
+	$$P(X<3,-1<Y<1)= \int^1_{-1}\int^\infty_3 f(x,y)dx dy$$
+	\begin{equation*}
+	\begin{tabular}[c|c|c|c]
+		&-1 &1&\\
+		0&1/8 &1/8&\\
+		1&1/8+c &1/8-c&\\
+		2&1/4 &1/4&\\
+	\end{tabular}
+	\end{equation}
+
+\end{document}

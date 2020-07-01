@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+\usepackage{xcolor}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+\newcommand{\Todo}[1]{\underline{\color{red}{#1}}}
+
+\begin{document}
+	\section{Übung 3}
+	(ignorieren wir, dass Blatt 8 Übung 5 maximum nicht minimum definiert)\\
+	minimum arbeitet von $List\ Nat\to Nat$, da map selbst auf listen operiert und auf jedem Element ``f'' (bzw hier length:$List\ a\to Nat$) ausführt. muss map length auf listen von listen operieren und minimum gibt die minimale länge der listen in den listen der Listen zurück:\\
+	\begin{minted}{haskell}
+	minimum.(map length)::List (List a)->Nat
+	\end{minted}
+	2.\\
+	map ersetzt jedes element der List mit einem transformierten, aber typgleichen element der Liste:\\
+	\Todo{benutzen die foldl mit argumentreihenfolge anders herum? MINDFUCK}\\
+	\Todo{es gehört $Foldable\ t\Rightarrow (b \to a \to b) \to b \to t a \to b$}\\
+	\Todo{UND DAS GLEICHE BEI DER ARGUMENTFUNKTION!!}
+	\begin{minted}{haskell}
+	-- reverse is necessary because the construction is resolved from back to front (so the first in the list is going to be )
+	map f xs =reverse $foldl  Nil (\x-> Cons (f x)) xs
+	\end{minted}
+	\begin{minted}{haskell}
+	reverse xs = foldL c g xs Nil
+	 where
+	 	--c::List a->List a
+	 	c = id
+	 	g::a->(List a->List a)->(List a->List a)
+	 	g y f ys = Cons (f y) ys
+	\end{minted}
+	\section{Übung 4}
+	Hintergrund:\\
+	die n-te quadratzahl kann von der vorherigen über:\\
+	\[n^2 = (n-1)^2+(n-1)+n\]
+	für diese berechnung brauchen wir also die zahl n selbst, sowie das vorherige quadrat
+	\begin{minted}{haskell}
+	-- initialfall 0**2 = 0 zu (n,n**2)
+	c = (0,0)
+	h x = (Suc(fst x), (snd x)+(fst x)+ Suc(fst x))
+	g = fst
+	\end{minted}
+	für die 2. Funktion:
+	\begin{minted}{haskell}
+	-- wir dürfen annehemen, dass n=0 wahr ist (laufvariable, letzter treffer)
+	c= (0,0)
+	h x= if p (fst x) then (Suc(fst x), fst x) else (Suc(fst x), snd x)
+	g= snd
+	\end{minted}
+\end{document}

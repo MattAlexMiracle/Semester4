@@ -1,0 +1,81 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	bsp.:\\
+	gem. Dichte:
+	\[f^{(X,Y)}(x,y)= \begin{cases}3y&x\in[-1,1],y\in[0,1-|x|]\\0&sonst\end{cases}\]
+	Randdichte $f^X$, $f^Y$\\
+	und Übergangsdichten von $f^{(X)} (x)f^{(Y)}_{(X)} (x;y)$\\
+	Die Übergangsdichten von i nach i-1 ist eine bedingte Dichte, die abhängig von genau diesen ist.\\
+	Dazu Randdichten $f^{(Y_1,\dots,Y_{n-1})},f^{(Y_1,\dots,Y_{n-2})},\dots f^{(Y_1,Y_2)}, f^{(Y_1)}=f_1$.\\
+	Dazu kann $f^{(Y_1,\dots,Y_{n-1})}$ einfach berechnet werden:
+	Idee: Fasse $f_1(x_1),\dots f^{n-2}_{n-1}(y_1\dots,y_{n-1})= f^{(Y_1,\dots,Y_{n-1})}(y_1\dots,y_n)$\\
+	\[f^{(Y_1,\dots,Y_{n-1})}(y_1\dots,y_n) =\int^\infty_{-\infty}\dots\int^\infty_{-\infty}f^{(Y_1,\dots,Y_{n})}(y_1\dots,y_n)dy_n\]
+	allgemein durch dividieren, kann man rekursiv berechnen:
+	\[f^{(Y_1,\dots,Y_{n})}(y_1\dots,y_n) =f^{(Y_1,\dots,Y_{n-1})}(y_1\dots,y_{n-1})f^{i-1}_i(y_1\dots,y_n)\]
+	\[\iff f^{i-1}_i(y_1\dots,y_n) =\frac{f^{(Y_1,\dots,Y_{n})}(y_1\dots,y_n) }{f^{(Y_1,\dots,Y_{n-1})}(y_1\dots,y_{n-1})}\]
+	weiter im Beispiel von oben:\\
+	\[f^{(X,Y)}(x,y)= \begin{cases}3y&x\in[-1,1],y\in[0,1-|x|]\\0&sonst\end{cases}\]
+	\[f^1_2(x,y)=\frac{f^{(X,Y)}(x,y)}{f^{(X)}(x)}\]
+	und 
+	\[f^X(x) = \int_\mathbb{R} f^{(X,y)}(x,y)dy = \int^\infty_{-\infty}f^{(X,y)}(x,y)dy\]
+	\[=\int ^{1-|x|}_0 3y dy=\frac{3}{2}[y^2]_{y=1}^{y=1-|x|} = \frac{3}{2}(1-|x|)^2\; x\in[-1,1]\]
+	Ergebnis $f^1_2(x,y)=\frac{3y}{\frac{3}{2}(y-|x|)^2}$ für $x\in[-1,1], y\in[0,1-|x|]$\\
+	(Bei 3 variablen könnte man jetzt $f^1_2(x,y)$ für die Randdichte benutzen, um das nächste zu berechnen)
+\end{document}
