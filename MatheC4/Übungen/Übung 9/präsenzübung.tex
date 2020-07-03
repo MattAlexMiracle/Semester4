@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	X,Y sind ZV $(\Omega, \mathcal{A}, \mathbb{P})$\\
+	$\Omega = \mathbb{N}_0$ $\mathcal{A} = \mathbb{P}(\Omega)$\\
+	1.
+	\[f_X(k)=e^{-\lambda} \frac{\lambda^k}{k!}\]
+	2.
+	\[f_Y(k)=e^{-\mu} \frac{\mu^k}{k!}\]
+	Beide sind voneinander UNABHÄNIG!!\\
+	$Z =X+Y$ ist definiert $(\Omega_z, \mathcal{A}_Z,\mathbb{P}_z)$\\
+	$\Omega_z = \mathbb{N}_0$ weil $\mathbb{N}_0$ abgeschlossene Gruppe über Addition.\\
+	Die Summe der Messräume gibt den neuen Messraum:\\
+	$\Omega_Z = (\Omega_Y+\Omega_X) = \mathbb{N}_0$\\
+	$\mathcal{A} = P(\Omega_z)$\\
+	Die Summe der beiden ZV liefert $x+y=z\implies x=z-y$\\
+	\[f_Z(n)=\sum^n_{k=0}f_X(k)\cdot f_Y(n-k) = \sum^n_{k=0} e^{-\lambda}\frac{\lambda^k}{k!}e^{-\mu}\frac{\mu^{n-k}}{(n-k)!}\]
+	\[ e^{-\lambda-\mu}\sum^n_{k=0}\frac{\lambda^k}{k!}\frac{\mu^{n-k}}{(n-k)!}\]
+	Erweitern mit n!
+	\[ e^{-\lambda-\mu}\sum^n_{k=0}\frac{\lambda^k}{k!}\frac{\mu^{n-k}n!}{(n-k)!n!}=\frac{e^{-\lambda-\mu}}{n!}\sum^n_{k=0}\frac{\lambda^k}{k!}\frac{\mu^{n-k}n!}{(n-k)!}=\frac{e^{-\lambda-\mu}}{n!}\sum^n_{k=0}\binom{n}{k}\lambda^k\mu^{n-k}n! = \frac{e^{-\lambda-\mu}}{n!}(\lambda+\mu)^n =f_Z(n)\]
+	Hier gilt:\\
+	\[f_Y(k)f_X(k) =e^{-\mu} \frac{\mu^k}{k!} e^{-\lambda} \frac{\lambda^k}{k!} = e^{-\mu-\lambda} \frac{\mu^k}{k!} \frac{\lambda^k}{k!} \neq f_Z(n)\]
+	\section{}
+	$X\sim\mathcal{U}(-1,0)$ $Y\sim\mathcal{U}(0,3)$\\
+	\[f_X(x) = 1\cdot 1_{(-1,0)}(x)\]
+	\[f_Y(y) = \frac{1}{3}\cdot 1_{(0,3)}(y)\]
+	$z=x+y\in (-1,3)$\\
+	\[f^{X+Y} = \int^\infty_{-\infty}f^X(x)f^Y(z-x)dx\]
+	Wir wissen $1_{(0,3)}(z-x)\iff z-x \in (0,3)\iff x \in (z-3,z-0)\iff x \in (z-3,z)$ (``Seitenwechsel wegen -x zu +x'')
+	\[\int^\infty_{-\infty}1_{(-1,0)}(x)\frac{1}{3} 1_{(z-3,z)}(y)dx =\int^\infty_{-\infty}1_{(-1,0)\cap (z-3,z)}(x)\frac{1}{3} 1(y)dx\]
+	\[\begin{cases}\frac{1}{3}\int^\infty_{-\infty}1_{(-1,z)}(x)dx =\frac{1}{3} \int^z_{-1}dx =\frac{1}{3} [x]^z_{-1} = \frac{1}{3}&z\in(-1,0)\\
+	\frac{1}{3}\int^\infty_{-\infty}1_{(-1,0)}(x)dx =\frac{1}{3} \int^0_{-1}dx =\frac{1}{3} [x]^0_{-1} = \frac{1}{3}(z+1)&z\in[0,2]\\
+	\frac{1}{3}\int^\infty_{-\infty}1_{(z-3,0)}(x)dx =\frac{1}{3} \int^{z-3}_{0}dx =\frac{1}{3} [x]^{z-3}_{0} = \frac{1}{3}(3-z)&z\in(2,3)\\
+	 \end{cases}\]
+	 Die Fälle ergeben sich aus auflösen  der verschiedenen Fälle (erste hälfe des ersten bereich, kern erste Bereich,  letzer teil des ersten Bereichs)
+
+
+
+\end{document}

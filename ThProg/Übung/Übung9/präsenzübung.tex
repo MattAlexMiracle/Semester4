@@ -62,27 +62,52 @@ Kapitel 1
 
 \begin{document}
 	\maketitle
-	ZV X und Y sind unabhängige, gleichverteilte ZV aus $\mathcal{U}(a,b)$\\
-	also ist
-	\[f^Y(y)=\frac{1}{b-a}1_{(a,b)}\]
-	\[f^X(x)=\frac{1}{b-a}1_{(a,b)}\]
-	Dazu die Faltung $Z=X+Y$ wobei $z=x+y\in (a,2b)$:
-	\[f^{(X+Y)}(z)=\int^\infty_{-\infty}f^Y(y)f^X(z-y)dy\]
-	\[f^{(X+Y)}(z)=\int^\infty_{-\infty}\frac{1}{b-a}1_{(a,b)}(y)\frac{1}{b-a}1_{(a,b)}(z-y)dy\]
-	\[f^{(X+Y)}(z)=\frac{1}{(b-a)^2}\int^\infty_{-\infty}1_{(a,b)}(y)1_{(a,b)}(z-y)dy\]
-	Die letzte Indikatorfunktion liefert $1_{(a,b)}(z-y)\iff z-y\in(a,b) \iff y\in (z-b,z-a)\iff 1_{(z-b,z-a)}(y)$ (weil $z-y=x\in(a,b)\iff y = z-x$, grenzen drehen sich um, weil ich das element der Menge minus nehme).\\
-	\[\frac{1}{(b-a)^2}\int^\infty_{-\infty}1_{(a,b)}(y)1_{(z-b,z-a)}(y)dy\iff \frac{1}{(b-a)^2}\int^\infty_{-\infty}1_{(a,b)\cap (z-b,z-a)}(y)dy\]
-	Wenn $z\in (a,a+b)$ dann gilt $y\in (a,z-a)$ weil y mindestens a sein muss. Dieser Teilintegral:
-	\[\int_a^{z-a}\frac{1}{(b-a)^2}dy = \frac{z-a}{(b-a)^2}-\frac{a}{(b-a)^2}=\frac{z-2a}{(b-a)^2}\]
-	Wenn $z\in (a+b,2b)$ dann $ y\in (z-b,b)$ da y höchstens b werden kann.\\
-	\[\int^b_{z-b}\frac{1}{(b-a)^2}dy = \frac{b}{(b-a)^2}-\frac{z-b}{(b-a)^2}\]
-	somit erhalten wir insgesamt:
-	\begin{equation*}
-	f_Z(z) = \begin{cases}
-	\frac{b}{(b-a)^2}-\frac{z-b}{(b-a)^2} &z\in (a+b,2b)\\
-	\frac{z-2a}{(b-a)^2}&y\in (a,z-a)
-	\end{cases}
-	\end{equation*}
+	\begin{minted}{haskell}
+	foldb::a->a->Bool->a
+	foldb t f True = t
+	foldb t f False = f
+
+	data Nat = Zero | Succ Nat deriving (Show, Eq)
+	foldn::a->(a->a)->Nat->a
+	foldn z s Zero = z
+	foldn z s (Succ n) = s (foldn z s n)
+
+	add::Nat->Nat->Nat
+	add n = foldn n Succ
+
+	mult::Nat->Nat->Nat
+	mult n = foldn Zero (add n)
+
+	exp::Nat->Nat->Nat
+	exp n = foldn (Suc Zero) (mult n)
+
+	data Tree a = Leaf a | Node (Tree a) (Tree a) deriving (Show, Eq)
+	data List a = Nil | Cons a (List a) deriving (Show, Eq)
+	-- sprich: überall wo ``Tree'' steht schreibt man ein b, alles andere lässt man unverändert
+	-- Merke: Leaf a ist kurzschreibweise für a->Tree a
+	foldL::b->(a->b->b)->List a->b
+	foldL n c Nil =n
+	foldL n c (Cons x xs) = Cons (c x) (foldL n c xs)
+
+	foldT::(a->b)->(b->b->b)->Tree a-> b
+	foldlT l n (Leaf a) = l a
+	foldlT l n (Node a b) = n (foltdT l n a) (foltdT l n b)
+
+	scanL::b->(a->b->b)->List a->List b
+	scanL n f Nil= Cons (foldL n f Nil) Nil
+	scanL n f (Cons x xs)= Cons (foldL n f (Cons x xs)) (scanL n f xs)
+
+	length = foldL 0 (\x->Succ)
+
+	snoc x=  foldL (Cons x Nil) (Cons x xs)
+
+	reverse = foldL Nil snoc
+
+	concat l1 l2 = foldL l2 Cons l1
+
+	front  = foldT (\x -> Cons x Nil) concat
+	\end{minted}
+
 
 
 \end{document}
