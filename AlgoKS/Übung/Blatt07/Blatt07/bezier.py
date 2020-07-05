@@ -52,10 +52,8 @@ def split_curve(P):
     L,R = [],[]
     P1 =P
     for _ in range( len(P1)-1):
-        print("step", len(P1))
         L +=[P1[0]]
         R =[P1[-1]]+R
-        print(L,R)
         P1 = de_casteljau_step(P1,0.5)  
     L +=[P1[0]]
     R=[P1[-1]]+R

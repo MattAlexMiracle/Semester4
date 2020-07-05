@@ -63,8 +63,8 @@ Kapitel 1
 
 \begin{document}
 	\section{Übung 3}
-	(ignorieren wir, dass Blatt 8 Übung 5 maximum nicht minimum definiert)\\
-	minimum arbeitet von $List\ Nat\to Nat$, da map selbst auf listen operiert und auf jedem Element ``f'' (bzw hier length:$List\ a\to Nat$) ausführt. muss map length auf listen von listen operieren und minimum gibt die minimale länge der listen in den listen der Listen zurück:\\
+	%(ignorieren wir, dass Blatt 8 Übung 5 maximum nicht minimum definiert)\\
+	maximum arbeitet von $List\ Nat\to Nat$, da map selbst auf listen operiert und auf jedem Element ``f'' (bzw hier length:$List\ a\to Nat$) ausführt. muss map length auf listen von listen operieren und maximum gibt die maximale länge der listen in den listen der Listen zurück:\\
 	\begin{minted}{haskell}
 	minimum.(map length)::List (List a)->Nat
 	\end{minted}

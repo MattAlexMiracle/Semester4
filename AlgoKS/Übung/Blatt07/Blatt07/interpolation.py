@@ -21,8 +21,7 @@ def newton_matrix(X):
         return A
     A[:,0]=1
     for i in range(1,X.shape[0]):
-        for j in range(i,X.shape[0]):
-            A[j,i]= A[j,i-1]*(X[j]-X[i-1])
+        A[i:,i]= A[i:,i-1]*(X[i:]-X[i-1])
     return A
 
 

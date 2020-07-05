@@ -1,0 +1,204 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{bm}
+\usepackage{verbatim}
+\usepackage{fourier}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath,amsthm}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usepackage{bussproofs}
+\usepackage{tikz-cd}
+
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=0pt}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\newcommand{\smallAscr}{\scriptscriptstyle\mathcal{A}}
+%\newcommand{\nsqsubseteq}{\xout{\sqsubseteq}}
+\title{Vorlesung 2}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\newtheorem{satz}{Satz}
+\newtheorem{korrolar}{Korrolar}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\theoremstyle{definition}
+\newtheorem{beweis}{Beweis}[section]
+\newtheorem{beispiel}{Beispiel}[section]
+\newtheorem{definition}{Definition}[section]
+
+
+\begin{document}
+	\section{Übung 4}
+	\subsection{}
+	\begin{minted}{haskell}
+	reverse::List a->List a
+	reverse Nil = Nil
+	reverse (Cons x xs) = snoc (reverse xs) x
+	\end{minted}
+	\[\forall xs\ ys.reverse (xs\oplus ys)= (reverse\ ys)\oplus(reverse\ xs)\]
+	Sei ys::List a beliebig aber fest.(so schwachsinnige diese schreibweise auch ist)\\
+	I.A. xs =Nil\\
+	wir erhalten¸\\
+	reverse (Nil$\oplus$ ys) = reverse ys\\
+	und\\
+	(reverse ys)$\oplus$(reverse Nil) = (reverse ys)$\oplus$Nil =  reverse ys\\
+	per Übung 2.3.a\\
+	Der induktionsanfang gilt also für beliebige ys.\\
+	I.V.: xs=Cons z zs, für zs gilt\\
+	reverse (zs$\oplus$ ys)= (reverse ys)$\oplus$(reverse zs)\\
+	linke Seite Umformen:\\
+	reverse ((Cons z zs)$\oplus$ ys) $\stackrel{def\ \oplus}{=}$ reverse (Cons z (zs$\oplus$ys)) $\stackrel{def\ reverse}{=}$ snoc (reverse (zs$\oplus$ys)) z $\stackrel{def\ IV}{=}$\\
+	snoc ((reverse ys)$\oplus$(reverse zs)) z\\
+	von der anderen Seite\\
+	(reverse ys)$\oplus$(reverse (Cons z zs)) $\stackrel{def\ reverse}{=}$ (reverse ys)$\oplus$(snoc (reverse zs) z) $\stackrel{(1)}{=}$ snoc ((reverse ys)$\oplus$(reverse zs)) z\\
+	(1) Anwendung von 2.3.b von rechts nach links.\\
+	Somit gilt auch die I.V. also gilt die Aussage.\\
+	\subsection{}
+	\subsubsection{}
+	\[\forall xs\ ys.\ reverse'\ xs \ ys =(reverse'\ xs\ Nil)\oplus ys\]
+	(idee: der rechte parameter bleibt unverändert, bis auf hinzufügen der Liste im ``stackformat'')\\
+	I.A. die Aussage gilt für xs=Nil\\
+	reverse' Nil  ys= ys $\stackrel{def\ \oplus}{=}$Nil $\oplus $ys= reverse (Nil Nil) $\oplus $ys\\
+	per definition von reverse'.\\
+	I.V. xs = Cons z zs\\
+	Die Aussage gilt für zs: reverse' zs bel=(reverse' zs Nil)$\oplus$bel\\
+	reverse' (Cons z zs)  ys$\stackrel{def\ reverse'}{ = }$ reverse' zs (Cons z ys) $\stackrel{IV}{=}$ (reverse' zs Nil) $\oplus$ (Cons z ys)\\
+	andere Seite\\
+	(reverse' (Cons z zs) Nil)$\oplus$ ys $\stackrel{def\ reverse'}{=}$ (reverse'  zs (Cons z Nil))$\oplus$ ys $\stackrel{IV}{=}$ ((reverse' zs Nil) $\oplus$ (Cons z Nil))$\oplus$ ys $\stackrel{(1)}{=} $\\
+	(reverse' zs Nil) $\oplus$( (Cons z Nil)$\oplus$ ys) $\stackrel{def\ \oplus}{=}$ (reverse' zs Nil) $\oplus$( Cons z (Nil$\oplus$ ys)) $\stackrel{def\ \oplus}{=}$ (reverse' zs Nil) $\oplus$( Cons z ys)\\
+	wobei in (1) die Assoziativität der konkatenation benutzt wurde (Beweis aus Vorlesung cc und $\oplus$ sind $\alpha$-Äquivalent)\\
+	\subsubsection{}
+	I.A.: sei xs =Nil\\
+	reverse Nil =Nil $\stackrel{def\ reverse'}{=}$ (reverse' Nil Nil)\\
+	gilt.\\
+	I.V. xs = Cons z zs\\
+	Die Aussage gilt für zs: reverse zs = reverse' zs Nil\\
+	reverse (Cons z zs) $\stackrel{def\ reverse}{=}$ snoc (reverse zs) z $\stackrel{IV}{=}$ snoc (reverse' zs Nil) z\\
+	reverse' (Cons z zs) Nil $\stackrel{def\ reverse'}{=}$ reverse' zs (Cons z Nil) $\stackrel{Lemma\ a)}{=}$ (reverse' zs Nil) $\oplus$ (Cons z Nil) $\stackrel{3.3}{=}$\\
+	snoc (reverse' zs Nil) z\\
+	Somit gilt die Aussage.\\
+	\section{}
+	\subsection{}
+	\[\forall f\ g\ xs.(map\ f.map\ g)\ xs = map\ (f.g)\ xs\]
+	Sei f,g beliebig, aber fest.\\
+	I.A.: xs=Nil\\
+	(map f.map g) Nil = $\lambda x. (map\ f)((map\ g)(x))$ Nil = (map f)((map g)(Nil)) = (map f)(Nil) = Nil\\
+	Anwenden der definition von (.) und dann 2 mal von map \\
+	map (f.g) Nil = Nil.\\
+	definition von map.\\
+	I.V. xs = Cons z zs\\
+	Die Aussage gilt für zs: (map f.map g) zs = map (f.g) zs\\
+	(map f.map g) (Cons z zs) $\stackrel{def\ (.)}{=}$ $\lambda x. (map\ f)((map\ g)(x))$ (Cons z zs) $\stackrel{applikation}{=}$  (map f)((map g)(Cons z zs)) $\stackrel{def\ map}{=}$ (map f)(Cons (g z) (map g zs)) $\stackrel{def\ map}{=}$ Cons (f (g z)) (map f (map g zs))\\
+	Andere Seite\\
+	map (f.g) (Cons z zs) $\stackrel{def\ map}{=}$ Cons ((f.g) z) (map (f.g) zs) $\stackrel{def\ (.)}{=}$ Cons (($\lambda x. f(g\ x)$) z) (map (f.g) zs) $\stackrel{\beta}{=}$\\
+	Cons (f(g z) ) (map (f.g) zs) $\stackrel{IV}{=}$ Cons (f(g z) ) ((map f.map g) zs) $\stackrel{def\ (.)}{=}$ Cons (f(g z) ) ($\lambda x. (map\ f)((map\ g)(x))$ zs) $\stackrel{\beta}{=}$\\
+	Cons (f(g z) ) ((map f)((map g)(zs))) $\stackrel{applikation}{=}$ Cons (f(g z) ) ((map f)((map g zs)) $\stackrel{applikation}{=}$\\
+	Cons (f(g z) ) (map f (map g zs))\\
+	Somit gilt die Aussage.\\
+	\subsubsection{}
+	\[\forall f\ ys xs.map\ f\ (xs\oplus ys) = (map\ f\ xs) \oplus (map\ f\ ys)\]
+	I.A. xs=Nil\\
+	map f $(Nil\oplus ys)$ $\stackrel{def\ \oplus}{=}$ map f ys\\
+	(map f $Nil$) $\oplus$ (map f ys) $\stackrel{def\ map}{=}$ Nil $\oplus$ map f ys $\stackrel{def\ oplus}{=}$ map f ys\\
+	I.V. xs = Cons z zs\\
+	Die Aussage gilt für zs: map f (zs$\oplus$ ys) = (map f zs) $\oplus$ (map f ys)\\
+	map f ((Cons z zs)$\oplus$ ys) $\stackrel{def\ \oplus}{=}$ map f ((Cons z ( zs$\oplus$ ys) $\stackrel{def\ map}{=}$  Cons (f z) (map ( zs$\oplus$ ys)) $\stackrel{IV}{=}$\\
+	Cons (f z) ((map f zs) $\oplus$ (map f ys))\\
+	Andere Seite.\\
+	(map f (Cons z zs)) $\oplus$ (map f ys) $\stackrel{def\ map}{=}$\\
+	( Cons (f z) (map f zs))) $\oplus$ (map f ys) $\stackrel{def\ \oplus}{=}$ Cons (f z) ((map f zs) $\oplus$ (map f ys))\\
+	Aussage gilt.\\
+	\section{}
+	\subsection{}
+	\[\forall t. mirror\ (mirror\ t) = t\]
+	I.A. t=Leaf.\\
+	mirror (mirror (Leaf)) $\stackrel{def\ mirror}{=}$ mirror (Leaf) $\stackrel{def\ mirror}{=}$ Leaf =Leaf\\
+	gilt.\\
+	I.V. t = Bin left x right\\
+	Die Aussage gilt für left und right.\\
+	mirror (mirror left) = left\\
+	mirror (mirror right) = right\\
+	mirror (mirror (Bin left x right)) $\stackrel{def\ mirror}{=}$ mirror (Bin (mirror right) x (mirror left)) $\stackrel{2\times IV}{=}$ mirror (Bin right x left) $\stackrel{def\ mirror}{=}$ (Bin (mirror left) x (mirror right) $\stackrel{IV}{=}$ Bin left x right
+	\subsection{}
+	\[\forall t. inorder\ (mirror\ t) = reverse\ (inorder\ t)\]
+	I.A. t = Leaf\\
+	inorder (mirror (Leaf)) $\stackrel{def\ mirror}{=}$ inorder (Leaf) $\stackrel{def\ inorder}{=}$ Nil\\
+	andere Seite:\\
+	reverse (inorder Leaf) $\stackrel{def\ indrder}{=}$ reverse Nil $\stackrel{def\ reverse}{=}$ Nil\\
+	gilt.\\
+	I.V. t = Bin left x right\\
+	Die Aussage gilt für left und right.\\ 
+	inorder (mirror left) = reverse (inorder left)\\
+	inorder (mirror right) = reverse (inorder right)\\
+	inorder (mirror (Bin left x right)) $\stackrel{def\ mirror}{=}$ inorder (Bin (mirror right) x (mirror left)) $\stackrel{def\ inorder}{=}$ inorder (mirror right) $\oplus$ (Cons x (inorder (mirror left))) $\stackrel{2\times IV}{=}$  reverse (inorder right) $\oplus$ (Cons x (reverse (inorder left))\\
+	Andere Seite:\\
+	reverse (inorder (Bin left x right)) $\stackrel{def\ inorder}{=}$ reverse (inorder left $\oplus$ (Cons x (inorder right))) $\stackrel{4.1}{=}$  (reverse (Cons x (inorder right)))) $\oplus$ reverse (inorder left) $\stackrel{def\ reverse}{=}$ (snoc (reverse (inorder right)) x) $\oplus$ reverse (inorder left) $\stackrel{Lemma\ A}{=}$\\
+	reverse (inorder right) $\oplus$ (Cons x (reverse (inorder left))\\
+	Die Aussage gilt.\\
+	\underline{Lemma A:}\\
+	(snoc xs x) $\oplus$ ys = xs $\oplus$ (Cons x ys)\\
+	I.A. xs = Nil\\
+	(snoc Nil x) $\oplus$ ys$\stackrel{def\ snoc}{=}$ (Cons x Nil) $\oplus$ ys $\stackrel{def\ \oplus}{=}$ Cons x (Nil$\oplus$ ys) $\stackrel{def\ \oplus}{=}$ Cons x ys \\
+	andere Seite:\\
+	Nil $\oplus$ (Cons x ys) $\stackrel{def\ \oplus}{=}$ Cons x ys.\\
+	gilt.\\
+	I.V. xs=Cons z zs\\
+	Die Aussage gilt für zs: (snoc zs x) $\oplus$ ys = zs $\oplus$ (Cons x ys).\\
+	(snoc (Cons z zs) x) $\oplus$ ys $\stackrel{def\ snoc}{=}$ (Cons z (snoc  zs x))$\oplus$ ys $\stackrel{def\ \oplus}{=}$ Cons z ((snoc zs x)$\oplus$ ys) $\stackrel{IV}{=}$ Cons z (zs $\oplus$ (Cons x ys))\\
+	Andere Seite:\\
+	(Cons z zs) $\oplus$ (Cons x ys) $\stackrel{def\ \oplus}{=}$  Cons z (zs$\oplus$(Cons x ys)).\\
+	Das Lemma ist gültig.\\
+\end{document}
+
+
+
+

@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	X$\sim EXP(1)$ und $Y\sim EXP(2)$ verteilt.\\
+	$EX = \frac{1}{1}$ und $EY = \frac{1}{2}$ (logisch $\lambda$ ist die Erwartete Zahl Ereignisse pro Zeitintervall.)\\
+	Die kovarianz ist definiert als $E((X-EX)(Y-EY))$ außerdem ist der Erwartungswert linear.\\
+	$U=2X+3Y$\\
+	\[\int_{-\infty}^\infty\int_{-\infty}^\infty f^{(X,Y)}(x,y)(x-EX)(y-EY)dxdy\]
+	\[\int_{0}^\infty\int_{0}^\infty 2\cdot e^{-x}3\cdot 2e^{-2y}(x-1)(y-\frac{1}{2})dxdy\]
+	\[6\cdot\int_{0}^\infty(\int_{0}^\infty e^{-x}2e^{-2y}(x-1)(y-\frac{1}{2})dx)dy\]
+	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})(\int_{0}^\infty e^{-x}(x-1)dx)dy\]
+	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})([-e^{-x}(x-1)]_0^\infty-\int_{0}^\infty -e^{-x}dx)dy\]
+	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})([-e^{-x}(x-1)]_0^\infty-[ -e^{-x}]_{0}^\infty)dy\]
+	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})([\lim_{x\to\infty}-e^{-x}(x-1)-(-1)]-[\lim_{x\to\infty} -e^{-x}-(-1)])dy\]
+	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})([0+1]-[1])dy\]
+	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})(0)dy=0\]
+	Da die ZV X und Y stochstisch unabhängig sind, ist ihre kovarianz 0:\\
+	per definition hüber Seite 105 unten c) X,Y s.t.u. $\implies$ kov(X,Y) sind s.t.u.: X,Y s.t.u\\
+	\[Var(X+Y) =Var(X)+Var(Y)\]
+	im allgemeinen Fall (also bei nicht s.t.u) gilt
+	\[Var(X+Y) = Var(X)+Var(Y)-2(EXY-EXEY)\]
+	mit Vorfaktoren (hier a,b = 2,3)
+	\[Var(aX+bY) =Var(aX)+Var(bY) =a^2Var(X)+b^2Var(Y)\]
+	und im allgemeinen
+	\[Var(aX+bY) = Var(aX)+Var(bY)-2(EaXbY-EaXEbY)\]
+	aus der ersten und 2. Gleichung zusammen, folgt Kov(aX,bY) =0, wenn X,Y s.t.u\\
+	Die Korrelation ist daher auch null: die Varianz von $Var(EXP(\lambda))=\frac{1}{\lambda^2}\implies std(EXP(\lambda))=\frac{1}{\lambda}$ existiert somit. Der zähler (=Kovarianz) ist null, somit ist Korrelation auch null\\
+	im Fall V=3X-Y\\
+	\[\int_{\mathbb{R}^2}3e^{-x}\cdot 2\cdot(-1)e^{-2y}(x-1)(y-\frac{1}{2})dxdy\]
+	\[-6\int_{\mathbb{R}^2}e^{-x}e^{-2y}(x-1)(y-\frac{1}{2})dxdy\]
+	\[-6\int_{0}^\infty e^{-2y}(y-\frac{1}{2})(\int_{0}^\infty e^{-x}(x-1))dxdy\]
+	\[-6\int_{0}^\infty e^{-2y}(y-\frac{1}{2})\underbrace{(0)}_{vgl.\ oben}dy=0\]
+	kovarianz gleiches spiel wie beim ersten.\\
+	korrelation ist null, gleiches spiel wie beim ersten.\\
+
+
+\end{document}

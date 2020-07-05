@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{reverse}\PYG{o+ow}{::}\PYG{k+kt}{List} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{List} \PYG{n}{a}
+	\PYG{n}{reverse} \PYG{k+kt}{Nil} \PYG{o+ow}{=} \PYG{k+kt}{Nil}
+	\PYG{n}{reverse} \PYG{p}{(}\PYG{k+kt}{Cons} \PYG{n}{x} \PYG{n}{xs}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{snoc} \PYG{p}{(}\PYG{n}{reverse} \PYG{n}{xs}\PYG{p}{)} \PYG{n}{x}
+\end{Verbatim}
