@@ -63,15 +63,25 @@ def stream(f):
     mask[1:-1, 1:-1] = 1
     fcop = f.copy()
     tmp = max(n, m)
-    coords = filter(
-        lambda x: x[0] < n and x[1] < m, [list(range(tmp)), list(range(tmp))]
-    )
+    coords = [(x, y) for x in range(tmp) for y in range(tmp) if x < n and y < m]
+    # print(coords)
     for k in range(9):
-        for i in range(n):
-            for j in range(m):
-                e = directions[k] + [i, j]
-                if 0 < e[0] < n and 0 < e[1] < m:
-                    f[k, e[0], e[1]] = fcop[k, i, j]
+        # for (i, j) in coords:
+        e = directions[k] + coords
+        print(e.shape)
+        e2 = np.where(
+            np.stack(((0 < e[:, 0]) * (e[:, 0] < n), (0 < e[:, 1]) * (e[:, 1] < m)), 1),
+            e,
+            0,
+        )
+        coords2 = np.where(
+            np.stack(((0 < e[:, 0]) * (e[:, 0] < n), (0 < e[:, 1]) * (e[:, 1] < m)), 1),
+            coords,
+            0,
+        )
+        f[k, e2[:, 0], e2[:, 1]] = fcop[k, coords2[:, 0], coords2[:, 1]]
+        # if 0 < e[0] < n and 0 < e[1] < m:
+        #    f[k, e[0], e[1]] = fcop[k, i, j]
     f = f * mask
     f = f + fcop * (1 - mask)
 
@@ -80,16 +90,8 @@ def stream(f):
 
 def noslip(f, masklist):
     """ masklist ist eine liste von (x,y) coordinaten """
-    _, n, m = f.shape
-    # masking
-    mask = np.zeros((n, m))
-    mask[1:-1, 1:-1] = 1
-    fcop = f.copy()
     for (x, y) in masklist:
         f[:, x, y] = f[::-1, x, y]
-    f = f * mask
-    f = f + fcop * (1 - mask)
-    pass  # TODO
     return f
 
 
