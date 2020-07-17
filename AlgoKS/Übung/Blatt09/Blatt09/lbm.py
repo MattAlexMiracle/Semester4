@@ -54,16 +54,21 @@ def collide(f, omega):
 
 
 def stream(f):
+    """
+        Ja, es gibt schnellere methoden, nein jetzt nicht
+    """
     _, n, m = f.shape
     # masking
     mask = np.zeros((n, m))
     mask[1:-1, 1:-1] = 1
-    print(n, m)
     fcop = f.copy()
-    for i in range(n):
-        for j in range(m):
-            for k in range(9):
-                # es = filter(lambda x : 0 < x[0] < n and 0 < x[1] < m, directions+[i,j])
+    tmp = max(n, m)
+    coords = filter(
+        lambda x: x[0] < n and x[1] < m, [list(range(tmp)), list(range(tmp))]
+    )
+    for k in range(9):
+        for i in range(n):
+            for j in range(m):
                 e = directions[k] + [i, j]
                 if 0 < e[0] < n and 0 < e[1] < m:
                     f[k, e[0], e[1]] = fcop[k, i, j]
@@ -74,6 +79,16 @@ def stream(f):
 
 
 def noslip(f, masklist):
+    """ masklist ist eine liste von (x,y) coordinaten """
+    _, n, m = f.shape
+    # masking
+    mask = np.zeros((n, m))
+    mask[1:-1, 1:-1] = 1
+    fcop = f.copy()
+    for (x, y) in masklist:
+        f[:, x, y] = f[::-1, x, y]
+    f = f * mask
+    f = f + fcop * (1 - mask)
     pass  # TODO
     return f
 
