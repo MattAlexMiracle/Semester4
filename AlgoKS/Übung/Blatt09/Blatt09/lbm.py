@@ -54,9 +54,6 @@ def collide(f, omega):
 
 
 def stream(f):
-    """
-        Ja, es gibt schnellere methoden, nein jetzt nicht
-    """
     _, n, m = f.shape
     # masking
     mask = np.zeros((n, m))
@@ -64,24 +61,22 @@ def stream(f):
     fcop = f.copy()
     tmp = max(n, m)
     coords = [(x, y) for x in range(tmp) for y in range(tmp) if x < n and y < m]
-    # print(coords)
+    big_e = np.expand_dims(directions, 1) + np.expand_dims(coords, 0)
+    big_filter = np.stack(
+        (
+            (0 < big_e[:, :, 0]) * (big_e[:, :, 0] < n),
+            (0 < big_e[:, :, 1]) * (big_e[:, :, 1] < m),
+        ),
+        2,
+    )  # das hier geht, weil (0,0) immer ausmaskiert wird
+    e2_big = np.where(big_filter, big_e, 0)
+    coords2_big = np.where(big_filter, coords, 0,)
+    # die schleife bringt man sicher auch nocht los, hab jetzt aber nicht die gedult dazu
     for k in range(9):
-        # for (i, j) in coords:
-        e = directions[k] + coords
-        print(e.shape)
-        e2 = np.where(
-            np.stack(((0 < e[:, 0]) * (e[:, 0] < n), (0 < e[:, 1]) * (e[:, 1] < m)), 1),
-            e,
-            0,
-        )
-        coords2 = np.where(
-            np.stack(((0 < e[:, 0]) * (e[:, 0] < n), (0 < e[:, 1]) * (e[:, 1] < m)), 1),
-            coords,
-            0,
-        )
-        f[k, e2[:, 0], e2[:, 1]] = fcop[k, coords2[:, 0], coords2[:, 1]]
-        # if 0 < e[0] < n and 0 < e[1] < m:
-        #    f[k, e[0], e[1]] = fcop[k, i, j]
+        f[k, e2_big[k, :, 0], e2_big[k, :, 1]] = fcop[
+            k, coords2_big[k, :, 0], coords2_big[k, :, 1]
+        ]
+
     f = f * mask
     f = f + fcop * (1 - mask)
 
@@ -119,6 +114,10 @@ def lbm(W, H, timesteps=1000, omega=1.85):
     mask[int(0.2 * W) : int(0.22 * W), int(0.4 * H) : int(0.6 * H)] = 1
     mask[1:-1, 1] = 1
     mask[1:-1, -2] = 1
+    # custom random obstacle
+    randomX = np.random.choice(W, 50)
+    randomY = np.random.choice(H, 50)
+    mask[randomX, randomY] = 1
     masklist = np.argwhere(mask)
 
     (ux, uy) = velocity(f)
@@ -136,7 +135,7 @@ def lbm(W, H, timesteps=1000, omega=1.85):
         mat.set_data((np.sqrt(ux * ux + uy * uy)).transpose())
 
     ani = animation.FuncAnimation(
-        fig, lambda _: update_velocity_field(), frames=10000, interval=10, blit=False
+        fig, lambda _: update_velocity_field(), frames=100, interval=10, blit=False
     )
 
     plt.show()

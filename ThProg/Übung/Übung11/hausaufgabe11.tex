@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	\begin{minted}{haskell}
+	prepend::List Sprite->Animation->Animation
+	sprite (prepend Nil anim) =sprite anim
+	sprite (prepend s anim) = s
+
+	advance (prepend Nil anim) = anim
+	advance (prepend s:xs anim) = prepend xs anim
+
+	transition::Animation->Animation->Animation
+	sprite (transition a1 a2) = sprite a1
+	advance (transition a1 a2) = if compatible (sprite a1) (sprite a2)
+	 then advance(a2)
+	 else advance a1
+	\end{minted}
+	3.\\
+	a) wir müssen nur den fall untersuchen, dass die prämisse gilt (sonst Ex falso sequitur quodlibet)\\
+	Im folgenden gehen wir also davon aus, dass die prämisse gilt.\\
+	Auswertung beider Seiten für sprite/advance:\\
+	1. sprite (transition (loop [s]) (loop (Cons t ts))) $\stackrel{def\ transition}{=}$ sprite( loop [s]) $\stackrel{def\ sprite}{=}$ s = sprite (loop [s])\\
+	2. advance (transition (loop [s]) (loop (Cons t ts))) $\stackrel{def\ transition}{=}$ advance(advance( loop [s])) $\stackrel{def\ advance}{=}$advance( loop(snoc Nil s) )$\stackrel{def\ snoc}{=}$ advance(loop([s]))\\
+	Was zu beweisen war. Der Satz folgt also direkt aus der Definition der funktionen. (er ist auf syntaktischer ebene korrekt)\\
+	b) Auch hier: nur der Fall mit wahren prämissen ist relevant. (Ex falso)\\
+	1. sprite (transition (loop Cons s ss) (loop (Cons t ts))) $\stackrel{def\ transition}{=}$ sprite (loop (Cons s ss)) $\stackrel{def\ sprite}{=}$ s\\
+	sprite (prepend [s] (loop (snoc ts t))) $\stackrel{def\ prepend}{=}$ s.\\
+	gilt\\
+	2.\\
+	advance ( transition (loop Cons s ss) (loop (Cons t ts))) $\stackrel{def\ transition}{=}$ advance(loop (Cons t ts)) $\stackrel{def\ loop}{=}$ loop (snoc (ts t).\\
+	weiterhin gilt\\
+	advance (prepend [s] (loop (snoc ts t)))  $\stackrel{def\ prepend}{=}$ advance (prepend Nil (loop (snoc ts t))) $\stackrel{def\ prepend}{=}$ loop (snoc ts t)\\
+	Also gilt dies auch.\\
+	(wir brauchen also wieder keine Bisimulation, mann kann aber natürlich eine Triviale einführen, wenn man will)\\
+	\section{}
+	\begin{minted}{haskell}
+	data ITree a where
+		inner: ITree a->a
+		left: ITree a-> ITree a
+		right:ITree a-> ITree a
+	\end{minted}
+	1.\\
+	\[G=A\times id\times id\]
+	2.\\
+	\begin{minted}{haskell}
+	itadd::ITree Nat->ITree Nat->ITree Nat
+	inner (itadd a b) = (inner a)+(inner b)
+	left (itadd a b) = itadd (left a) (left b)
+	right (itadd a b) = itadd (right a) (right b)
+	\end{minted}
+	3.\\
+	\begin{minted}{haskell}
+	flip::Stream Bool->Stream Bool
+	hd (flip b) = not (hd b)
+	tl (flip b) = flip (tl b)
+	choose::Stream Bool->ITree a->Stream a
+	hd(choose a b)= inner b
+	tl(choose a b)=if hd a then choose (tl a) (left b) else choose (tl a) (right b)
+	mirror::ITree a->ITree a
+	inner (mirror a) = inner a
+	left (mirror a) = mirror(right a)
+	right (mirror a) = mirror(left a)
+	\end{minted}
+	4.\\
+	Die Bisimulation muss hier für alle ``Richtungen'' gelten (bzw Relation muss für alle G-Terme gelten) für $sRt$ gilt
+	\[inner\ s = inner\ t\]
+	\[(left\ s )R (left\ t)\]
+	\[(right\ s )R (right\ t)\]
+	5.\\
+	a) hier natürlich Koinduktion über unendliche Bäume:\\
+	Sei $R=\{(itadd\ t1\ t2, itadd\ t2\ t1)| \forall t1,t2\in ITree\}$\\
+	inner (itadd t1 t2) $\stackrel{def\ itadd}{=}$ (inner t1) + (inner t2) $\stackrel{def\ itadd}{=}$ inner (itadd t2 t1)\\
+	left (itadd t1 t2) $\stackrel{def\ itadd}{=}$ (itadd (left t1) (left t2))$\underbrace{R(itadd (left\ t2) (left\ t1))}_{IV}$\\
+	right (itadd t1 t2) $\stackrel{def\ itadd}{=}$ (itadd (right t1) (right t2))$\underbrace{R(itadd (right\ t2) (right\ t1))}_{IV}$\\
+	hierbei wird ausgenutzt, dass right/left eine instanz von Tree liefert.\\
+	b) Koinduktion über Streams (da das äußerste ein Stream ist)\\
+	Sei $R=\{(choose (flip\ s) (mirror\ t), choose\ s\ t),\forall s\in Stream\}$\\
+	hd (choose (flip s) (mirror t)) $\stackrel{def\ choose}{=}$ inner (mirror t) $\stackrel{def\ mirror}{=}$ inner t = inner(choose s t).\\
+	tl (choose (flip s) (mirror t)) $\stackrel{def\ choose}{=}$ (if hd (flip s) then (choose (tl(flip s)) (left(mirror t))) else (choose (tl(flip s)) (right(mirror t)))).\\
+	$\stackrel{def\ flip}{=}$ (if not (hd s) then (choose (flip(tl s)) (left(mirror t))) else (choose (flip(tl s)) (right(mirror t))))\\
+	$\stackrel{def\ mirror}{=}$ (if not (hd s) then (choose (flip(tl s)) (mirror (right t))) else (choose (flip(tl s)) (mirror (left t))))\\
+	Andere Seite der Bisimulation:\\
+	tl ( choose s t) $\stackrel{def\ choose}{=}$ if (hd s) then (choose (tl s) (left t)) else (choose (tl s) (right b))\\
+	2 Fälle (hd s)=True und (hd s) = False (induktion über Bool).\\
+	1. $(hd\ s)=True\implies not (hd\ s) = False$\\
+	(choose (flip(tl s)) (mirror (left t)))) R (choose (tl s) (left t))\\
+	2. $(hd\ s)=False\implies not (hd\ s) = True$\\
+	(choose (flip(tl s)) (mirror (right t)))R(choose (tl s) (right b))\\
+	somit gilt auch diese Aussage.\\
+
+\end{document}

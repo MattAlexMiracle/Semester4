@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYG{n}{hd}\PYG{p}{(}\PYG{n}{unfold} \PYG{n}{h} \PYG{n}{t} \PYG{n}{x}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{h} \PYG{n}{x}
+		\PYG{n}{tl}\PYG{p}{(}\PYG{n}{unfold} \PYG{n}{h} \PYG{n}{t} \PYG{n}{x}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{unfold} \PYG{n}{h} \PYG{n}{t} \PYG{p}{(}\PYG{n}{t} \PYG{n}{x}\PYG{p}{)}
+\end{Verbatim}

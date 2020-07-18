@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	Norm ist eine Abbildung $||\cdot ||:\mathbb{R}^n\to \mathbb{R}$\\
+	1) $||x||\geq 0$ und $||x||=0\implies x=\vec{0}$\\
+	2) $\alpha||x|| = ||\alpha x||$\\
+	3) $||x+y||\leq ||x||+||y||$\\
+	Durch $||\cdot||$ erzeugte Operatornorm: $||| \cdot |||:\mathbb{R}^{n\times n}\to\mathbb{R}$\\
+	$|||A||| =max\{||A\cdot x||\ | x\in\mathbb{R}^n, ||x||=1\}$\\
+	$A=\begin{bmatrix} 3&-4\\ 1&-2\end{bmatrix}$\\
+	Spaltensummennorm $||| \cdot |||_1$ wird durch die 1-Norm $||\cdot||_1$ erzeugt.\\
+	\[|||A|||_1 = max_{k=1,\dots,n}\sum^n_{j=1} a_{jk}=max(|3|+|1|,|-4|+|-2|)=max(4,6)=6\]
+	k ist spaltenindex, j ist Zeilenindex.\\
+	\[||x||_1=\sum^n_{i=1} |x_i|\]
+	Zeilensummennorm $|||\cdot |||_\infty$ wird erzeugt durch die maximumsnorm.\\
+	\[|||A|||_\infty=max_{j=1,\dots,n}\sum^n_{k=1}|a_{jk}| = max(3+4,1+2)=7\]
+	Frobeniusnorm ist keine Induzierte Norm (ist aber kompatibel mit der Euklid-norm). Behandelt die Matrix wie einen Vektor
+	\[|||A|||_F = \sqrt{\sum^n_{j=1}\sum^n_{u=1} a_{jk}^2} = \sqrt{9+16+1+4}=\sqrt{30}\]
+	Spektralnorm $|||\cdot |||_2$ wird erzeugt durch euklidische Norm $|||\cdot|||_2 =\sqrt{\lambda_{max}}$  wobei $\lambda_{max}$ der größte EW von $A^TA$ ist.\\
+	\[AA^T = \begin{bmatrix} 3&-4\\ 1&-2\end{bmatrix}\begin{bmatrix} 3&1\\-4&-2\end{bmatrix} \to EW(\lambda_1=15+\sqrt{221},\lambda_2=15-\sqrt{221})\]
+	\[|||A|||_2 = \sqrt{15+\sqrt{221}}\approx 5,464\]
+	i.A.
+	\[\kappa(A)=\frac{max\{||Ax||\ |\ ||x||=1\}}{min\{||Ax||\ |\ ||x||=1\}} = |||A|||\cdot |||A^{-1}|||\]
+	falls A invertierbar\\
+	spez $\kappa_2$ Konditionszahl bzgl $||\cdot ||_2$
+	\[\kappa_2(A) =|||A|||_2\cdot |||A^{-1}|||_2 = \sqrt{\frac{\lambda_{max}}{\lambda_{min}}} =\frac{\sqrt{15+\sqrt{221}}}{\sqrt{15-\sqrt{221}}}\approx 14,933 \]
+	Frobenius aus SVD
+	\[\sqrt{spur(AA^T)} = \sqrt{\sum^n_{j=1}\sum^n_{k=1} a_{jk}^2} =|||A|||_F\]
+	$spur(AA^T)$ die spur ist gleich der summe der Eigenwerte von $AA^T$\\
+	Singulärwerte von A. $\sigma_i =\sqrt{\lambda_i}\to |||A|||_F = \sqrt{\sum^n_{i=1} \lambda_i} = \sqrt{\sum^n_{i=1} \sigma^2_i}$\\
+	Spektralnorm mit SVD\\
+	\[|||A|||_2 =\sqrt{\lambda_{max}}\]
+	also einfach der Singulärwert ganz oben links in der mitte.\\
+	Konditionszahl ist links oben geteilt durch rechts unten.\\
+	aus matrix $B\in\mathbb{R}^{n\times m}$ mit vollem Rang ($Rank(B)=m$) gilt:\\
+	$B^TB$ ist nicht singulär.\\
+	$\to B^TB$ hat die EW $\lambda_i=\sigma^2_i, 1\leq i\leq m, \lambda_i >0$, da die matrix Rang m hat.\\
+	$\to det(B^TB) = \prod_{i=1}^m\lambda_i>0\implies B^TB$ ist invertierbar.\\
+	Zeige $(B^TB)^{-1} B^T = B^{\sim 1}$\\
+	die Pseudoinverse ist einfach $\sigma^{\sim1}$ mit den reziproken singulärwerten. und gedrehten dimensionen $\mathbb{R}^{m\times n}$ (also wir haben $V\Sigma^{\sim1}U^T$\\
+	$B^TB = (U\Sigma V^T)^T \Sigma V^T = V\Sigma^T \underbrace{U^TU}_{=E_n}\Sigma V^T=V\underbrace{\Sigma^T\Sigma}_{=x;\ diagonalmatrix\ aus\ eigenwerten\ invertierbar} V^T$\\
+	\[(B^TB)^{-1}B^T=(VXV^T)^{-1}(U\Sigma V^T)^T = VX^{-1} V^TV\Sigma U^T = VX^{-1}\Sigma^T U^T\]
+	\[X^{-1}\Sigma^T = \begin{bmatrix}\frac{1}{\sigma_1^2}&&\\&\frac{1}{\sigma_2^2}&&\\ &&\frac{1}{\sigma_n^2} \end{bmatrix}\begin{bmatrix}\sigma_1&&\\&\sigma_2&&\\ &&\sigma_n \end{bmatrix} =\Sigma^{\sim 1}\]
+	und das ist mal $V\Sigma^{\sim1}U^T = B^{\sim1}$\\
+	d)\\
+	zZ.:$x=B^{\sim1}b$ löst die gleichung
+	\[B^T(Bx-b) = 0\iff B^TBx-B^Tb =0\iff B^TBx = B^Tb \iff x = \underbrace{(B^TB)^{-1}B^T}_{B^{\sim 1}}b \iff x=B^{\sim1}b\]
+	Also statt $A^TAx=A^Tb$ umzustellen, um x zu bekommen
+	\[x=A^{\sim1}b\]
+	ist numerisch auch meist die beste Lösung. (falls A tatsächlich invertierbar, dann gilt $A^{\sim1} = A^{-1}$)
+
+
+
+
+
+
+
+\end{document}
+

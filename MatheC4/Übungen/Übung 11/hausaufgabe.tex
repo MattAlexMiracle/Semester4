@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	a)\\
+	da alle Störungen unabhängig sind, erhält man eine unabhängige Kopplung
+	\[f(y) = N((1,1,2,3)^T,\begin{bmatrix}4&0&0&0\\0&1&0&0\\0&0&9&0\\0&0&0&4\end{bmatrix})\]
+	b)\\
+	wir haben eine Transformation von $Y_1,Y_2,Y_3,Y_4$ zu einem Vektor $Z_1,Z_2,Z_3$\\
+	dabei ist $b=(10,20,5)^T$ und $B=\begin{bmatrix}3&0&1&2\\0&-2&5&3\\0&-4&5&-1\end{bmatrix}$ (also ich gehe davon aus, dass mit $+-Y_4$ in der angabe einfach minus gemeint ist)\\
+	in $b+BY=Z$\\
+	dabei gilt\\
+	$N(b+Ba,BKB^T)$ wobei $Y\sim N(a,k)$ ist\\
+	\[Ba = \begin{bmatrix}3&0&1&2\\0&-2&5&3\\0&-4&5&-1\end{bmatrix}(1,1,2,3)^T = (11,17,3)^T\]
+	somit ist
+	\[b+Ba = (10,20,5)^T+(11,17,3)^T=(21,37,8)^T\]
+	\[BK=\begin{bmatrix}3&0&1&2\\0&-2&5&3\\0&-4&5&-1\end{bmatrix}\begin{bmatrix}4&0&0&0\\0&1&0&0\\0&0&9&0\\0&0&0&4\end{bmatrix}=\begin{bmatrix}12&0&9&8\\0&-2&45&12\\0&-4&45&-4\end{bmatrix}\]
+	\[BKB^T = \begin{bmatrix}12&0&9&8\\0&-2&45&12\\0&-4&45&-4\end{bmatrix}
+	\begin{bmatrix}
+	3&0&0\\
+	0&-2&-4\\
+	1&5&5\\
+	2&3&-1
+	\end{bmatrix}=\begin{bmatrix}61&69&37\\69&265&221\\37&221&245\end{bmatrix} \]
+	das inverse ist
+	Daraus folgt\\
+	\[Z\sim N((21,37,8)^T, \begin{bmatrix}61&69&37\\69&265&221\\37&221&245\end{bmatrix})\]
+	c)\\
+	Die Kovarianzen stehen in $BKB^T$\\
+	$Kov(Z_1,Z_2)=Kov(Z_2,Z_1)=69$\\
+	$Kov(Z_1,Z_3)=Kov(Z_3,Z_1)=37$\\
+	$Kov(Z_2,Z_3)=Kov(Z_2,Z_3)=221$\\
+	
+
+
+
+\end{document}

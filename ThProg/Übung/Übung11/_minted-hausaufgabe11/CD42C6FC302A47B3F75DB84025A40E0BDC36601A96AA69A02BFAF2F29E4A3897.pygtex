@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k+kr}{data} \PYG{k+kt}{ITree} \PYG{n}{a} \PYG{k+kr}{where}
+		\PYG{n}{inner}\PYG{k+kt}{:} \PYG{k+kt}{ITree} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{n}{a}
+		\PYG{n}{left}\PYG{k+kt}{:} \PYG{k+kt}{ITree} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{ITree} \PYG{n}{a}
+		\PYG{n}{right}\PYG{k+kt}{:ITree} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{ITree} \PYG{n}{a}
+\end{Verbatim}

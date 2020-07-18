@@ -65,34 +65,34 @@ Kapitel 1
 	X$\sim EXP(1)$ und $Y\sim EXP(2)$ verteilt.\\
 	$EX = \frac{1}{1}$ und $EY = \frac{1}{2}$ (logisch $\lambda$ ist die Erwartete Zahl Ereignisse pro Zeitintervall.)\\
 	Die kovarianz ist definiert als $E((X-EX)(Y-EY))$ außerdem ist der Erwartungswert linear.\\
-	$U=2X+3Y$\\
-	\[\int_{-\infty}^\infty\int_{-\infty}^\infty f^{(X,Y)}(x,y)(x-EX)(y-EY)dxdy\]
-	\[\int_{0}^\infty\int_{0}^\infty 2\cdot e^{-x}3\cdot 2e^{-2y}(x-1)(y-\frac{1}{2})dxdy\]
-	\[6\cdot\int_{0}^\infty(\int_{0}^\infty e^{-x}2e^{-2y}(x-1)(y-\frac{1}{2})dx)dy\]
-	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})(\int_{0}^\infty e^{-x}(x-1)dx)dy\]
-	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})([-e^{-x}(x-1)]_0^\infty-\int_{0}^\infty -e^{-x}dx)dy\]
-	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})([-e^{-x}(x-1)]_0^\infty-[ -e^{-x}]_{0}^\infty)dy\]
-	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})([\lim_{x\to\infty}-e^{-x}(x-1)-(-1)]-[\lim_{x\to\infty} -e^{-x}-(-1)])dy\]
-	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})([0+1]-[1])dy\]
-	\[6\cdot\int_{0}^\infty 2e^{-2y}(y-\frac{1}{2})(0)dy=0\]
-	Da die ZV X und Y stochstisch unabhängig sind, ist ihre kovarianz 0:\\
-	per definition hüber Seite 105 unten c) X,Y s.t.u. $\implies$ kov(X,Y) sind s.t.u.: X,Y s.t.u\\
-	\[Var(X+Y) =Var(X)+Var(Y)\]
-	im allgemeinen Fall (also bei nicht s.t.u) gilt
-	\[Var(X+Y) = Var(X)+Var(Y)-2(EXY-EXEY)\]
-	mit Vorfaktoren (hier a,b = 2,3)
-	\[Var(aX+bY) =Var(aX)+Var(bY) =a^2Var(X)+b^2Var(Y)\]
-	und im allgemeinen
-	\[Var(aX+bY) = Var(aX)+Var(bY)-2(EaXbY-EaXEbY)\]
-	aus der ersten und 2. Gleichung zusammen, folgt Kov(aX,bY) =0, wenn X,Y s.t.u\\
-	Die Korrelation ist daher auch null: die Varianz von $Var(EXP(\lambda))=\frac{1}{\lambda^2}\implies std(EXP(\lambda))=\frac{1}{\lambda}$ existiert somit. Der zähler (=Kovarianz) ist null, somit ist Korrelation auch null\\
-	im Fall V=3X-Y\\
-	\[\int_{\mathbb{R}^2}3e^{-x}\cdot 2\cdot(-1)e^{-2y}(x-1)(y-\frac{1}{2})dxdy\]
-	\[-6\int_{\mathbb{R}^2}e^{-x}e^{-2y}(x-1)(y-\frac{1}{2})dxdy\]
-	\[-6\int_{0}^\infty e^{-2y}(y-\frac{1}{2})(\int_{0}^\infty e^{-x}(x-1))dxdy\]
-	\[-6\int_{0}^\infty e^{-2y}(y-\frac{1}{2})\underbrace{(0)}_{vgl.\ oben}dy=0\]
-	kovarianz gleiches spiel wie beim ersten.\\
-	korrelation ist null, gleiches spiel wie beim ersten.\\
-
-
+	$U=2X+3Y$ und $V=3X-Y$\\
+	Die Varianz der Exponentialverteilung ist bekannt: $Var(EXP(\lambda))=\frac{1}{\lambda^2}$. Außerdem ist die Varianz additiv, wenn die zugrundeliegenden ZV st.u:\\
+	\[Var(U) = Var(2X+3Y) \stackrel{X,Y\ st.u}{=} Var(2X)+Var(3Y) = 4Var(X)+9Var(Y) = 4\frac{1}{1}+\frac{9}{2^2} = 4+\frac{9}{4}=\frac{25}{4}\]
+	ähnlich V
+	\[Var(V) = Var(3X)+Var(-1Y) = 9Var(X)+Var(Y) = 9\cdot 1 +\frac{1}{4}=\frac{37}{4}\]
+	Die Kovarianz ist definiert als 
+	\[Kov(U,V) = EUV-EU\cdot EV\]
+	Die Erwartungswerte sind linear
+	\[EU = E(2X+3Y) = 2EX+3EY = \frac{2}{1}+3\frac{1}{2}\]
+	\[EV = E(3X-Y) = 3EX-EY = \frac{3}{1}-\frac{1}{2}\]
+	\[EUV = E((2X+3Y)(3X-Y))= E(6X^2+7XY-3Y^2)\stackrel{additivitaet}{=}6EX^2+\underbrace{7EXEY}_{X,Y, st.u}-3EY^2\]
+	Wir benötigen also
+	\[EX^2 = \int_{-\infty}^\infty x^2 f^X(x)dx = \int_0^\infty x^2 1e^{-1x}dx = [-x^2e^{-1x}]_0^\infty+\int_0^\infty2xe^{-1x}dx = [-x^2e^{-1x}]_0^\infty- ([2xe^{-x}]_0^\infty + \int_0^\infty2e^{-1x}dx )\]
+	\[\underbrace{[-x^2e^{-1x}]_0^\infty}_{=0}- (\underbrace{[2xe^{-x}]_0^\infty}_{=0} + \underbrace{\int_0^\infty2e^{-1x}dx}_{[-2e^{-x}]_0^\infty =-2} ) = 2\]
+	\[EY^2 =\int_{-\infty}^\infty y^2 f^Y(y)dy =\int_0^\infty y^2 2e^{-2y}dy =\]
+	\[ 2([\frac{1}{-2}y^2e^{-2y}]_0^\infty +\int_0^\infty ye^{-2y} dy= 2([\frac{1}{-2}y^2e^{-2y}]_0^\infty +(\frac{1}{-2}ye^{-2y}]_0^\infty+\int_0^\infty \frac{1}{2}e^{-2y} dy))=\]
+	\[ 2(\underbrace{[\frac{1}{-2}y^2e^{-2y}]_0^\infty}_{0} +(\underbrace{\frac{1}{-2}ye^{-2y}]_0^\infty}_{0}+\underbrace{\int_0^\infty \frac{1}{2}e^{-2y} dy}_{[-\frac{1}{4}e^{-2y}]_0^\infty =\frac{1}{4} })) = \frac{1}{2}\]
+	Somit ist
+	\[EUV = 6\cdot 2+7\cdot 1\cdot \frac{1}{2}-3\cdot\frac{1}{2}=14\]
+	somit ist die Kovarianz:
+	\[Kov(U,V) = EUV-EUEV = 14-\frac{7}{2}\cdot \frac{5}{2} = 14-\frac{35}{4}=\frac{21}{4}=5.25\]
+	Die Korrelation ist die Normierte Kovarianz
+	\[Korr(U,V)=\frac{Kov(U,V)}{std(U)std(V)} =\frac{Kov(U,V)}{\sqrt{Var(U)Var(V)}} = \frac{5.25}{\sqrt{\frac{37}{4}\frac{25}{4} }}\approx 0.6904\dots\]
+	Die Quantile entstehen durch den Wert der jeweiligen FV
+	\[F(y) = (1-e^{-2y})1_{y\geq 0}\stackrel{!}{=} quantil\]
+	das 5\% quantil ist also
+	$u_{5\%}$\\
+	$F(y) = 0.05\iff (1-e^{-2y})1_{y\geq 0} = 0.05 \iff 1-e^{-2y}=0.05\iff e^{-2y}=0.95\iff y=\frac{ln(0.95)}{-2} \approx 0.02564\dots$\\
+	$u_{75\%}$\\
+	$F(y) = 0.75\iff (1-e^{-2y})1_{y\geq 0} = 0.75 \iff 1-e^{-2y}=0.75\iff e^{-2y}=0.25\iff y=\frac{ln(0.25)}{-2}\approx 0.69314\dots$\\
 \end{document}

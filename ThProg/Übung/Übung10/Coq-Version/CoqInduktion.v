@@ -1,51 +1,47 @@
 Section List.
 
-Variable A:Type.
-Variable x:A.
-
-
-Inductive  List:=
- | Nil : List
- | Cons : A->List->List.
+Inductive List A:=
+ | Nil : List A
+ | Cons : A->List A->List A.
 Print List.
 
-Fixpoint length (x:List) := 
+Fixpoint length {A} (x:List A):nat := 
  match x with
- | Nil => O
- | Cons x xs => S (length xs)
+ | Nil _ => O
+ | Cons _ x xs => S (length xs)
 end.
 
-Eval compute in (length (Cons x (Cons x Nil))).
+Eval compute in (length (Cons nat 0 (Cons nat 0 (Nil nat)))).
 
-Fixpoint snoc (x:List) (y:A) := 
+Fixpoint snoc {A} (x:List A) (y:A) := 
  match x with
- | Nil => Cons y Nil
- | Cons x xs => Cons x (snoc xs y)
+ | Nil _ => Cons _ y (Nil _)
+ | Cons _ x xs => Cons _ x (snoc xs y)
 end.
-Print snoc.
+Check snoc.
 
-Fixpoint reverse (x:List) := 
+Fixpoint reverse {A} (x:List A) := 
  match x with
- | Nil => Nil
- | Cons x xs => snoc (reverse xs) x
+ | Nil _ => Nil _
+ | Cons _ x xs => snoc (reverse xs) x
 end.
 
-Fixpoint concat (xs:List) (ys:List) :=
+Fixpoint concat {A} (xs:List A) (ys:List A) :=
  match xs with
- | Nil=>ys
- | Cons x xs => Cons x (concat xs ys)
+ | Nil _=>ys
+ | Cons _ x xs => Cons _ x (concat xs ys)
 end.
 Infix "++" := concat (at level 60, right associativity). 
 
 
-Fixpoint reverse' (xs ys:List):=
+Fixpoint reverse' {A} (xs ys:List A):=
  match xs with
- | Nil=>ys
- | Cons x xs=> reverse' xs (Cons x ys)
+ | Nil _=>ys
+ | Cons _ x xs=> reverse' xs (Cons _ x ys)
 end.
 
 
-Theorem CCNil: forall (xs:List),xs ++ Nil =xs.
+Theorem CCNil {A}: forall (xs:List A),xs ++ (Nil A) =xs.
 intro B; elim B.
 simpl.
 reflexivity.
@@ -56,7 +52,7 @@ reflexivity.
 Qed.
 
 
-Theorem SnocPlus: forall (x:A), forall (xs ys:List), snoc (xs++ys) x = xs ++ (snoc ys x).
+Theorem SnocPlus {A}: forall (x:A), forall (xs ys:List A), snoc (xs++ys) x = xs ++ (snoc ys x).
 intros.
 elim xs.
 simpl.
@@ -67,7 +63,8 @@ rewrite ->H.
 reflexivity.
 Qed.
 
-Theorem RevSnoc: forall (x: A),forall (xs:List), reverse (snoc xs x) = Cons x (reverse xs).
+
+Theorem RevSnoc {A}: forall (x: A),forall (xs: (List A)), reverse (snoc xs x) = Cons A x (reverse xs).
 induction xs. (* hab ich grad erst herausgefunden, dass es die Tactic auch gibt*)
 simpl.
 reflexivity.
@@ -76,7 +73,7 @@ rewrite -> IHxs.
 reflexivity.
 Qed.
 
-Theorem DoubleInverse: forall (xs:List), reverse (reverse xs)=xs.
+Theorem DoubleInverse {A}: forall (xs:List A), reverse (reverse xs)=xs.
 induction xs.
 simpl.
 reflexivity.
@@ -86,7 +83,7 @@ rewrite -> IHxs.
 reflexivity.
 Qed.
 
-Theorem SingleAddFromBack: forall (x:A), forall (xs:List), xs ++ (Cons x Nil)=snoc xs x.
+Theorem SingleAddFromBack {A}: forall (x:A), forall (xs:List A), xs ++ (Cons A x (Nil A))=snoc xs x.
 induction xs.
 simpl.
 reflexivity.
@@ -95,7 +92,7 @@ rewrite <- IHxs.
 reflexivity.
 Qed.
 
-Theorem RevConcat: forall (xs ys:List), reverse (xs++ys) = (reverse ys) ++ (reverse xs).
+Theorem RevConcat{A}: forall (xs ys:List A), reverse (xs++ys) = (reverse ys) ++ (reverse xs).
 induction xs.
 intros.
 simpl.
@@ -108,7 +105,7 @@ rewrite SnocPlus.
 reflexivity.
 Qed.
 
-Lemma CCAssoc: forall (xs ys zs:List), (xs ++ ys)++zs = xs ++(ys++zs).
+Lemma CCAssoc{A}: forall (xs ys zs:List A), (xs ++ ys)++zs = xs ++(ys++zs).
 induction xs.
 simpl.
 reflexivity.
@@ -118,7 +115,7 @@ rewrite IHxs.
 reflexivity.
 Qed.
 
-Lemma Rev'Eq: forall (xs ys : List), reverse' xs ys = reverse' xs Nil ++ ys.
+Lemma Rev'Eq{A}: forall (xs ys : List A), reverse' xs ys = reverse' xs (Nil A) ++ ys.
 induction xs.
 intro.
 simpl.
@@ -132,7 +129,7 @@ simpl.
 reflexivity.
 Qed.
 
-Theorem RevEqRev': forall (xs :List), reverse xs = reverse' xs Nil.
+Theorem RevEqRev'{A}: forall (xs :List A), reverse xs = reverse' xs (Nil A).
 induction xs.
 simpl.
 reflexivity.
@@ -151,7 +148,7 @@ Definition chain {A B C:Type} (f: B->C) (g:A->B) (n:A) :C := f (g n).
 
 Infix "(.)" := chain (at level 60, right associativity).
 
-Eval compute in (length nat (.) reverse nat) (Cons nat 1 (Nil nat)).
+Eval compute in (length (.) reverse) (Cons nat 1 (Nil nat)).
 
 
 Fixpoint map {A B:Type} (f: A->B) (xs:List A): (List B):=
@@ -175,7 +172,7 @@ reflexivity.
 Qed.
 
 
-Theorem MapCC: forall (A B:Type), forall (f:A->B), forall (xs ys: List A), map f ( concat A xs ys) = concat B (map f xs) (map f ys).
+Theorem MapCC {A B}: forall (f:A->B), forall (xs ys: List A), map f ( concat xs ys) = concat (map f xs) (map f ys).
 induction xs.
 intros.
 simpl.
@@ -188,26 +185,24 @@ Qed.
 
 Section Bäume.
 
-Variable A:Type.
-
-Inductive BinTree :=
- | Leaf:BinTree
- | Bin: BinTree -> A-> BinTree-> BinTree
+Inductive BinTree A :=
+ | Leaf:BinTree A
+ | Bin: BinTree A -> A-> BinTree A-> BinTree A
 .
 
-Fixpoint mirror (tree:BinTree) :=
+Fixpoint mirror {A} (tree:BinTree A) :=
  match tree with
- |Leaf=> Leaf
- |Bin l x r => Bin (mirror r) x (mirror l)
+ |Leaf _=> Leaf _
+ |Bin _ l x r => Bin _ (mirror r) x (mirror l)
 end.
 
-Fixpoint inorder (tree: BinTree):List A :=
+Fixpoint inorder {A} (tree: BinTree A):List A :=
  match tree with
- | Leaf=>Nil A
- | Bin l x r=> concat A (inorder l) (Cons A x (inorder r))
+ | Leaf _ =>Nil _
+ | Bin _ l x r=> concat (inorder l) (Cons _ x (inorder r))
 end.
 
-Theorem DoubleMirror: forall (t: BinTree), mirror (mirror t) = t.
+Theorem DoubleMirror {A}: forall (t: BinTree A), mirror (mirror t) = t.
 induction t.
 simpl.
 reflexivity.
@@ -217,7 +212,7 @@ rewrite IHt2.
 reflexivity.
 Qed.
 
-Lemma ShiftSnoc: forall (B:Type), forall (xs:List B), forall (ys:List B), forall (x:B), concat B (snoc B xs x) ys = concat B xs (Cons B x ys).
+Lemma ShiftSnoc {A}: forall (xs:List A), forall (ys:List A), forall (x:A), concat (snoc xs x) ys = concat xs (Cons A x ys).
 induction xs.
 intros.
 simpl.
@@ -228,7 +223,7 @@ rewrite IHxs.
 reflexivity.
 Qed.
 
-Theorem MirroredFlatten: forall (t: BinTree), inorder (mirror t) = reverse A (inorder t).
+Theorem MirroredFlatten{A}: forall (t: BinTree A), inorder (mirror t) = reverse (inorder t).
 induction t.
 simpl.
 reflexivity.
@@ -240,6 +235,8 @@ simpl.
 rewrite ShiftSnoc.
 reflexivity.
 Qed.
+
+Print Assumptions MirroredFlatten.
 
 
 

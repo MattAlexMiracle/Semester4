@@ -1343,14 +1343,415 @@ Kapitel 1
 	$(G_1\times G_2)X = G_1X\times G_2X$\\
 	entsprechend mit abbildungen Gf: $GX\to GY$ ($f:X\to Y$)\\
 	\begin{definition} Eine \underline{G-Koalgebra}\\
-	besteht aus einer Menge M (von ``Zuständen'') und Abbildung $\alpha:M\to GM$ (Transitionsabbildung, welche Zustände sind von M aus erreichbar).\\
+	besteht aus einer Menge M (von ``Zuständen'') und Abbildung $\alpha:M\to GM$ (Transitionsabbildung, welche Zustände sind von M aus erreichbar und welche beobachtung).\\
 	\end{definition}
 	\begin{beispiel}.\\
 	G=$A\times id$
+	\end{beispiel}\noindent
+	G-Koalgebra = Koalgebra oben:\\
+	$M\to A\times M$\\
+	Eine Koalgebra besteht aus 2 sub-abbildungen: $M\to A$ (``outputabbildung'') und $M\to M$ (``next-abbildung'') das kreuzprodukt aus beiden ist die Hauptabbildung.\\
+	z.B. $A=\{a,b,c\}$\\
+	\includegraphics[width=256px]{images/GKoalgebra-AS-Statemachine.png}\\
+	Stream abacab\dots\\
+	G-Koalgebraen sind Dual zu den Koalgebra (sie haben ein ``unfold'' statt ein ``fold'' prinzip)\\
+	\begin{definition} Ein (G-Koalgebra-)Morphismus zwischen G-Koalgebren $\alpha:M\to GM$ $\beta:N\to GN$ ist eine Abbildung $h:M\to N$ mit\\
+	\includegraphics[width=256px]{images/G-Morphismus.png}\\
+	$\alpha: M\to GM = A\times M = <\underbrace{\mathfrak{M}}_{G-Koalgebra}\dbrack{hd},\mathfrak{M}\dbrack{tl}>$
+	\end{definition}
+	\begin{beispiel}.\\
+	z.B. $G=A\times id$\\
+	$h:\mathfrak{M}\to\mathfrak{N}$\\
+	\includegraphics[width=256px]{images/G-KoalgebraBeispiel.png}\\
+	Also das h bewahrt die heads.\\
+	h ist mit der tail-funktion verträglich.\\
 	\end{beispiel}
-	G-Koalgebra = Koalgebra oben. $M\to A\times M$\\
-
+	\begin{definition} Eine G-Koalgebra $\mathfrak{N}$ ist final $\iff$ für jede G-Koalgebra $\mathfrak{M}$ existiert genau ein Morphismus $h:\mathfrak{M}\to\mathfrak{N}$\\
+	\end{definition}
+	\begin{satz} Die finale G-Koalgebra ist eindeutig modulo Isomorphismus (genauer: eindeutig bestimmter isomorphismus)
+	\end{satz}
+	\begin{beweis} Dual zur Eindeutigkeit initialer Algebren (zwischen zwei initialen Algebren gibt es einen homomorphismus, wenn beide initial sind,dann gibt die verkettung der morphismen die Ursprüngliche Algebra)
+	\end{beweis}
+	\begin{satz} Existenz der finalen Algebra\\
+	Sei $G=A\times id$. $<hd,tl>:A^\omega\to A\times A^\omega$ ist finale G-Koalgebra.\\
+	\end{satz}
+	\begin{beweis}(anhand eines Beispiels für einfachere Notation\dots)\\
+	Sei $\mathfrak{N}$ G-Koalgebra, schreibe $h_N = \mathfrak{N}\dbrack{hd}:N\to A$ $t_N = \mathfrak{N}\dbrack{tl}:N\to N$\\
+	Setze $f:N\to A^\omega$ $f(x) = [a_0,a_1,\dots]$\\
+	$a_0 = h_N(x)$,$a_1 = h_N(t_N(x))$ allg. $a_i = h_N(t^i_N(x))$\\
+	Beh.: f ist der einzige Morphismus $\mathfrak{N}\to A^\omega$\\
+	i) f ist ein Morphismus:\\
+	$hd(f(x))\stackrel{!}{=}h_N(x)$\\
+	$=h_N(t_N^0(x))$\\
+	$tl(f(X)) = tl(a_0,a_1,\dots) = (a_1,\dots) =: (b_0,b_1,\dots)$\\
+	$b_i=a_{i+1} = \underbrace{h_N (t_N^{i+1}(x))}_{``beobachtungskontext''} = hn(t_N^i(\underline{t_N(x)}))$\\
+	also $(b_0,b_1,\dots) = f(t_N(x))$ d.h. f verträgt sich mit der Argumentation von tail\\
+	wir iterieren mit $t_N$ und machen eine Observation mit $h_N$
+	ii) Eindeutigkeit von f: Sei $g:\mathfrak{N}\to A^\omega$ Morphismus\\
+	zZ $f=g$.\\
+	Zeige $f(x)_i = g(x)_i$ wobei der index ``an der stelle i'' heißt. $\forall x\in N$\\
+	durch Induktion über $i\in \mathbb{N}$:\\
+	$i=0: g(x)_0 = hd(g(x)) \stackrel{morphismus}{=} h_N(x)=f(x) $\\
+	$i\to i+1$: $g(x)_{i+1} \stackrel{indexversch}{=} (tl (g(x)))_i = \stackrel{morphismus}{=} g(t_N(x))_i \stackrel{IV}{=} f(t_N(x))_i = \dots =f(x)_{i+1}$ (Weil die Aussage für alle x gilt, und $t_N(x)$ ein x aus N ist)\\
+	\end{beweis}
+	\begin{definition} $h:N\to A, t:N\to N$\\
+	definieren G-Koalgebra $\mathfrak{N}$, der eindeutige Morphismus $\mathfrak{N}\to A^\omega$ heißt
+	 \[unfold\ h\ t\]
+	unfold  h t ist definiert durch 2 Gleichungen:\\
+	\begin{minted}{haskell}
+		hd(unfold h t x) = h x
+		tl(unfold h t x) = unfold h t (t x)
+	\end{minted}
+	\underline{Korekursive Definition}\\
+	Man schreibt also für jeden Konstruktor eine funktion, die im korekursiven Fall beliebig oft eine Funktion auf den gegebenes Element x ausführt.\\
+	\end{definition}
+	\begin{beispiel} ones = 1,1,\dots\\
+	\begin{minted}{haskell}
+	ones = 1:ones
+	\end{minted}
+	\begin{minted}{Agda}
+	hd ones = 1
+	tl ones = 1
+	\end{minted}
+	blink x $(a_0,a_1,\dots) = (x,a_0,x,a_1,\dots)$\\
+	\begin{minted}{Agda}
+	hd (blink x s) = x
+	tl (blink x s) = blink x ...???
+	\end{minted}
+	allgemeiner: blink: $2\times A\times A^\omega\to A^\omega$ wobei $2=\{0,1\}$\\
+	Die 2 ist also ein ``merker'', bzw Extra Zustände in der Zustandsmaschine\\
+	blink 0 x (a0,a1,...) = (x,a0,x,a1,...)\\
+	blink 1 x (a0,a1,...) = (a0,x,a1,...)
+	\begin{minted}{Agda}
+	blink 0 = b0
+	blink 1 = b1
+	hd (b0 x s) = x
+	tl (b0 x s) = b1 x s
+	hd (b1 x s) = hd s
+	tl (b1 x s) = b0 x (tl s)
+	\end{minted}
+	Das tail in b1 ist wichtig, weil wir das a0 auf a1 weiterschieben müssen\\
+	\end{beispiel}
+	\subsection{Koinduktion}
+	$even:A^\omega \to A^\omega$\\
+	even $(a_0, a_1, \dots)$ = $(a_0,a_2,a_4,\dots)$\\
+	odd $(a_0, a_1, \dots)$ = $(a_1,a_3,a_5,\dots)$\\
+	\begin{minted}{Agda}
+	hd (even s) = hd s
+	tl (even s) =even $tl $tl s
+	hd (odd s) = hd $ tl s
+	tl (odd s) = odd $tl $tl $ s
+	\end{minted}
+	Behauptung: odd $(b_0\ x\ s) = s$\\
+	hd (odd $(b_0\ x\ s)$) = hd (tl $(b_0\ x \ s)$) = hd ($b_1$ x s) = hd s\\
+	tl (odd $(b_0\ x\ s)$) = odd (tl tl $(b_0\ x\ s)$) = odd (tl ($b_1$ x s)) = odd ($b_0$ x (tl s)) $\stackrel{IV??????}{=}$ tl s\\
+	Problem: wir reduzieren hier ``tl s$\to$ s'' aber hier wird ja nichts ``abgebaut'' die Streams werden also nicht kürzer!!!\\
+	KOINDUKTION!! (``Circular Solver'')\\
+	\begin{definition} Eine Relation $R\subseteq A^\omega\times A^\omega$ heißt Bisimulation, wenn für alle $(s,t)\in R$ gilt\\
+	\begin{itemize}
+		\item hd s = hd t
+		\item (tl s) R (tl l)
+	\end{itemize}
+	\end{definition}
+	\begin{satz} (Koinduktion). Wenn R eine Bisimulation ist, dann gilt $R\subseteq id$, d.h
+	\[\forall s,t\in A^\omega (sRt)\implies s=t\]
+	\end{satz}
+	\begin{beweis} Sei $tl^n(s)Rtl^n(t)$. Per \underline{Induktion} über n folgt
+	n=0 Annahme\\
+	$n\to n+1$ per IV.
+	\[\underbrace{tl(tl^n(s))}_{tl^{n+1}(s)}Rtl(tl^n(t))\]
+	Es gilt also
+	\[tl^i(s)Rtl^i(t)\ \text{ für alle }i\geq 0\]
+	und damit
+	\[hd(tl^i(s))=hd(tl^i(t))\text{ für alle } i\geq 0\]
+	Damit folgt s=t\\
+	Die Koinduktion ist also eigentlich nur eine Induktion über Destruktorkontexte!
+	\end{beweis}
+	\begin{beispiel} cont von oben\\
+	Setze R=$\{(odd(b_0\ x\ s),s)|\forall s \in A^\omega\}$\\
+	Zeige: R ist Bisimulation.\\
+	Sei also $s\in A^\omega$\\
+	i) hd($odd(b_0\ x\ s) $) = hd(s). Oben schon gezeigt.\\
+	ii) tl($odd(b_0\ x\ s)$)R(tl s)\\
+	linke Seite $=odd(b_0\ x (tl\ s))$, damit haben wir die Relation $\checkmark$
+	\end{beispiel}
+	\begin{beispiel} Zip-Funktion\\
+	zip$:A^\omega\times A^\omega\to A^\omega$\\
+	zip $(x_0,x_1,\dots)$ $(y_0,y_1,\dots)$ = $(x_0,y_0,x_1,y_1)$.\\
+	hd(zip s t) = hd s.\\
+	tl(zip s t)= zip t (tl s)\\
+	(wir drehen also t und s um und entfernen den ersten Wert)\\
+	Beh.: zip (even s) (odd s) = s.\\
+	Setze R=$\{(zip(even\ s)(odd\ s),s)|\forall s\in A^\omega\}$\\
+	zZ.: R ist Bisimulation. Sei also $s\in A^\omega$.\\
+	i) hd (zip (even s) (odd s)) = hd (even s) = hd s $\checkmark$ wir haben die Relation\\
+	ii) tl (zip (even s) (odd s))= zip (odd s) (tl (even s)) = zip (odd s) (even (tl (tl  (s)))) vs. tl s??????????\\
+	also geht R nicht (R muss abgeschlossen sein, was es hier aber nicht ist)
+	R' = $R\cup\{(zip (odd\ s) (even\ tl^2\ s), tl\ s)|\forall s\in A^\omega\}$\\
+	R' ist Bisimulation:\\
+	Paare in R schon bewiesen.\\
+	neue Paare in R':\\
+	i) hd(zip (odd s) (\dots)) = hd (odd s) = hd (tl s)$\checkmark$\\
+	ii) tl(zip (odd s) (even $tl^2$ s) ) = zip (even ($tl^2$ s)) $\underbrace{(tl (odd s))}_{odd(\underline{tl^2\ s})}$ R'(tl(tl s))\checkmark.\\
+	Entspricht also verstärkung des Induktionszieles.\\
+	\end{beispiel}
+	\subsection{kodatentypen mit mehreren Nachfolgeoperationen}
+	\begin{minted}{agda}
+	codata Tree where
+	 out:   Tree -> A
+	 left:  Tree -> Tree
+	 right: Tree -> Tree
+	\end{minted}
+	definiert die finale G-Koalgebra für $G=A\times id\times id$\\
+	Diese besteht aus unendlichen binären Bäumen mit in A beschrifteten Knoten.\\
+	$mirror:Tree\to Tree$ Korekursiv definiert durch\\
+	\begin{minted}{agda}
+	out (mirror t) = out t
+	left (mirror t) = mirror (right t)
+	right (mirror t) = mirror (left t)
+	\end{minted}
+	$R\subseteq Tree\times Tree$ ist Bisimulation $\iff$ $\forall(s,t)\in R$\\
+	i) out s = out t\\
+	ii) (right s) R (right t)\\
+	iii) (left s) R (left t)\\
+	(analog wie bei Streams, nur mit 2 ``tail'' funktionen)\\
+	\begin{beispiel} Beh.: mirror (mirror t) = t.\\
+	Setze R = $\{(mirror(mirror\ t),t)|\forall t\in Tree\}$ (eig. Semantikklammern um Tree, wird hier ``wegvereinfacht'')\\
+	Zeige: R ist eine Bisimulation.\\
+	Sei also $t\in Tree$\\
+	i) out (mirror (mirror t)) = out(mirror t) = out t.$\checkmark$\\
+	ii) left(mirror(mirror t)) = mirror (right(mirror t)) = mirror (mirror (left t)) R( left t)\\
+	weil oben in R als beliebiges t auch (left t) gewählt werden kann.\\
+	iii) analog \\
+	right(mirror(mirror t)) = mirror (left(mirror t)) = mirror (mirror(right t)) R (right t)\\
+	\end{beispiel}
+	\underline{Nebenbemerkung}: Es gibt auch Abbrechende Streams von Typ $1+A\times X$ (gleiche System von Listen). Hier gibt es 2 optionen: Wir kriegen einen neuen Stream bei tail, den head, oder ein Ende. (vgl Skript 4.8)\\
+	\section{Polymorphie}
+	polymorphe Funktionen: anwendbar auf Argumente verschiedenen Typs.\\
+	ad-hoc-Polymorphie: +\\
+	parametrische Polymorphie\\
+	swap (x,y) = (y,x)\\
+	swap:$a\times b\to b\times a$\\
+	d.h. Das genau gleich stückchen code bekommt verschiedene typen (im gegensatz zu ad-hoc, wo im einen fall int, im anderen float addition ausgewählt wird).\\
+	concat: List a$\to$ List a$\to$ List a.\\
+	ist auch parametrisch polymorph.\\
+	\subsection{System F}
+	silly::Bool\\
+	silly=($\lambda xy.x$)(id True)(id 42)\\
+	Im einfach getypten Lambda Kalkül kann man das nicht typen: $id:Bool\to Bool$ und gleichzeitig $id:Int\to Int$!\\
+	Typen in System F:\\
+	\[\alpha,\beta::=a|\alpha\to\beta |\forall a.\alpha\ \ (a\in V)\]
+	z.B.: $id:\lambda x.x:\forall a.a\to a$\\
+	Typregeln: $\lambda\to$ plus\\
+	\AxiomC{$a\notin FV(\Gamma)$}
+	\AxiomC{$\Gamma\vdash s:\alpha$}
+	\LeftLabel{$(\forall_i)$}
+	\BinaryInfC{$\Gamma\vdash s:\forall a.\alpha $}
+	\DisplayProof\\
+	\AxiomC{$\Gamma\vdash s:\forall a.\alpha$}
+	\LeftLabel{$(\forall_e)$}
+	\UnaryInfC{$\Gamma\vdash s:(\alpha[\beta/a])$}
+	\DisplayProof\\
+	\begin{beispiel}.\\
+	\AxiomC{}
+	\RightLabel{NICHT $x:a|x:\forall a.a$, das a ist im Kontext}
+	\LeftLabel{(Ax)}
+	\UnaryInfC{$x:a\vdash x:a$}
+	\LeftLabel{($\to_i$)}
+	\UnaryInfC{$\vdash \lambda x.x: a\to a$}
+	\LeftLabel{$\forall i$}
+	\UnaryInfC{$\vdash \lambda x.x: \forall a. a\to a$}
+	\DisplayProof\\
+	\end{beispiel}
+	\subsection{Church-Kodierung in System F}
+	$\mathbb{N}$ ist initiale $\Sigma_{Nat}$-Algebra $\Sigma_{Nat} =\{0/0,s/1\}$\\
+	\begin{itemize}
+		\item $\mathbb{N}:=\forall a.(a\to a)\to a\to a$
+		\item $0:\mathbb{N}$\\
+		 $0=\lambda fx.x$ hat den typ von oben\\
+		\item $s:\mathbb{N}\to \mathbb{N}$\\
+		$s\ = \underbrace{\lambda\ n}_{wir\ kriegen\ ein\ \mathbb{N}}.\lambda\ f\ x.f(n\ f\ x)$\\
+		Haskell mit GHC: Higher-Rank-polymorphism
+		\item fold:$\forall a.(a\to a)\to a\to \mathbb{N}\to a$\\
+		fold = $\lambda f\ x\ n.n\ f\ x$ also n mal f auf x anwenden.
+	\end{itemize}
+	Paare:
+	\begin{itemize}
+		\item $(a\times b):=\forall r\underbrace{(a\to b\to r)}_{f}\to r$ (sprich ich kann ein paar aus ab zu einem r machen, effektiv uncurry)
+		\item pair:$\forall ab: a\to b\to( a\times b)$\\
+		pair = $\lambda x y.\lambda f.f\ x\ y$
+		\item fst:$\forall ab. (a\times b)\to a$
+		fst = $\lambda p.p\underbrace{(\lambda\ x\ y.x)}_{das\ ist\ das\ zugeordnete\ f}$ wir haben also eine pick-funktion, die das erste paarelement gibt, das zweite ignoriert
+	\end{itemize}
+	Summen:
+	\begin{itemize}
+	 \item (a+b):$\forall r.\underbrace{(a\to r)}_{f}\to \underbrace{(b\to r)}_{g}\to r$
+	 \item inl:$\forall ab.a\to (a+b)$\\
+	 inl = $\lambda x.\lambda f\ g. f\ x$\\
+	 \item case: $\forall abs. (a\to s)\to (b\to s)\to (a+b)\to s$\\
+	 case = $\lambda\ f\ g\ z.z\ f\ g$
+	\end{itemize}
+	Listen:
+	\begin{itemize}
+		\item List a:$\forall r.r\to (a\to r\to r)\to r$\\
+		Nil: $\forall a. List\ a$\\
+		Nil = $\lambda u\ f. u$\\
+		Cons: $\forall a. a\to List\ a\to List\ a$\\
+		Cons = $\lambda u\ f. \lambda v\ g.g\ u(f\ v\ g)$
+	\end{itemize}
+	Herleitung der Typisierung von suc\\
+	\AxiomC{ist typ von $\mathbb{N}$}
+	\LeftLabel{(AX)}
+	\UnaryInfC{$\Gamma\vdash \forall a.(a\to a)\to a\to a$}
+	\LeftLabel{$(\forall_e)$}
+	\UnaryInfC{$\Gamma\vdash n:(a\to a)\to a\to a$}
+	\UnaryInfC{$\vdots$}
+	\LeftLabel{für f und x typen aus kontext}
+	\UnaryInfC{$\Gamma\vdash n\ f\ x:a$}
+	\AxiomC{}
+	\LeftLabel{(Ax)}
+	\UnaryInfC{$\Gamma\vdash f:a\to a$}
+	\LeftLabel{$\to_e$}
+	\BinaryInfC{$\underbrace{n:\mathbb{N};f:a\to a;x:a}_{\Gamma}\vdash f\ (n\ f\ x):a$}
+	\LeftLabel{$2\times\to_i$}
+	\UnaryInfC{$n:\mathbb{N}\vdash \lambda\ f\ x.\ f\ (n\ f\ x):(a\to a)\to a\to a$}
+	\LeftLabel{$\forall_i$}
+	\RightLabel{zum auflösen von $\mathbb{N}$}
+	\UnaryInfC{$n:\mathbb{N}\vdash \lambda\ f\ x.\ f\ (n\ f\ x):\mathbb{N}$}
+	\LeftLabel{($\to_i$)}
+	\UnaryInfC{$\vdash \lambda\ n\ f\ x.\ f\ (n\ f\ x):\mathbb{N}\to\mathbb{N}$}
+	\DisplayProof\\
 	\newpage
+	\begin{satz} Wells 1994: Typcheck in System F ist untentscheidbar!\\
+	Jede arithmetik 2. Stufe definierbar totale berechenbare Funktion ist in System F typisierbar!! (Reicht um die Reellen Zahlen zu typisieren!)
+	\end{satz}
+	\begin{satz} (Normalisierend, Girard) System F ist SN, wenn $\Gamma\vdash s:\alpha$ in $\lambda 2$ dann ist s stark normalisierend (also System F nicht Turingmächtig)
+	\end{satz}
+	Trotzdem in System F ist definierbar
+	\begin{itemize}
+		\item alle primitiv rek. Funktionen
+		\item Ackermann
+		\item Compiler, aber nicht Interpreter
+	\end{itemize}
+	\subsection{ML-Polymorphie}
+	Einschränkungen:\\
+	1) $\forall$ nur top-level.\\
+	2) Mehrfachinstanziierung nur per let!\\
+	$(\lambda f.ff)\underbrace{(\lambda x.x)}_{id}$\\
+	ist let $\underbrace{f=\lambda x.x}_{\forall a.a\to a}$ in f f.\\
+	Typen
+	\[\alpha,\beta::= a|\alpha\to\beta\]
+	Typschemata gebe durch die nicht rekursive Grammatik
+	\[S::= \forall a_1,\dots,a_k.\alpha\text{ mit } (k\geq 0)\]
+	Terme
+	\[t,s::=x|ts|\lambda x.t|let\ x=s\ in\ t\]
+	in System F sind variablen, die nicht verwendet werden implizit alquantifiziert.\\
+	Wir definieren eine Closure
+	\[Cl(\Gamma,\alpha)=\forall a_1,\dots,a_k.\alpha\ \text{mit }\ \{a_1,\dots,a_k\}= FV(\alpha)\setminus FV(\Gamma)\]
+	Typschemata in $\Gamma$. Also alle typen sind Tyschemata, aber nicht alle Typschemata sind typen!\\
+	Die Tyschemata kommen nur im Kontext vor, man kann keine Funktion selbst polymorph machen, nur sagen, dass eine Poylmorphes ``ding'' im kontext steht.\\
+	Typregeln $(\to_i),(\to_e)$ gleich\\
+	\AxiomC{}
+	\RightLabel{$(x:\forall a_1,\dots, a_k.\alpha\in\Gamma)$}
+	\LeftLabel{$\forall_e$}
+	\UnaryInfC{$\Gamma\vdash x:\alpha[\beta_1/a_1,\dots,\beta_k/a_k]$}
+	\DisplayProof\\
+	Effektiv wird hier also $\forall_e$ immer kombiniert mit einer Ax Regel ausgeführt. Dies liegt daran, dass wir Termen kein Typschema, sondern nur Typen zuweisen können)
+	\\
+	\AxiomC{$\Gamma[x\mapsto Cl(\Gamma,\alpha)]\vdash t:\beta$}
+	\AxiomC{$\Gamma\vdash s:\alpha$}
+	\RightLabel{$(x:\forall a_1,\dots, a_k.\alpha\in\Gamma)$}
+	\LeftLabel{let}
+	\BinaryInfC{$\Gamma\vdash$ let x=s in t $:\beta$}
+	\DisplayProof\\
+	Dies ersetzt die $\forall_i$ wir setzen also alle noch nicht vom Kontext festgelegten werte frei im Let. Wir lassen also keine funktionen mehr von polymorphen funktionen abhängen, stattdessen benutzen wir das let und passen das Typschema an.\\
+	Kontexte bestehen aus $\Gamma =\{x_1:S_1,\dots,x_n:S_n\}$ also aus Typschemata.\\
+	\begin{beispiel}.\\
+	\AxiomC{z.B. $\gamma=a\to a$}
+	\LeftLabel{$(\forall_e)$}
+	\UnaryInfC{$id:\forall a.a\to a\vdash id:\gamma$}
+	\AxiomC{z.B. $\beta=a\to a$}
+	\LeftLabel{$(\forall_e)$}
+	\UnaryInfC{$id:\forall a.a\to a\vdash id:\gamma\to\beta$}
+	\LeftLabel{$\to_e$}
+	\BinaryInfC{$id:\forall a.a\to a\vdash id\ id:\beta$}
+	\RightLabel{implizite allquantifizierung von a explizit}
+	\AxiomC{$\hdots$}
+	\LeftLabel{(herleitung $\lambda\to$)}
+	\UnaryInfC{$\vdash \lambda x.x$}
+	\LeftLabel{(let)}
+	\BinaryInfC{$\vdash$let id = $\lambda x.x$ in id id:$\beta$}
+	\DisplayProof\\
+	\end{beispiel}
+	Wenn wir den Hindley-Millner algorithmus generalisieren wollen, brauchen wir die Typinversionsregeln.\\
+	Diese gelten aber in System F nicht (das macht genau die Entscheidbarkeit kaputt)\\
+	\begin{satz} Inversionslemma: Applikation,$\lambda$ wie für $\lambda\to$\\
+	- Variablen: $\Gamma\vdash x:\alpha\iff \Gamma(x)=\forall a_1,\dots, a_k.\beta$\\
+	$\alpha$ hat die Form $\alpha =\beta[\gamma_1/\alpha_1,\dots,\gamma_k/\alpha_k]$\\
+	- let: $\Gamma\vdash let\ x= s$ in t$:\beta$ $\iff\Gamma\vdash s:\alpha, \Gamma[x\mapsto Cl(\Gamma,\alpha)]\vdash t:\beta$\\
+	\end{satz}
+	Recall: $PT(\Gamma,t,\alpha)$ Gleichunssystem\\
+	\underline{Invariante}: $\sigma$ löst $\Gamma\vdash t:\alpha$ $\iff \sigma$ erweitert zu Unifikator von $PT(\Gamma,t,\alpha)$\\
+	\begin{definition} von $PT(\Gamma,t,\alpha)$ per Rekursion über t.\\
+	Klauseln für Applikation, $\lambda$ wie in $\lambda\to$\\
+	$PT(\Gamma,x,\alpha)=\{\beta[a_1'/a_1,\dots a_k'/a_k] \doteq \alpha\}$ für $\Gamma(x)=\forall a_1,\dots,a_k.\beta$ sprich wir müssen verlangen, dass die allquantifizierten variablen von $\beta$ frisch sind\\
+	$PT(\Gamma,let\ x=s\ in\ t;\alpha)=PT(\Gamma\sigma[x\mapsto Cl(\Gamma\sigma,\sigma(a))];t;\alpha\sigma)$\\
+	$\sigma = $mgu($PT(\Gamma,s,a)$ (a frisch)) wir machen also Typinferenz für s und substituieren passend.\\
+	\end{definition}
+	\begin{beispiel} $PT((); let\ id\ = \lambda x.x\ in \ id\ id; a)$\\
+	zuerst das let auflösen, dafür PT von $\lambda x.x$ bestimmen\\
+	$mgu(PT(();\lambda x.x; b))$; $\sigma(b)=c\to c$\\
+	jetzt das Closure einsetzen für let\\
+	$PT(\underbrace{id:\forall c.c\to c}_{\Gamma}; id\ id; a)$\\
+	$=PT(\Gamma; id; d\to a)\cup PT(\Gamma, id; d)$\\
+	$=\{c\to c\doteq d\to a\}\cup \{\underbrace{e\to e}_{global\ frisch} \doteq d\}$\\
+	der mgu ist also $\color{red} a\doteq e\to e$
+	\end{beispiel}
+	\begin{beweis} Korrektheit Invariante\\
+	Variablen: wenig neues (wir machen jetzt nur ein instanziierung, die vom unifikationsalgorithmus sowieso gemacht wird)\\
+	\begin{definition} Für $S=\forall a_1,\dots,a_k.\alpha$\\
+	Inst(S) =$\{\alpha[\beta_1/a_1,\dots,\beta_k/a_k|\beta_1,\dots, \beta_k\text{ Typen}\}$\\
+	S allgemeiner als $S'$ $\iff$ Inst(S')$\subset Inst(S)$\\
+	\end{definition}
+	\begin{lemma} Für $S=\forall a_1,\dots, a_k.\alpha, S'=\forall b_1,\dots, b_m.\beta$ sind äquivalent:\\
+	i)  S allgemeiner als S'\\
+	ii) $\beta\in Inst(S)$ UND $b_1\dots b_m\notin FV(\alpha)$\\
+	Das Liefert u.U. aber ein Problem $S=\forall a.a\to b$ $S' = \forall b.b\to b$ hier ist S nicht allgemeiner als S', obwohl man einfach a=b wählen kann\\
+	\begin{beweis} (nur ii nach i, andere Richtung geht, brauchen wir aber nicht)\\
+	Sei $\beta=\alpha[\gamma_1/a_1,\dots,\gamma_k/a_k]$, $\sigma = [\delta_1/b_1,\dots,\delta_m/b_m]$ (d.h. $\beta\sigma\in$ Inst(S'))\\
+	zZ $\beta\sigma\in Inst(S)$\\
+	Nach Annahme\\
+	$\beta\sigma =\alpha[\gamma_1\sigma/a_1,\dots \gamma_k\sigma/a_k]\in Inst(S)$
+	\end{beweis}
+	\end{lemma}
+	Damit folgt
+	\begin{lemma} $CL(\Gamma,\alpha)\sigma$ allgemeiner als $CL(\Gamma\sigma,\alpha\sigma)$\\
+	\begin{beweis} i) Klar $\checkmark$\\
+	ii): Quantifizierte Variablen rechts: $FV(\alpha\sigma)\setminus FV(\Gamma\sigma)$\\
+	d.h. $b\in FV(CL(\Gamma,\alpha)\sigma)\implies b\in FV(\sigma(a))$ für ein $a\in FV(CL(\Gamma,\alpha))\subseteq FV(\Gamma)$\\
+	$\implies b\in FV(\Gamma\sigma)$,\\
+	also b rechts nicht quantifiziert.\\
+	\end{beweis}
+	\end{lemma}
+	\begin{lemma} Abschwächung:\\
+	S allgemeiner als S', $\Gamma,x:S'\vdash t:\alpha$\\
+	$\implies \Gamma,x:S\vdash t:a\alpha$, Klar.
+	\end{lemma}
+	Invariante für let:\\
+	(nur $\implies$ weil $\impliedby$ direkt folgt, weil wir mehr unifizieren, als wir brauchen, also auch insbesondere unser let)\\
+	Sei $\Gamma\sigma\vdash let\ x= s\ in\ t:\alpha\sigma$.\\
+	Per Inversionslemma es existiert $\beta$ mit $\Gamma\sigma\vdash s:\beta,\Gamma\sigma,x:CL(\Gamma\sigma,\beta)\vdash t:\alpha\sigma$\\
+	$\stackrel{IV}{\implies}\sigma$ erweiterbar zu $\sigma'\in Unif(PT(\Gamma\sigma;s;b))$ mit $\sigma'(b)=\beta$\\
+	$\tau:=mgu(PT(\Gamma\sigma;s;b));$ GLOIN: o.E.$\tau\sigma'=\sigma'$\\
+	zZ: $\sigma'$ erweitert zu Unifikator von $PT(\Gamma\tau, x:CL(\Gamma\tau,\tau(b)),t,\alpha\tau)$\\
+	I.V.: reicht $\Gamma\tau\sigma',x:CL(\Gamma\tau,\tau(b))\sigma'\vdash t:\alpha\tau\sigma'$\\
+	$\iff \Gamma\sigma,x:CL(\Gamma\tau,\tau(b))\sigma'\vdash t:\alpha\sigma$\\
+	$\iff \Gamma\sigma,x:CL(\Gamma\sigma,\sigma(b))\vdash t:\alpha\sigma$\\
+	Man kann das $\sigma'$ reinziehen (das geht per lemma, weil wir sogar weniger allgemein auf der rechten seite werden)
+	\end{beweis}
+
+
+
 
 	\begin{thebibliography}{1}
 	\bibitem{knuthBendix}
@@ -1366,5 +1767,6 @@ Kapitel 1
 	\end{thebibliography}
 
 \end{document}
+
 
 

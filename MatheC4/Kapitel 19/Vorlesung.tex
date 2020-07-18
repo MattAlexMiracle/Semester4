@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Vorlesung 4}
+
+
+\begin{document}
+	\maketitle
+	Die Kovarianzmatrix ist eine Matrix aus n Normalverteilten ZV, wobei in Zeile x und spalte y die Kovarianz zwischen der x-ten und y-ten ZV ist\\
+	Ausgangspunkt ist also ein Zufalls\underline{vektor} X der länge m.\\
+	Wie ist X verteilt: $X_i$ sind Normalverteilt $X_i\sim N(a_i,k_{ij})$\\
+	$Kov(X_i, X_j) = k_{ij}$ dann sagen wir $X\sim N(a,K)$\\
+	(Diese Definition kann theoretisch auf beliebige Verteilungen erweitert werden. Dann ebenfalls $Kov(X_i,X_j)=:k_{ij}$)\\
+	Auch hier gilt $k_{ii} =Var(X_i)$, $k_{ij}=Kov(X_j,X_i)$\\
+	Eigenschaften der \\
+	Var (x) = Kov(X,X)\\
+	X,Y st.u EX,EY$<\infty\implies$  Kov(X,Y)=0 (ES IST NUR $\iff$ für Normalverteilung)\\
+	$Kov(X,Y)=E((X-EX)(Y-EY)) = E(XY-Y(EX)- X(EY)+(EX)(EY))= E(XY)-E(X(EY))-E(Y(EX))+E(EX)(EY) = E(XY)-EX\cdot EY$\\
+	$=\int xyf^{(X,Y)}(x,y)d(x,y)-(\int xf^{(X)}(x)dx)(\int yf^{(Y)}(y)dy) \stackrel{X,Y,\ st.u.}{=}\int xyf^{(X,Y)}(x,y)d(x,y)-\int xyf^{(X,Y)}(x,y)d(x,y) =0 $\\
+	Die Kovarianz ist linear $Kov(X+Y, Z) = Kov(X,Z)+Kov(Y,Z)$ (wegen symmetrie in beiden Argumenten linear)\\
+	Sei X eine n-dimensionale Standardnormalverteilung mit $Y=AX+a$, daraus folgt\\
+	\[Y\sim N(a,AA^T)\]
+	$Y=AX+a$ liefert über Transformationssatz
+	\[Y=g(X)=AX+A\]
+	\[J_g(X)=A, det(J_g)=det(A)\]
+	\[f^Y(y) =\frac{1}{\sqrt{|K|}}(\frac{1}{\sqrt{2\pi}})^nexp(-\underbrace{\frac{1}{2}(y-a)^T(K^{-1})(y-a)}_{quadratische\ Form})\]
+	Wir wissen, dass wenn $Y\sim N(a,K)$ verteilt ist, gilt \textbf{$X=b+BY$, dann ist $X\sim N(b+Ba,BKB^T)$-verteilt.}\\
+	Ziel ist $b+Ca =0$ und $CKC^T =E_n$ einheitsmatrix\\
+	$K=AA^T$ gilt, $CAA^TC^T = E_n$, wenn $C=A^{-1}$\\
+	$\sum ^n_{i=1} Y_i$ ist $N(\sum^n_{i=1} a_i, \sum^n_{i=1} K_{i,j})$-verteilt
+
+
+	
+\end{document}

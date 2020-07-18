@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	hd \PYG{o}{(}even s\PYG{o}{)} \PYG{o+ow}{=} hd s
+	tl \PYG{o}{(}even s\PYG{o}{)} \PYG{o+ow}{=}even \PYGZdl{}tl \PYGZdl{}tl s
+	hd \PYG{o}{(}odd s\PYG{o}{)} \PYG{o+ow}{=} hd \PYGZdl{} tl s
+	tl \PYG{o}{(}odd s\PYG{o}{)} \PYG{o+ow}{=} odd \PYGZdl{}tl \PYGZdl{}tl \PYGZdl{} s
+\end{Verbatim}

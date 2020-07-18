@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k+kr}{codata} Tree \PYG{k+kr}{where}
+	 \PYG{n+nf}{out}\PYG{o+ow}{:}   Tree \PYG{o+ow}{\PYGZhy{}\PYGZgt{}} A
+	 \PYG{n+nf}{left}\PYG{o+ow}{:}  Tree \PYG{o+ow}{\PYGZhy{}\PYGZgt{}} Tree
+	 \PYG{n+nf}{right}\PYG{o+ow}{:} Tree \PYG{o+ow}{\PYGZhy{}\PYGZgt{}} Tree
+\end{Verbatim}

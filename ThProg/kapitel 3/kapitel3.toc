@@ -24,3 +24,9 @@
 \contentsline {subsection}{\numberline {11.4}Strukturelle Induktion über Datentypen}{39}% 
 \contentsline {subsection}{\numberline {11.5}strukturelle Induktion über mehrsortige Datentypen}{39}% 
 \contentsline {subsection}{\numberline {11.6}Kodaten}{41}% 
+\contentsline {subsection}{\numberline {11.7}Koinduktion}{45}% 
+\contentsline {subsection}{\numberline {11.8}kodatentypen mit mehreren Nachfolgeoperationen}{47}% 
+\contentsline {section}{\numberline {12}Polymorphie}{48}% 
+\contentsline {subsection}{\numberline {12.1}System F}{48}% 
+\contentsline {subsection}{\numberline {12.2}Church-Kodierung in System F}{49}% 
+\contentsline {subsection}{\numberline {12.3}ML-Polymorphie}{51}% 

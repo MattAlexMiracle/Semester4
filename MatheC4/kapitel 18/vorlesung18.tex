@@ -1,0 +1,131 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	\[E(XY)=EXEY\]
+	gilt wenn X und Y st.u.\\
+	Es gibt ukorrelierte größen, die nixht st.u. sind (nur bei normalverteilung ein gdw)\\
+	WEnn $X_1$ und $X_2$ stochastisch unabhängig identisch verteilt sind, gilt
+	\[VarX_1 = VarX_2\]
+	wegen identisch
+	\[Var(X_1+X_1)=Var(2X_1)=4Var(X_1)\]
+	wegen multiplikationsregel
+	\[Var(X_1+X_2)=2Var(X_1)\]
+	wegen identisch und unabhängig.\\
+	Der unterschied zwischen dem letzten und Vorletzen ensteht dadurch, dass das erste eine streckung ist, während das andere als Faltung modeliert wird. Somit ist der zweite Wert ``beengt'' durch den ersten per $\int^z_{-\infty}f(x)f(x-z) $.\\
+	würfeln und mal 2 nehmen vs summe der augenzahlen\\
+	Das heißt, dass die Varianz vom ersten ist kleiner, als beim zweiten (Erwartungswert bleibt gleich)\\
+	\[Kov(X,X) = E((X-EX)\cdot (X-EX)) = Var(X)\]
+	Frage: ist die Kovarianz linear? Ja, $Kov(aX+b,cY+d) = ac\cdot Kov(X,y)$\\
+	Definition $k\in\mathbb{N}$
+	\[M_k = E(|X|^k)\]
+	nennt man k-tes absolutes Moment von X.\\
+	Ist X eine reelle TV mit dichte $f^X$\\
+	\[m_k^X = \int_{-\infty}^\infty x^kd F^X(x)=\int_{-\infty}^\infty x^k f^X(x)dx\]
+	das Zentrale Moment ist definiert als
+	\[\mu_k:=E((X-\mu)^2)\]
+	das dritte zentrale Moment heißt Schiefe, das vierte Wölbung\\
+	Die Momenterzeugende Funktion ist definiert durch
+	\[M_X(t)=\int^\infty_{-\infty}e^{tx}f(x)dx\]
+	ist ein Parameterintegral, abhängig von t.\\
+	heißt Laplacetransformation von t. (zweiseitig)\\
+	\[=\int^\infty_{-\infty} (1+tx+\frac{t^2}{2!}x^2+\dots)f(x)dx\]
+	\[=1+tm_1^X+\frac{t^2}{2!}m_2^X\]
+	Diese hat jetzt folgende Eigenschaften:\\
+	1. $M_X(0)=1$, $M_X'(0)=EX$, $M_X''(0)=EX^2 =Var(X)+(EX)^2$\\
+	2. $M_{aX+b}(t)=M_X(at)e^{tb}$\\
+	3. $M_{X+Y}(t)=M_Y(t)M_Y(t)$ wenn X,Y st.u\\
+	4. $M_{X_n}(t)\to M_{X_n}(t)\iff X_n\to X$ für $n\to\infty$ wenn X,Y st.u\\
+	5. $Y\sim N(0,1)\iff M_Y(t)=e^\frac{t^2}{2}$\\
+	THEMAWECHSEL!!\\
+	Es gibt auch linkseigenvektoren
+	\[(A-\lambda I)v=0\]
+	\[v^T(A-\lambda I)=0\]
+	sind nur gleich, wenn A symmetrisch.\\
+	Diagonalisierung $D=T^{-1}AT$\\
+	A ist eine Symmetrische Matrix $A\in\mathbb{R}^{n\times n}$\\
+	A ist diagonalisierbar (in $\mathbb{R}$),\\
+	$q_A(x) = \frac{1}{2}x^T Ax \in\mathbb{R}$\\
+	vgl quadratische Optimierung mit ZF.: $\frac{1}{2}x^TAx+b^Tx+c = \frac{1}{2}<Ax,x>+<x,b>+c$\\
+	Es gilt A ist diagonalisierbar (mit hilfe dieses Satzes)
+	\[A=SDS^T\]
+	$q_A(x)=\frac{1}{2}x^TAx =\frac{1}{2}x^TSD\underbrace{s^Tx}_{:=y} = y^TDy = q_D(y)$\\
+	(Außerdem gilt) $<Ax,x> = x^TAx = x^TL^TLx = y^Ty= ||X||_A$\\
+	Die mehrdimensionale Normalverteilung
+	\[f^X(x_1,\dots,x_n)=(\frac{1}{\sqrt{2\pi}})^ne^{-\frac{1}{2}(x_1+\dots+x_n^2)}=(\frac{1}{\sqrt{2\pi}})^ne^{-\frac{1}{2}x^Tx}=(\frac{1}{\sqrt{2\pi}})^ne^{-\frac{1}{2}||x||^2}\]
+	Es gilt\\
+	1. $E_{Y_i}=a_i$\\
+	2. Für Kovarianzen gilt
+	\[Kov(Y_i,Y_j) = E(Y_i-EY_i)(Y_j-EY_j)\]
+	\[=E(\sum^n_{k=1}a_{ik}X_k)(\sum^n_{l=1}a_{jl}X_l)\]
+	\[K=AA^T\]
+	Dichte für $Y=a+AX$\\
+	\[f^Y(y_1,\dots,y_n)=\frac{1}{|det(K)|}(\frac{1}{\sqrt{(2\pi)}})^n e^{-\frac{1}{2}\underbrace{(y-a)^T(K^{-1})(y-a)}_{hier\ kommt\ das\ quadratische}}\]
+	sprich eine transformierte Normalverteilung ist abhängig von ihren Kovarianzen.\\
+	das heißt eine n-Dimensionale Normalverteilung und wir mit $\mathcal{N}(a,K)$ bezeichnet.\\
+	a bezeichnet den Erwartungsvektor und K die Kovarianzenmatrix.\\
+	Die n-dimensionale Standardnormalverteilung wird mit $\mathcal{N}(0,I_n)$ bezeichnet.\\
+
+
+
+\end{document}

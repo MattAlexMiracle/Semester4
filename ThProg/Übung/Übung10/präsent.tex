@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	1.\\
+	zZ.: $\forall x\ xs. length(snoc\ x\ xs) = 1+length\ xs$\\
+	Seien x:a, xs:List a. per induktion über xs\\
+	I.A.:\\
+	length (snoc Nil x) = length (Cons x Nil) =Suc (length Nil) = Suc(0)=1 \\
+	1+ length Nil = 1+0 = Suc(0)\\
+	Annahme von vorherigen Blatt.\\
+	I.S.\\
+	Induktionshypothese die Aussage gilt für ein ys:List a und beliebige y:a.\\
+	IH length (snoc ys x) = 1+length(ys)\\
+	zZ.: length (snoc (Cons y ys) x) =length (Cons y (snoc ys x)) = Suc (length (snoc ys x)) = Suc(1+length ys)\\
+	1+length (Cons y ys)= 1+(1+length (ys)) = Suc(1+length ys)\\
+	Annahme von vorherigen Blatt.\\
+	2. zZ $\forall xs. length (reverse\ xs) = length\ xs$\\
+	i.A.:\\
+	sei xs=Nil\\
+	length(reverse Nil) = length Nil\\
+	length Nil\\
+	fertig.\\
+	I.S.\\
+	xs = cons y ys\\
+	I.H. length (reverse ys) = length ys\\
+	length (reverse (Cons y ys)) = length (snoc (reverse ys) y) $\stackrel{A1}{=}$ 1+length (reverse ys)$\stackrel{IH}{=}$ 1+length ys\\
+	length (Cons y ys) = suc (length ys) = 1+length ys\\
+	Annahme von vorherigen Blatt.\\
+	
+
+
+
+\end{document}

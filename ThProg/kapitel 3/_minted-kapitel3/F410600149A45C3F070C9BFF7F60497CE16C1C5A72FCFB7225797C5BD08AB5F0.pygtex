@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	blink \PYG{l+m+mi}{0} \PYG{o+ow}{=} b0
+	blink \PYG{l+m+mi}{1} \PYG{o+ow}{=} b1
+	hd \PYG{o}{(}b0 x s\PYG{o}{)} \PYG{o+ow}{=} x
+	tl \PYG{o}{(}b0 x s\PYG{o}{)} \PYG{o+ow}{=} b1 x s
+	hd \PYG{o}{(}b1 x s\PYG{o}{)} \PYG{o+ow}{=} hd s
+	tl \PYG{o}{(}b1 x s\PYG{o}{)} \PYG{o+ow}{=} b0 x \PYG{o}{(}tl s\PYG{o}{)}
+\end{Verbatim}

@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{flip}\PYG{o+ow}{::}\PYG{k+kt}{Stream} \PYG{k+kt}{Bool}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Stream} \PYG{k+kt}{Bool}
+	\PYG{n}{hd} \PYG{p}{(}\PYG{n}{flip} \PYG{n}{b}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{not} \PYG{p}{(}\PYG{n}{hd} \PYG{n}{b}\PYG{p}{)}
+	\PYG{n}{tl} \PYG{p}{(}\PYG{n}{flip} \PYG{n}{b}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{flip} \PYG{p}{(}\PYG{n}{tl} \PYG{n}{b}\PYG{p}{)}
+	\PYG{n}{choose}\PYG{o+ow}{::}\PYG{k+kt}{Stream} \PYG{k+kt}{Bool}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{ITree} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Stream} \PYG{n}{a}
+	\PYG{n}{hd}\PYG{p}{(}\PYG{n}{choose} \PYG{n}{a} \PYG{n}{b}\PYG{p}{)}\PYG{o+ow}{=} \PYG{n}{inner} \PYG{n}{b}
+	\PYG{n}{tl}\PYG{p}{(}\PYG{n}{choose} \PYG{n}{a} \PYG{n}{b}\PYG{p}{)}\PYG{o+ow}{=}\PYG{k+kr}{if} \PYG{n}{hd} \PYG{n}{a} \PYG{k+kr}{then} \PYG{n}{choose} \PYG{p}{(}\PYG{n}{tl} \PYG{n}{a}\PYG{p}{)} \PYG{p}{(}\PYG{n}{left} \PYG{n}{b}\PYG{p}{)} \PYG{k+kr}{else} \PYG{n}{choose} \PYG{p}{(}\PYG{n}{tl} \PYG{n}{a}\PYG{p}{)} \PYG{p}{(}\PYG{n}{right} \PYG{n}{b}\PYG{p}{)}
+	\PYG{n}{mirror}\PYG{o+ow}{::}\PYG{k+kt}{ITree} \PYG{n}{a}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{ITree} \PYG{n}{a}
+	\PYG{n}{inner} \PYG{p}{(}\PYG{n}{mirror} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{inner} \PYG{n}{a}
+	\PYG{n}{left} \PYG{p}{(}\PYG{n}{mirror} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{mirror}\PYG{p}{(}\PYG{n}{right} \PYG{n}{a}\PYG{p}{)}
+	\PYG{n}{right} \PYG{p}{(}\PYG{n}{mirror} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{mirror}\PYG{p}{(}\PYG{n}{left} \PYG{n}{a}\PYG{p}{)}
+\end{Verbatim}

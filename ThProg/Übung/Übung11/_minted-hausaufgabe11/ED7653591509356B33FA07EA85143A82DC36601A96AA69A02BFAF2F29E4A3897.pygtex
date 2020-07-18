@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{prepend}\PYG{o+ow}{::}\PYG{k+kt}{List} \PYG{k+kt}{Sprite}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Animation}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Animation}
+	\PYG{n}{sprite} \PYG{p}{(}\PYG{n}{prepend} \PYG{k+kt}{Nil} \PYG{n}{anim}\PYG{p}{)} \PYG{o+ow}{=}\PYG{n}{sprite} \PYG{n}{anim}
+	\PYG{n}{sprite} \PYG{p}{(}\PYG{n}{prepend} \PYG{n}{s} \PYG{n}{anim}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{s}
+
+	\PYG{n}{advance} \PYG{p}{(}\PYG{n}{prepend} \PYG{k+kt}{Nil} \PYG{n}{anim}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{anim}
+	\PYG{n}{advance} \PYG{p}{(}\PYG{n}{prepend} \PYG{n}{s}\PYG{k+kt}{:}\PYG{n}{xs} \PYG{n}{anim}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{prepend} \PYG{n}{xs} \PYG{n}{anim}
+
+	\PYG{n}{transition}\PYG{o+ow}{::}\PYG{k+kt}{Animation}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Animation}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{Animation}
+	\PYG{n}{sprite} \PYG{p}{(}\PYG{n}{transition} \PYG{n}{a1} \PYG{n}{a2}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{sprite} \PYG{n}{a1}
+	\PYG{n}{advance} \PYG{p}{(}\PYG{n}{transition} \PYG{n}{a1} \PYG{n}{a2}\PYG{p}{)} \PYG{o+ow}{=} \PYG{k+kr}{if} \PYG{n}{compatible} \PYG{p}{(}\PYG{n}{sprite} \PYG{n}{a1}\PYG{p}{)} \PYG{p}{(}\PYG{n}{sprite} \PYG{n}{a2}\PYG{p}{)}
+	 \PYG{k+kr}{then} \PYG{n}{advance}\PYG{p}{(}\PYG{n}{a2}\PYG{p}{)}
+	 \PYG{k+kr}{else} \PYG{n}{advance} \PYG{n}{a1}
+\end{Verbatim}

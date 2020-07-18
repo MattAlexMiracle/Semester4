@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	hd \PYG{o}{(}blink x s\PYG{o}{)} \PYG{o+ow}{=} x
+	tl \PYG{o}{(}blink x s\PYG{o}{)} \PYG{o+ow}{=} blink x \PYG{o+ow}{...}???
+\end{Verbatim}

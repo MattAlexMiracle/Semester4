@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{sprite} \PYG{p}{(}\PYG{n}{delay} \PYG{n}{a}\PYG{p}{)}  \PYG{o+ow}{=} \PYG{n}{sprite} \PYG{n}{a}
+	\PYG{n}{advance} \PYG{p}{(}\PYG{n}{delay} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{a}
+	\PYG{n}{sprite} \PYG{p}{(}\PYG{n}{halfspeed} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{sprite} \PYG{n}{a}
+	\PYG{n}{advance} \PYG{p}{(}\PYG{n}{halfspeed} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{delayed} \PYG{n}{a}
+		\PYG{k+kr}{where}
+			\PYG{n}{sprite} \PYG{p}{(}\PYG{n}{delayed} \PYG{n}{a}\PYG{p}{)}  \PYG{o+ow}{=} \PYG{n}{sprite} \PYG{n}{a}
+			\PYG{n}{advance} \PYG{p}{(}\PYG{n}{delayed} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{halfspeed} \PYG{p}{(}\PYG{n}{advance} \PYG{n}{a}\PYG{p}{)}
+	\PYG{n}{sprite} \PYG{p}{(}\PYG{n}{doublespeed\PYGZus{}e} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{sprite} \PYG{n}{a}
+	\PYG{n}{advance} \PYG{p}{(}\PYG{n}{doublespeed\PYGZus{}e} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{doublespeed\PYGZus{}e} \PYG{p}{(}\PYG{n}{advance} \PYG{p}{(}\PYG{n}{advance} \PYG{n}{a}\PYG{p}{))}
+	\PYG{n}{sprite} \PYG{p}{(}\PYG{n}{doublespeed\PYGZus{}o} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=}\PYG{n}{sprite}  \PYG{p}{(}\PYG{n}{advance} \PYG{n}{a}\PYG{p}{)}
+	\PYG{n}{advance} \PYG{p}{(}\PYG{n}{doublespeed\PYGZus{}o} \PYG{n}{a}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{doublespeed\PYGZus{}o} \PYG{p}{(}\PYG{n}{advance} \PYG{p}{(}\PYG{n}{advance} \PYG{p}{(}\PYG{n}{delay} \PYG{n}{a}\PYG{p}{)))}
+\end{Verbatim}

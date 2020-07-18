@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{itadd}\PYG{o+ow}{::}\PYG{k+kt}{ITree} \PYG{k+kt}{Nat}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{ITree} \PYG{k+kt}{Nat}\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{k+kt}{ITree} \PYG{k+kt}{Nat}
+	\PYG{n}{inner} \PYG{p}{(}\PYG{n}{itadd} \PYG{n}{a} \PYG{n}{b}\PYG{p}{)} \PYG{o+ow}{=} \PYG{p}{(}\PYG{n}{inner} \PYG{n}{a}\PYG{p}{)}\PYG{o}{+}\PYG{p}{(}\PYG{n}{inner} \PYG{n}{b}\PYG{p}{)}
+	\PYG{n}{left} \PYG{p}{(}\PYG{n}{itadd} \PYG{n}{a} \PYG{n}{b}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{itadd} \PYG{p}{(}\PYG{n}{left} \PYG{n}{a}\PYG{p}{)} \PYG{p}{(}\PYG{n}{left} \PYG{n}{b}\PYG{p}{)}
+	\PYG{n}{right} \PYG{p}{(}\PYG{n}{itadd} \PYG{n}{a} \PYG{n}{b}\PYG{p}{)} \PYG{o+ow}{=} \PYG{n}{itadd} \PYG{p}{(}\PYG{n}{right} \PYG{n}{a}\PYG{p}{)} \PYG{p}{(}\PYG{n}{right} \PYG{n}{b}\PYG{p}{)}
+\end{Verbatim}

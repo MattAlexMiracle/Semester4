@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	out \PYG{o}{(}mirror t\PYG{o}{)} \PYG{o+ow}{=} out t
+	left \PYG{o}{(}mirror t\PYG{o}{)} \PYG{o+ow}{=} mirror \PYG{o}{(}right t\PYG{o}{)}
+	right \PYG{o}{(}mirror t\PYG{o}{)} \PYG{o+ow}{=} mirror \PYG{o}{(}left t\PYG{o}{)}
+\end{Verbatim}

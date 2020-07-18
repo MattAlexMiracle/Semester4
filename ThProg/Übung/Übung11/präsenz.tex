@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{framed}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\usepackage{bm}
+\usepackage{verbatim}
+\usepackage{fourier}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath,amsthm}
+\usepackage{gauss}
+\usepackage{euscript}
+\usepackage{tkz-euclide}
+\usepackage{stackengine}
+\usepackage{bussproofs}
+\usepackage{tikz-cd}
+
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\title{Übungsblatt 5}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=0pt}
+\usepackage{titlesec}
+\newcommand{\nto}{\nrightarrow}
+\newcommand{\smallAscr}{\scriptscriptstyle\mathcal{A}}
+%\newcommand{\nsqsubseteq}{\xout{\sqsubseteq}}
+\title{Vorlesung 2}
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\newtheorem{satz}{Satz}
+\newtheorem{korrolar}{Korrolar}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\theoremstyle{definition}
+\newtheorem{beweis}{Beweis}[section]
+\newtheorem{beispiel}{Beispiel}[section]
+\newtheorem{definition}{Definition}[section]
+
+
+\begin{document}
+	\maketitle
+	sprite( advance (advance (advance (loop [s1,s2,s3,s4,s5,s6]))))=\\
+	= sprite (advance advance loop [s2,s3,s4,s5,s6,s1])=\\
+	= sprite (loop [s4,s5,s6,s1,s2,s3])=\\
+	= s4.\\
+	\begin{minted}{haskell}
+	sprite (delay a)  = sprite a
+	advance (delay a) = a
+	sprite (halfspeed a) = sprite a
+	advance (halfspeed a) = delayed a
+		where
+			sprite (delayed a)  = sprite a
+			advance (delayed a) = halfspeed (advance a)
+	sprite (doublespeed_e a) = sprite a
+	advance (doublespeed_e a) = doublespeed_e (advance (advance a))
+	sprite (doublespeed_o a) =sprite  (advance a)
+	advance (doublespeed_o a) = doublespeed_o (advance (advance (delay a)))
+	\end{minted}
+	1.\\
+	$R\subseteq Animation\times Animation$ mit $sRt\implies $\\
+	i) sprite(s) = sprite(t)\\
+	ii) advance(s)R advance(t)\\
+	gilt R bisimulation $sRt\implies s=t$.\\
+	2 a)\\
+	$\forall a.$ doublespeede (halfspeed a) =a\\
+	$R=\{(doublespeede(halfspeed\ a), a)|a\in Animation\}$\\
+	Zeige R Bisimulation, (doublespeede (halfspeed a)) R a\\
+	i)  sprite(doublespeede (halfspeed a)) = sprite(halfspeed a)  =sprite(a)\\
+	ii)	advance(doublespeede (halfspeed a)) = doublespeed(advance (advance (halfspeed a))) =\\
+	doublespeed(advance (delayed a)) = doublespeed(halfspeed (advance a)) R (advance a)\\
+	$\forall a$ doublespeede a = doublespeedo(delayed a)\\
+	$R=\{(doublespeede\ a,doublespeedo(delayed\ a))|\forall a\in Animation\}$\\
+	i)  sprite(doublespeede a) = sprite(a) = sprite(delayed a) = sprite(doublespeedo(delayed a))\\
+	ii) advance(doublespeede a) = doublespeede( advance(advance(a)))\\
+	advance(doublespeedo(delayed a)) = doublespeedo(advance(advance(delay a))=doublespeedo(advance a)\\
+	R' = $R\cup \{(doublespeede(advance(advance\ a)), doublespeedo(advance\ a))|a\in Animation\}$\\
+	die vorher bewiesenen gelten jetzt (advance per definition).\\
+	i) sprite(doublespeede(advance(advance a))) =sprite( advance(advance a))\\
+	sprite(doublespeedo(advance a)) = sprite(advance(advance a)) $\checkmark$\\
+	ii) advance(doublespeede (advance (advance a))) =doublespeede (advance(advance(advance(advance a))))\\
+	advance(doublespeedo(advance (a))) = doublespeedo(advance(advance(advance(a))))\\
+	Diese stehen per oben in relation (advance(advance(a)) ist auch ein element aus Anim).\\
+	R' ist eine Bisimulation.\\
+	
+
+
+\end{document}
+
+
+
