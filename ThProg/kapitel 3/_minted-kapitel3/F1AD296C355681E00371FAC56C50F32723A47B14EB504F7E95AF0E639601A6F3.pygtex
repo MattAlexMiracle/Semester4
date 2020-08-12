@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYG{n}{codata} \PYG{k+kt}{Lang} \PYG{k+kt}{Sigma} \PYG{k+kr}{where}
+			\PYG{n}{acc} \PYG{k+kt}{:} \PYG{k+kt}{Lang} \PYG{k+kt}{Sigma} \PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Bool}
+			\PYG{n}{der} \PYG{k+kt}{:} \PYG{k+kt}{Lang} \PYG{k+kt}{Sigma} \PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{p}{(}\PYG{k+kt}{Sigma} \PYG{o+ow}{\PYGZhy{}\PYGZgt{}} \PYG{k+kt}{Lang} \PYG{k+kt}{Sigma}\PYG{p}{)}
+			\PYG{c+c1}{\PYGZhy{}\PYGZhy{} accept/derivation}
+\end{Verbatim}

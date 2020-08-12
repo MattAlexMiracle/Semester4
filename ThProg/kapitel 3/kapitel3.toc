@@ -1,32 +1,36 @@
 \babel@toc {german}{}
 \babel@toc {german}{}
-\contentsline {section}{\numberline {1}Terme}{3}% 
-\contentsline {subsection}{\numberline {1.1}substitution}{3}% 
-\contentsline {subsection}{\numberline {1.2}Kontext}{3}% 
-\contentsline {section}{\numberline {2}Operationelle Semantik von TES}{3}% 
-\contentsline {section}{\numberline {3}Terminierung}{4}% 
-\contentsline {section}{\numberline {4}Reduktionsordnungen}{5}% 
-\contentsline {subsection}{\numberline {4.1}Polynomordnungen}{6}% 
-\contentsline {section}{\numberline {5}Konfluenz}{8}% 
-\contentsline {section}{\numberline {6}Der $\lambda $-Kalkül}{16}% 
-\contentsline {section}{\numberline {7}Der ungetypte $\lambda $-Kalkül}{16}% 
-\contentsline {subsection}{\numberline {7.1}Rekursion}{19}% 
-\contentsline {subsection}{\numberline {7.2}Auswertungsstrategie}{19}% 
-\contentsline {section}{\numberline {8}Der einfach getypte $\lambda $-Kalkül}{20}% 
-\contentsline {subsection}{\numberline {8.1}Typinferenz}{23}% 
-\contentsline {subsection}{\numberline {8.2}Subjektreduktion}{25}% 
-\contentsline {section}{\numberline {9}Church Rosser des $\lambda $-Kalkül}{26}% 
-\contentsline {section}{\numberline {10}Curry-Howard Isomorphismus}{29}% 
-\contentsline {section}{\numberline {11}Induktive Datentypen}{31}% 
-\contentsline {subsection}{\numberline {11.1}Mengenkonstruktionen}{33}% 
-\contentsline {subsection}{\numberline {11.2}Initialität und Rekursion}{36}% 
-\contentsline {subsection}{\numberline {11.3}Mehrsortige Typen}{37}% 
-\contentsline {subsection}{\numberline {11.4}Strukturelle Induktion über Datentypen}{39}% 
-\contentsline {subsection}{\numberline {11.5}strukturelle Induktion über mehrsortige Datentypen}{39}% 
-\contentsline {subsection}{\numberline {11.6}Kodaten}{41}% 
-\contentsline {subsection}{\numberline {11.7}Koinduktion}{45}% 
-\contentsline {subsection}{\numberline {11.8}kodatentypen mit mehreren Nachfolgeoperationen}{47}% 
-\contentsline {section}{\numberline {12}Polymorphie}{48}% 
-\contentsline {subsection}{\numberline {12.1}System F}{48}% 
-\contentsline {subsection}{\numberline {12.2}Church-Kodierung in System F}{49}% 
-\contentsline {subsection}{\numberline {12.3}ML-Polymorphie}{51}% 
+\contentsline {section}{\numberline {1}Terme}{3}%
+\contentsline {subsection}{\numberline {1.1}substitution}{3}%
+\contentsline {subsection}{\numberline {1.2}Kontext}{3}%
+\contentsline {section}{\numberline {2}Operationelle Semantik von TES}{3}%
+\contentsline {section}{\numberline {3}Terminierung}{4}%
+\contentsline {section}{\numberline {4}Reduktionsordnungen}{5}%
+\contentsline {subsection}{\numberline {4.1}Polynomordnungen}{6}%
+\contentsline {section}{\numberline {5}Konfluenz}{8}%
+\contentsline {section}{\numberline {6}Der $\lambda $-Kalkül}{16}%
+\contentsline {section}{\numberline {7}Der ungetypte $\lambda $-Kalkül}{16}%
+\contentsline {subsection}{\numberline {7.1}Rekursion}{19}%
+\contentsline {subsection}{\numberline {7.2}Auswertungsstrategie}{19}%
+\contentsline {section}{\numberline {8}Der einfach getypte $\lambda $-Kalkül}{20}%
+\contentsline {subsection}{\numberline {8.1}Typinferenz}{23}%
+\contentsline {subsection}{\numberline {8.2}Subjektreduktion}{25}%
+\contentsline {section}{\numberline {9}Church Rosser des $\lambda $-Kalkül}{26}%
+\contentsline {section}{\numberline {10}Curry-Howard Isomorphismus}{29}%
+\contentsline {section}{\numberline {11}Induktive Datentypen}{31}%
+\contentsline {subsection}{\numberline {11.1}Mengenkonstruktionen}{33}%
+\contentsline {subsection}{\numberline {11.2}Initialität und Rekursion}{36}%
+\contentsline {subsection}{\numberline {11.3}Mehrsortige Typen}{37}%
+\contentsline {subsection}{\numberline {11.4}Strukturelle Induktion über Datentypen}{39}%
+\contentsline {subsection}{\numberline {11.5}strukturelle Induktion über mehrsortige Datentypen}{39}%
+\contentsline {subsection}{\numberline {11.6}Kodaten}{41}%
+\contentsline {subsection}{\numberline {11.7}Koinduktion}{45}%
+\contentsline {subsection}{\numberline {11.8}kodatentypen mit mehreren Nachfolgeoperationen}{47}%
+\contentsline {section}{\numberline {12}Polymorphie}{48}%
+\contentsline {subsection}{\numberline {12.1}System F}{48}%
+\contentsline {subsection}{\numberline {12.2}Church-Kodierung in System F}{49}%
+\contentsline {subsection}{\numberline {12.3}ML-Polymorphie}{51}%
+\contentsline {section}{\numberline {13}Automatentheorie}{54}%
+\contentsline {subsection}{\numberline {13.1}Sprachen als Kodaten}{54}%
+\contentsline {subsection}{\numberline {13.2}Minimierung}{56}%
+\contentsline {section}{\numberline {14}Bonus: SN von System F}{59}%

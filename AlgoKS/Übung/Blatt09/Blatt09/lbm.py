@@ -117,7 +117,7 @@ def lbm(W, H, timesteps=1000, omega=1.85):
     # custom random obstacle
     randomX = np.random.choice(W, 50)
     randomY = np.random.choice(H, 50)
-    mask[randomX, randomY] = 1
+    #mask[randomX, randomY] = 1
     masklist = np.argwhere(mask)
 
     (ux, uy) = velocity(f)

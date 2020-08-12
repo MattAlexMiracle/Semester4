@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	Das Gewicht einer Kiste ist $X\sim \mathcal{R}(105,135)$ verteilt.\\
+	a)\\
+	\[E(X) = \frac{135+105}{2} = 120kg\]
+	\[Var(X) = \frac{(135-105)^2}{12} = 75kg^2\]
+	b)\\
+	Die Summe für $ES_{64} = E\sum_{i=1}^{64} X_i = 64\cdot \underbrace{\frac{1}{64} \sum_{i=1}^{64} X_i}_{EX} = 64\cdot 120kg = 7680kg$\\
+	ist der Erwartungswert der Summe der 64 Kisten.\\
+	Das ist gleich $64\cdot E(X_1)$ ist identisch st.u. also ist es egal welche Kiste speziell wir verwenden.\\
+	$Var(S_{64}) =Var(\sum^{64}_{i=1} X_i) = 64Var(X_1) = 64\cdot 75kg^2 = 4875kg^2$\\
+	Mit Hilfe der \underline{Chebychev-Markov Ungleichung} ($P(|X-\mu|\geq k)\leq \frac{\sigma^2}{k^2}$.\\
+	\[P(7560kg\leq S_{64}\leq 7800kg) = P(7560kg-ES_{64}\leq S_{64}-ES_{64}\leq 7800-ES_{64}) =P(-120\leq S_{64}-7680\leq 120) \]
+	also einfach um mittelwert verschieben
+	\[= P(|S_{64}-ES_{64}|\leq 120)\]
+	wir haben also effektiv einen Kreis mit Radius 120 um $ES_{64}$. Wir stellen um, um das äußere des Kreises zu erhalten
+	\[1-P(|S_{64}-\underbrace{7680}_{ES_{64}}|>120)\]
+	(WICHTIG $>$ und nicht $\geq$! sonst sind Ereignis/Gegenereignis nicht distinkt)\\
+	\[\underbrace{1-P(|S_{64}-ES_{64}|>120)\geq 1-\frac{Var(S_{64})}{(EX)^2}}_{Chebychew-Markow\ mit\ k = ES_{64}}\]
+	\[\underbrace{1-P(|S_{64}-ES_{64}|>120)}_{=P(|S_{64}-ES_{64}|\leq 120)} = 1-\frac{4875}{(120)^2}=\frac{2}{3}\]
+	Also ist die Lösung $P(|S_{64}-ES_{64}|\leq 120) =\frac{2}{3}$\\
+	c)\\
+	Gesucht $P(S_{64}\leq 7800)$ Zentrale Grenzwertsatz (oder 64 mal falten\dots)\\
+	Die Anwendung des Zentralen Grenzwertsatzes ergibt:
+	\[\frac{S_{64}-ES_{64}}{\sqrt{Var(S_{64})}} = \frac{S_{64}-ES_{64}}{Str(S_{64})}\sim N(0,1)\]
+	\[P(S_{64}\leq 7800) = P(\frac{S_{64}-ES_{64}}{Str(S_{64})}\leq \frac{7800-ES_{64}}{Var(S_{64})})\]
+	(hier kann man sogar schön den Zusammenhang von Chebychew-Markow mit dem Zentralen Grenzwertsatz sehen)
+	\[= \Phi(\frac{120}{Str(S_{64})}) = \]
+	wobei $\Phi$ die FV der (standard)-Normalverteilung ist
+	\[f(x)=(\frac{1}{\sqrt{2\pi}})^n\frac{1}{\sqrt{det(K)}}e^{\frac{-1}{2}(x-a)^TK^{-1}(x-a)\]
+	
+
+\end{document}

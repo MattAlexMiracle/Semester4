@@ -1749,6 +1749,272 @@ Kapitel 1
 	$\iff \Gamma\sigma,x:CL(\Gamma\sigma,\sigma(b))\vdash t:\alpha\sigma$\\
 	Man kann das $\sigma'$ reinziehen (das geht per lemma, weil wir sogar weniger allgemein auf der rechten seite werden)
 	\end{beweis}
+	\section{Automatentheorie}
+	(Gerade Rechtzeitig\dots)\\
+	\subsection{Sprachen als Kodaten}
+	Recall: DFA A = $(Q,\Sigma,\delta, s, F)$\\
+	\begin{itemize}
+		\item Q (endliche) Menge von Zuständen
+		\item $\Sigma$ Alphabet (endlich)
+		\item $\delta : Q\times (\Sigma\cup\{\epsilon\})\to Q$
+		\item Anfangszustand $s\in Q$
+		\item Menge $F\subseteq Q$ von akzeptierenden/finalen Zuständen
+	\end{itemize}
+	\begin{definition} $\delta(q,w)$ für $w\in\Sigma^*$ induktiv
+	\[\delta(q,\epsilon)=q\]
+	\[\delta(q,wa)=\delta(\delta(q,w),a)\]
+	(von hinten erweitern ist einfacher, wir schalten Buchstabe für Buchstabe durch das Wort)\\
+	Von A akzeptierte Sprache\\
+	\[L(A) =\{ w\in\Sigma^*|\delta(s,w)\in F\}\]
+	(Praxisrelevanz: Programme sind meistens automaten (u.u. endlich), d.h. es wurden schon pinautomaten geknackt, indem man automatisch den automatenuntersucht hat)\\
+	Schreibe $\delta : Q \to (\Sigma\to Q)$, $F:Q\to 2$\\
+	wir haben also $<F,\delta>:Q\to \underbrace{2\times \overbrace{(\Sigma\to Q)}^{\cong Q\times \dots\times Q,|\Sigma|\ mal}}_{GQ}$ wir haben also eine (rekursive) G-Koalgebra.\\
+	bzw. Es fehlt noch der intialzustand, wir nennen diese Vorstufe eine (deterministisches) Transitionssystem $A_0$
+	\begin{minted}{haskell}
+		codata Lang Sigma where
+			acc : Lang Sigma -> Bool
+			der : Lang Sigma -> (Sigma -> Lang Sigma)
+			-- accept/derivation
+	\end{minted}
+	\end{definition}
+	der sind eigentlich viele nachfolgeoperationen: Eine pro $\Sigma$.\\
+	finale Koalgebra:
+	- unendliche $\Sigma$-verzweigenden Bäumen\\
+	- Knoten in 2 gelabled (also $T,\bot$)\\
+	\includegraphics[width=256px]{images/AutomatenAlgebra.png}\\
+	Es ändert sich eigentlich nur, welche Lables in jedem schritt gesetzt werden (links bleibt a, rechts b)\\
+	Allgemein kann somit der Baum mit Worten indiziert werden. Der Baum hier entspricht also einer Teilmenge aus $\Sigma^*$ ist also eine Sprache.\\
+	\[F(L)\epsilon=T\iff \epsilon\in L\]
+	\[\delta\ L\ a =\{u\in\Sigma|au\in L\} = L_a\]
+	wobei $L_a$ Ableitung von L nach a ist. (wir schalten mit $\delta$ durch den Ableitungsbaum)\\
+	$\Lambda = P(\Sigma^*)$ bezeichnet sowohl die Menge aller Sprachen, als auch die finale G-Koalgebra\\
+	G-Koalgebramorphismen:\\
+	Sei A, B automaten und f eine funktion von $Q_A\to Q_B$
+	\includegraphics[width=256px]{images/AutomatenHomomorphismus.png}\\
+	(b,g) $\mapsto$ ($b, f\circ g$)\\
+	links: $F_B(f(q)) = F_A(q)$ d.h. $f(q)$ final $\iff$ q final.\\
+	Also wenn wir im Urbild fertig sind, dann muss auch das Bild fertig sein.\\
+	rechts: $\delta_B(f(q)(a)) = f(\delta_A(q)(a))$ wir können also eine Transition in $Q_A$ machen, und den fortschritt in $Q_B$ bringen.\\
+	\begin{satz} Sei $A_0 = (Q,\Sigma,\delta_A,F_A)$ Transitionssysteme.\\
+	Der eindeutige G-Koalgebramorphismus $f:A_0\to \Lambda$ ist
+	\[f:Q\to\Lambda\]
+	\[q\mapsto L(A_0,q) = \{w|F(\delta(q)(w)) = T\}\]
+	(in anderen worten: f bildet von automaten auf die akzeptierende Sprache ab)
+	\end{satz}
+	\begin{beweis} Reicht: f ist Morphismus\\
+	Finalität wird bewahrt: q final $\iff$ $\epsilon\in L(A_0,q)\iff L(A_0,q)$ final in $\Lambda$\\
+	Transitionen: zZ $\overbrace{f(\delta_A(q)(a))}^{L(A_0,\delta_A(q)(a)}=\delta_\Lambda (f(q))(a) = L(A_0,q)a$\\
+	$u\in L(A_0, \delta_A(q)(a))\iff F_A(\underbrace{\delta_A(\delta_A(q)(a))(u)}_{=\delta_A(q)(au)}) = T \iff au\in L(A_0,q)\iff u\in L(A_0,q)_a$
+	\end{beweis}
+	\begin{korrolar}\label{KorrolarSprache} 1) $L\in\Lambda\implies L(\Lambda, L) = L$\\
+	 ($\Lambda$ ist ein Automat, L eine Sprache in diesem (undendlichen Automat))\\
+	 2) $f:A_0\to B_0$ Morphismus von Transitionssystemen $\implies L(A_0,q)= L(B_0,f(q))$
+	 \end{korrolar}
+	 \begin{beweis}.\\
+	 1)\\
+	 \includegraphics[width=128px]{images/LausLambda.png}
+	 2)\\
+	 \includegraphics[width=256px]{images/Kommutation.png}
+	 \end{beweis}
+	 \subsection{Minimierung}
+	 Wir haben 2 grobe Fälle: Zustände können equivalent sein, oder Nutzlos (unerreichbar)
+	 \begin{definition} Sei $A_0$ Transitionssystem $q\in Q_0$
+	 \[<q> =\{\delta(q)(w) | w\in\Sigma^*\}\]
+	 Das sind alle von q aus erreichbaren Zustände. Wir nennen dies das von q erzeugte Untertransitionssystem.\\
+	 \end{definition}
+	 Es ist Tatsächlich ein Untertransitionssystem, weil $q'\in <q>$ final $\iff$ $q'$ final in $A_0$\\
+	 $\underbrace{\delta_{<q>}(q')(a)}_{\delta(q)(w)}=\underbrace{\delta_{A_0}(q')(a)}_{\delta(q)(wa)\in <\delta>}$\\
+	 somit unter Transition abgeschlossen.
+	 \begin{lemma}\label{einbettung} Die Einbettung $<q>\hookrightarrow A_0$ Morphismus, sodass die Behauptungen aus dem Korrolar \ref{KorrolarSprache}
+	 (die Eigentliche Einbettung ist ein Noop von $q\to q$, zeigt nur eine Teilmengeneigenschaft auf der Algebra)
+	 \end{lemma}
+	 \begin{lemma} .\\
+	 \[f:A_0\to B_0\]
+	 Morphismus $\implies$
+	 \[f:<q>\to <f(q)>\]
+	 Morphismus, surjektiv\\
+	 (aus surjektiv folgt insbesondere $|<f(q)>|\leq |<q>|$)
+	 \end{lemma}
+	 \begin{beweis}.\\
+	 $\{\delta_{A_0}(q)(w)|w\in\Sigma^*\}$ $\{\delta_{B_0}(q)(w)|w\in\Sigma^*\}$\\
+	 f kommutiert $f(\delta_{A_0}(q)(w))=\delta_{B_0}(f(q))(w)$\\
+	 Damit sind beide Behauptungen gezeigt.
+	 \end{beweis}
+	 \begin{lemma} $L(<q>,q) = L(A_0,q)$ folgt aus \ref{einbettung}
+	 \end{lemma}
+	 z.B. $f = L(A_0,-)$ ist ein Morphismus:
+	 \[|<L(A_0,q)>| \leq |<q>| \leq |A_0|\]
+	 d.h. $L(A)=L \implies |<L>|\leq |A|\implies L(\Lambda, L) = L(<L>,L) =L $ $(<L>,L)$ ist minimaler Automat für L. (besteht aus allen von m aus erreichbaren Sprachen im Transitionssystem)
+	 \begin{satz} L regulär $\iff$ $<L>$ endlich.
+	 \end{satz}
+	 Recall:  R Äquivalent auf X $\implies X/R =\{[x]_R|x\in X\} = \{y|xRy\}$\\
+	 $|x/R| =$ Index von R.\\
+	 $f: X\to Y$\\
+	 $Ker (f) = \{(x,y)| f(x) = f(y)\}$ ist eine Äquivalenz (Das ist eine generalisierung von Ker aus linAlg $f(x)=f(y)\iff f(x)-f(y)=0\iff \underbrace{f(x-y)}_{linear} =0\iff x-y\in Ker(f)$)\\
+	 \[h: X/(Ker(f))\to f[X] =\{f(x) | x\in X\}\]
+	 \[[x]_{Kerf} \mapsto f(x) \text{  bijektiv}\]
+	 h wohldefiniert: x(Kerf)y $\implies f(y)=f(x)$ DAS HIER IST WOHLDEFINIERT (die Abbildung ist von representanten unabhängig, NICHTS anderes)\\
+	 also index von Kerf = $|f[x]|$
+	 \[<L> = \{L_u | u\in \Sigma^*\} = d[\Sigma^*],\]
+	 mit $d(u) = L_u\implies <L>$ endlich $\iff \Sigma^*/(Kerd)$ endlich.\\
+	 $\sim_L := Kerd$
+	 \[v\sim_L w\iff L_v = L_w \iff \forall u\in \Sigma^* (u\in L_v \iff u\in L_w)\]
+	 \[\forall u\in \Sigma^* (vu\in L\iff wu\in L)\]
+	 \begin{satz} von Myhill/Nerode: L regulär $\iff \sim_L$ hat endlichen Index.\end{satz}
+	 Bisimulation auf $\Lambda$: $R\subseteq \Lambda\times\Lambda$ Bisimulation $\iff$ L R K $\implies$\\
+	 1) $\sigma\in L\iff \sigma\in K$ (also $F(L)=T\iff F(k)=T$)\\
+	 2) $\forall a\in \Sigma(\underbrace{\delta(L)(a))}_{L_a} R \underbrace{\delta(K)(a)}_{K_a})$\\
+	 allgemeiner: $A_0 = (Q,\Sigma,\delta,F)$ Transitionssystem\\
+	 $R\subseteq Q\times Q$ Bisimulation $\iff \{(L(A_0,q),L(A_0,r))| (q,r)\in R\}$ Bisimulation auf $\Lambda$ (sprich, wenn die Sprache von q und die Sprache von r über A in Relation stehen)\\
+	 d.h. $(q,r)\in R\implies$\\
+	 1) $F(q)=F(r)$
+	 2) $\forall a\in\Sigma(\delta(q)(a)R\delta(r)(a))$\\
+	 q,r \underline{bisimilar} (ist die größte Bisimulation zwischen q und r) $\iff \exists R$ Bisimulation (qRr)\\
+	 q,r bisimlar $\implies$ $L(A_0,q)=L(A_0,r)$\\
+	 ALGORITHMUS (Minimiere DFA A=$(Q,\Sigma,\delta,s,F)$)
+	 var $R\subseteq Q\times Q$
+	\begin{itemize}
+	 \item 1. Entferne nicht erreichbare Zustände aus Q (Tiefensuche, merke gefunde Zustände, sobald ein Zustand doppelt, kann dieser Teilbaum abgebrochen werden)
+	 \item 2. Initialisiere $R=\{(q,r)\in Q\times Q| q\in F\iff r\in F\}$ (R hat erstmal 2 Äquivalienzklassen: final/nichtfinal, wir nähern die größte bisimulation von oben her an; bisimilar 1 gilt)\\
+	 \item 3. Pick $(q,r)\in R, a\in \Sigma$ mit
+	 \[(\delta(q)(a),\delta(r)(a))\notin R\]
+	 if not found goto 4
+	 else $R:= R\setminus \{\overbrace{(r,q),(q,r)}^{symmetrie}\}$ goto 3
+	 \item 4. $Q:=Q/R, f:=F/R, \delta([q]_R)(a)=[\delta(q)(a)]_R$ wir reduzieren also den automaten auf die Äquivalenzklassen
+	\end{itemize}
+	\begin{satz} Nach Schritt 4 ist	A minimal (nach Quotientierung durch R)
+	\end{satz}
+	\begin{beweis} Reich $q,r$ bisimilar (im Input) $\iff qRr$ in Schritt 4.\\
+	``$\impliedby$'' per 2,3 ist R am ende eine Bisimulation. (in 2. werden alle finalen und nichtfinalen getrennt, in 3. werden alle nicht äquivalenten zustände getrennt)\\
+	``$\implies$'' Entfernte Paare sind nicht bisimilar (Invariante des Algorithmus)
+	\end{beweis}
+	\begin{beispiel}.\\
+	\includegraphics{images/MinimierungBsp.png}\\
+	Dreieckig, weil symmetrisch, auch die diagonale kann weggelassen werden (Äq-Relation ist trivial Reflexiv)
+	Die zahl ist die Optimierungsrunde, in der die Zustände rausfliegen.\\
+	Runde Null lässt Zustände mit unterschiedlicher finalität rausfliegen.\\
+	Erste runde z.B. $q_2$ hat 1 nachfolger $q_2$ und $q_0$ hat 1 nachfolger $q_1$. $q_1$  und $q_2$ sind nicht in relation (per schritt 0) fliegt raus.\\
+	aber z.B. $q_3,q_4$ haben beide als 1 nachfolger $q_2$ und 0 nachfolger $q_3$ und $q_4$, die beide in Relation stehen (wir checken ja gerade das, deshalb müssen sie noch drin sein) \\
+	Die leeren stellen sind die in relation stehenden zustände\\
+	\includegraphics{images/MinimalerAutomat.png}
+	die Übergänge können einfach durch einen der Nachfolger bestimmt werden (welcher ist egal, die sind ja äquivalent)
+	\end{beispiel}
+	\section{Bonus: SN von System F}
+	Idee: zu Typ $\alpha$ definiere
+	\[\dbrack{\alpha}_{\xi} \subseteq SN = \{t\in \Lambda|t\ SN\}\]
+	mit $\xi: V\to SAT$
+	\[SAT = \{A\subseteq SN| A\ saturiert\}\]
+	\[A\to B = \{t\in\Lambda| \forall s\in A.\ ts\in B\}\]
+	mit $A,B\subseteq \Lambda$\\
+	Rekursiv 3 Fälle:
+	\[\dbrack{\alpha}_{\xi} =\xi(\alpha)\]
+	\[\dbrack{\alpha\to\beta}_{\xi} = \dbrack{\alpha}\to\dbrack{\beta}\]
+	\[\dbrack{\forall a.\alpha}_{\xi} = \bigcap_{A\in SAT}\dbrack{\alpha}_{\xi[a\mapsto A]}\]
+	(der letzte punkt ist ein Durchschnittstyp: das macht das ding untentscheidbar)
+	\begin{lemma} Substitutionslemma (noch eins)\\
+	\[\dbrack{\alpha[\beta/a]}_\xi = \dbrack{\alpha}_{\xi[a\mapsto\dbrack{\beta}_\xi]}\]
+	Beweis: Induktion über $\alpha$
+	\end{lemma}
+	\begin{definition} $A\subseteq SN$  \underline{saturiert} $\iff$\\
+	i) $xt_1\dots t_n\in A$ ($x\in V;t_1,\dots,t_n\in SN;n\geq 0$)\\
+	ii) $t[s/x] u_1\dots u_n\in A\implies $\\
+	$(\lambda x.t)su_1\dots u_n\in A (s, \in SN)$ (wir müssen explizit s SN annehmen, weil x u.U. nicht in t existiert: es viele also in der prämisse weg. Die konklusion ist dann aber abhängig von reduktionsreihenfolge, also nicht mehr SN!)\\
+	\end{definition}
+	\begin{lemma} Saturiertheitslemma\\
+	a) $SN\in SAT$\\
+	b) $\dbrack{\alpha}_{\xi}\in SAT$\\
+	\end{lemma}
+	\begin{beweis} a) 1. Sie $x\in V,t_1,\dots,t_n\in SN$\\
+	zZ.: $xt_1\dots t_n\in SN\checkmark$\\
+	alle Reduktionen passieren in den $t's$ also insgesamt SN\\
+	2) Sei $s\in SN, t[s/x]u_1\dots u_n\in SN$\\
+	zZ: $(\lambda x.t)su_1\dots u_n\in SN$\\
+	Widerspruchsbeweis: Annahme es gibt eine unendliche Reduktionssequenz:\\
+	$(\lambda x.t)su_1\dots u_n\to_\beta^* (\lambda x.t')s'u_1'\dots u_n'$ wir reduzieren also alles was geht ($t,u_1\dots u_n,s\in SN$)\\
+	$\to_\beta t'[s'/x]u_1'\dots u_n'\to_\beta^*\dots$\\
+	Das führt jedoch zum widerspruch:\\
+	$t[s/x]u_1\dots u_n$ reduziert in endlich vielen schritten auf die Form $t'[s'/x]u_1'\dots u_n'$ also gäbe es eine unendliche Reduktionssequenz für $t[s/x]u_1\dots u_n$\\
+	b)\\
+	Induktion über $\alpha$\\
+	$\alpha = a\checkmark$\\
+	$\to$ IV $A=\dbrack{\alpha}_\xi$ $B=\dbrack{\beta}_\xi$ $A,B\in SAT$\\
+	zZ: $\dbrack{\alpha\to\beta}_\xi = A\to B\in SAT$\\
+	dafür zZ:\\
+	0) $A\to B\subseteq SN$ : Sei $t\in A\to B$ habe $x\in A$ (wir haben so ein x, weil A saturiert und dort insbesondere alle Variablen sind) $\implies tx\in B\subseteq SN\implies t\in SN$\\
+	1) Sei $x\in V, r_1,\dots, r_n\in SN$\\
+	zZ $xr_1\dots r_n\in A\to B$; sei also $s\in A$\\
+	zZ $xr_1\dots r_n s\in B\checkmark$ \\
+	2) Sei $s\in SN, r[s/x]r_1\dots r_n\in A\to B$\\
+	zZ $(\lambda x.t)sr_1\dots r_n\in A\to B$\\
+	Sei also $v\in A$, zZ $(\lambda x.t)sr_1\dots r_n v\in B\impliedby t[s/x]r_1\dots r_nv\in B\impliedby t[s/x]r_1\dots r_n\in  A\to B, v\in A\checkmark$\\
+	3. $\forall$ SAT ist offenbar abgeschlossen unter Durchschnitten nichtleerer Mengenfamilien. Aus a) folgt, dass im Durchschnitt mindestens ein index A, nämlich A = SN vorkommt
+	\end{beweis}
+	\begin{definition} Erfülltheit/Konsequenz.\\
+	\[\sigma,\xi\models t:\alpha \iff t\sigma\in \dbrack{\alpha}_\xi\]
+	$(\sigma,\xi)$ efüllen $t:\alpha$
+	\[\sigma,\xi\models \Gamma\iff \forall (x:\alpha)\in \Gamma.\sigma\models x:\alpha\]
+	$(\sigma,\xi)$ efüllen $\Gamma$
+	\[\Gamma\models t:\alpha \iff \forall \sigma,\xi.(\sigma,\xi \models \Gamma\implies \sigma,\xi\models (t:\alpha))\]
+	$t:\alpha$ ist Konsequenz von $\Gamma$ (also alles genau wie Korrektheit FOL)
+	\end{definition}
+	\begin{beweis} Korrektheit\\
+	\AxiomC{}
+	\RightLabel{$(x:\alpha)\in \Gamma$}
+	\LeftLabel{(Ax)}
+	\UnaryInfC{$\Gamma\vdash x:\alpha$}
+	\DisplayProof\\
+	Wahr per definition
+	\AxiomC{$\Gamma\vdash t:\alpha\to\beta$}
+	\AxiomC{$\Gamma\vdash s:\alpha$}
+	\LeftLabel{$(\to_e)$}
+	\BinaryInfC{$\Gamma\vdash ts:\beta$}
+	\DisplayProof\\
+	Annahme: prämissen gelten $\Gamma\models t:\alpha\to\beta,\Gamma\models s:\alpha$\\
+	zZ $\Gamma\models ts:\beta$\\
+	Sei also $\sigma,\xi\vdash \Gamma;$ zZ $\sigma,\xi\models ts:\beta$\\
+	per Annahme: $\sigma,\xi\models t:\alpha\to\beta,\sigma,\xi \models s:\alpha\implies t\sigma\in \dbrack{\alpha\to\beta}_\xi =\dbrack{\alpha}_\xi\to\dbrack{\beta}_\xi, s\sigma\in\dbrack{\alpha}_\xi$\\
+	$\implies \underbrace{(t\sigma)s\sigma}_{(ts)\sigma}\in \dbrack{\beta}_\xi\iff \sigma,\xi\models ts:\beta$\\
+	\AxiomC{$\Gamma[x\mapsto\alpha]\vdash t:\beta$}
+	\LeftLabel{$(\to_i)$}
+	\BinaryInfC{$\Gamma\vdash \lambda x.t:\alpha\to\beta$}
+	\DisplayProof\\
+	Sei $\sigma,\xi\models\Gamma$ zZ: $\sigma,\xi\models \lambda x.t:\alpha\to\beta$\\
+	$(\lambda x.t)\sigma =\lambda x.t\sigma\stackrel{!}{\in} \dbrack{\alpha\to\beta}_\xi$ o.E. $x$ frisch für $\sigma$\\
+	Sei  also $v\in \dbrack{\alpha}_\xi$\\
+	zZ: $(\lambda x.t\sigma)v\in\dbrack{\beta}_\xi\in SAT$\\
+	$\impliedby (t\sigma)[v/x]\in \dbrack{\beta}_\xi$\\
+	$\iff \sigma[v/x],\xi\models t:\beta$\\
+	$\impliedby \sigma[v/x],\Gamma[x\mapsto \alpha]$\\
+	$\iff [v/x]\models x:\alpha,\xi\models x:\alpha \iff v\in \dbrack{\alpha}_\xi\checkmark$\\
+	\AxiomC{$\Gamma\vdash t:\forall a.\alpha$}
+	\LeftLabel{$(\forall_e)$}
+	\UnaryInfC{$\Gamma\vdash t:\alpha[\beta/a]$}
+	\DisplayProof\\
+	$\dbrack{\forall a.\alpha} = \bigcap_{A\in SAT}\dbrack{\alpha}_{\xi[a\mapsto A]}\subseteq \dbrack{\alpha}_{\xi[a\mapsto \dbrack{\beta}_\xi]} = \dbrack{\alpha[\beta/a]}_\xi$ letzter Schritt subst. Lemma.\\
+	\AxiomC{$\Gamma\vdash t:\alpha$}
+	\RightLabel{$a\notin FV(\Gamma)$}
+	\LeftLabel{$(\forall_i)$}
+	\UnaryInfC{$\Gamma\vdash t:\forall a.\alpha$}
+	\DisplayProof\\
+	Sei $\sigma,\xi\models \Gamma, A\in SAT$ a frisch\\
+	$\implies \sigma,\xi[a\mapsto A]\models \Gamma$
+	$\implies \sigma,\xi[a\mapsto A]\models t:\alpha$\\
+	$\iff t\sigma\in\dbrack{\alpha}_{\xi[a\mapsto A]}\implies t\sigma\dbrack{\forall a.\alpha}_\xi\implies \sigma,\xi\models t:\forall a.\alpha$
+	\end{beweis}
+	\begin{satz} $\lambda 2$ ist SN
+	\end{satz}
+	\begin{beweis} Sei $\Gamma\vdash t:\alpha$\\
+	Korrektheit $\implies \Gamma\models t:\alpha$\\
+	sei $\sigma = []$ (leere substitution)\\
+	$\xi(x) = SN, \forall a\in V$\\
+	$\implies \sigma,\xi\models \Gamma$, denn \\
+ 	$\implies x\in\dbrack{\alpha}_\xi\in SAT$ stets\\
+ 	$\implies \sigma,\xi\models t:\alpha,$ d.h. $t\in\dbrack{\alpha}_\xi\subseteq SN$
+ 	\end{beweis}
+
+
+
+
 
 
 
@@ -1757,8 +2023,8 @@ Kapitel 1
 	\bibitem{knuthBendix}
 	Knuth-bendix algorithm for creating CR TES from terminating TES\\
 	\text{https://en.wikipedia.org/wiki/Knuth\%E2\%80\%93Bendix\_completion\_algorithm}
-	\bibitem{dependantChoice}
-	dependant choice\\
+	\bibitem{dependentChoice}
+	dependent choice\\
 	\text{https://de.wikipedia.org/wiki/Axiom\_der\_abh\%C3\%A4ngigen\_Auswahl}
 	\bibitem{nominaleMengen}
 	nominale Mengen\\

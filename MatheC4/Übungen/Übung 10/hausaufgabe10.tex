@@ -89,7 +89,9 @@ Kapitel 1
 	Die Korrelation ist die Normierte Kovarianz
 	\[Korr(U,V)=\frac{Kov(U,V)}{std(U)std(V)} =\frac{Kov(U,V)}{\sqrt{Var(U)Var(V)}} = \frac{5.25}{\sqrt{\frac{37}{4}\frac{25}{4} }}\approx 0.6904\dots\]
 	Die Quantile entstehen durch den Wert der jeweiligen FV
-	\[F(y) = (1-e^{-2y})1_{y\geq 0}\stackrel{!}{=} quantil\]
+	\[F(y) = (1-e^{-2y})1_{y\geq 0}\stackrel{!}{=}\]
+	\[F(x-)\leq u\leq F(x)\]
+	die Verteilungsfunktion ist hier stetig, somit ist $F(x-)=F(x)=u$\\
 	das 5\% quantil ist also
 	$u_{5\%}$\\
 	$F(y) = 0.05\iff (1-e^{-2y})1_{y\geq 0} = 0.05 \iff 1-e^{-2y}=0.05\iff e^{-2y}=0.95\iff y=\frac{ln(0.95)}{-2} \approx 0.02564\dots$\\

@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{scrextend}
+\usepackage[english,german]{babel}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+\usepackage{tikz}
+\usepackage{algorithm,algpseudocode}
+\usepackage[doublespacing]{setspace}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{polynom}
+\usepackage{amsmath}
+\usepackage{gauss}
+\usepackage{tkz-euclide}
+\usepackage{minted}
+\usepackage{mathrsfs}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\author{
+Alexander Mattick Kennung: qi69dube\\
+Kapitel 1
+}
+\usepackage{import}
+\date{\today}
+\geometry{a4paper, margin=2cm}
+\usepackage{stackengine}
+\parskip 1em
+\newcommand\stackequal[2]{%
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{=}{$\scriptscriptstyle#1$}}{%
+  $\scriptscriptstyle#2$}}
+ }
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\lstset{
+  language=haskell,
+}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{titlesec}
+\usepackage{ stmaryrd }
+\usepackage{verbatim}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+
+\titlespacing*{\subsection}{0pt}{2pt}{3pt}
+\titlespacing*{\section}{0pt}{0pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{1pt}{2pt}
+\title{Übung 7}
+
+
+\begin{document}
+	\maketitle
+	\[L(x_1,\dots,x_n,\mu,\sigma^2) = \prod^n_{i=1}f^{X_i}(x_i,\mu,\sigma^2)\]
+	hier
+	\[L(x_1,\dots,x_n,\mu,\sigma^2) =(\frac{1}{\sqrt{2\pi\sigma^2}})^n\prod^n_{i=1}\exp(\frac{1}{2\sigma^2}(x_i-\mu)^2)\]
+	jetzt log-likelyhodd
+	\[\ln(L(x_1,\dots,x_n,\mu,\sigma^2)) =\frac{-n}{2}ln(2\pi)-\frac{-n}{2}ln(\sigma^2)+\sum^n_{i=1}\frac{-1}{2\sigma^2}(x_i-\mu)^2\]
+	maximieren:\\
+	ableiten
+	\[\implies \frac{\partial}{\partial\mu} \ln(L(x_1,\dots,x_n,\mu,\sigma^2)) =\frac{1}{\sigma^2}\sum^n_{i=1}(x_i-\mu)^2\]
+	\[\implies \frac{\partial}{\partial\sigma^2} \ln(L(x_1,\dots,x_n,\mu,\sigma^2)) =-\frac{-n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum^n_{i=1}(x_i-\mu)^2\]
+	\[\implies \mu_{ML} =\frac{1}{n}\sum^n_{i=1}x_i=\bar x\]
+	\[\implies \sigma_{ML} =\frac{1}{n}\sum^n_{i=1}(x_i-\mu_{ML})^2=\frac{1}{n}\sum^n_{i=1}(x_i-\bar x)^2\]
+	Hess($\ln(L(x_1,\dots,x_n,\mu,\sigma^2))$)\\
+	$\begin{bmatrix} -n/\sigma^2&-\frac{1}{\sigma^4}\sum(x_i-\mu)^2\\-\frac{1}{\sigma^4}\sum(x_i-\mu)^2& \end{bmatrix}$\\
+	b) Schätzer für $\sigma^2$ Erwartungstreu machen.\\
+	\[\sigma_{ML} = \frac{1}{n}\sum^n_{i=1} (x_i-\bar x)^2= \frac{1}{n}\sum^n_{i=1} x_i^2-(\bar x)^2\]
+	\[\implies E(\sigma_{ML}) = \frac{1}{n}\sum^n_{i=1} E(x_i^2)-E(\bar x^2) \]
+	wir wissen im allgemeinen
+	\[E(x_i^2) = Var(x_i)+(E(x_i))^2\]
+	daraus folgt auch
+	\[E(\bar x_i^2) = Var(\bar x)+(E(\bar x))^2 = \frac{1}{n^2}nVar(x_1)+\mu^2\]
+	aus $ \frac{1}{n}\sum^n_{i=1} E(x_i^2)-E(\bar x^2)$ und einsetzen folgt
+	\[E(\sigma_{ML}) = \frac{n-1}{n}\sigma^2\]
+	\[s^2 = \frac{n}{n-1} \sigma = \frac{1}{n-1}\sum^n_{i=1}(x_i-\bar x)^2\]
+	\[\implies E(S^2) = \frac{n}{n-1} E(\sigma_{ML})\]
+	\[\implies E(S^2) = \frac{n}{n-1}  \frac{n-1}{n}\sigma^2 = \sigma^2\]
+	a) Gesucht ist ein $\epsilon>0$ mit
+	\[P(-\infty <\mu\leq \bar x+\epsilon) = 1-\alpha\]
+	Punktschätzer für $\mu$
+	\[T_\mu (x_1,\dots,x_n)=\frac{1}{n} \sum^n_{i=1} x_i = \bar x\]
+	$x_1,\dots, x_n$ sind $N(\mu,\sigma^2)$-verteilt $\bar x\sim N(\mu,\sigma^2/n)$\\
+	\[P(-\infty\leq \mu\leq \bar x+\epsilon) = P(\mu\leq \bar x+\epsilon) = P(\bar x-\mu\geq -\epsilon) = P(\frac{\bar x-\mu}{\sqrt{\sigma^2/n}}\geq -\frac{\epsilon}{\sqrt{\sigma^2/n}})\]
+	\[= P(Z \geq -\frac{\epsilon}{\sqrt{\sigma^2/n}}) = 1-P(Z < -\frac{\epsilon}{\sqrt{\sigma^2/n}})\]
+	mit Standardisierter ZV $Z\sim N(0,1)$\\
+	\[ 1-P(Z < -\frac{\epsilon}{\sqrt{\sigma^2/n}}) =  1-P(Z < -\frac{\epsilon\sqrt{n}}{\sigma})\]
+	\[= 1-\Phi(-\frac{\epsilon\sqrt{n}}{\sigma}) = 1-\alpha\]
+	das $1-\alpha$-Quantil $Z_{(1-\alpha)}=\frac{\epsilon\sqrt{n}}{\sigma}$\\
+	$\implies \epsilon = Z_{(1-\alpha)}/\sqrt{n}$\\
+	$K I_\mu = (-\infty, X+\epsilon] = (-\infty, X+Z_{(1-\alpha)}/\sqrt{n}]$\\
+	$K I_\mu = (-\infty, \bar x + z_{0.95}\sigma/\sqrt{n}] = (-\infty, 2.648 + 1.644\cdot 2/\sqrt{11}] = (-\infty,3.640]$\\
+	zweiseitig
+	\[K I = [\bar x-z_{(1-\alpha/2)}\cdot\sigma/\sqrt{n},\bar x+z_{(1-\alpha/2)}\cdot\sigma/\sqrt{n}]\]
+	\[K I = [\bar x-z_{(0.975)}\cdot\sigma/\sqrt{n},\bar x+z_{(0.975)}\cdot\sigma/\sqrt{n}]\]
+	\[K I = [\bar x-z_{(0.975)}\cdot\sigma/\sqrt{n},\bar x+z_{(0.975)}\cdot\sigma/\sqrt{n}]\]
+	\[K I = [2.644-1.9600\cdot2/\sqrt{11},2.644+1.9600\cdot2/\sqrt{11}]\]
+	\[K I 0 [1.4663,3.830]\]
+
+\end{document}
